@@ -17,6 +17,7 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/image/**" location="/resources/image/" />
+	<resources mapping="/images/**" location="/resources/images/" />
 	<resources mapping="/js/**" location="/resources/js/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
@@ -26,11 +27,13 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+	<!-- 파일 업로드 시, form에  -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000" />
+	</beans:bean>
 
-	<context:component-scan base-package="aaa.bbb.WriteYourDay" />
-
-	<context:component-scan base-package="bizUtil"></context:component-scan>
-	<context:component-scan base-package="bizController"></context:component-scan>
+	<context:component-scan base-package="controller"></context:component-scan>
 
 
 
