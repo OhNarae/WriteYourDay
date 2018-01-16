@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +14,7 @@
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script>
-	function initMonth() {
+	function initMonth(var year, var month, var eventInfos) {
 		var today = new Date();
 		var firstDate = new Date(today.getFullYear(), today.getMonth(), 1);
 		var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -24,7 +25,6 @@
 			$('#month-body').append('<tr>')
 			for (var j = 1; j < 8; j++) {
 				var td = '<td class="month-row">';
-
 
 				if (start == j) {
 					start = 0;
@@ -41,21 +41,77 @@
 			$('#month-body').append('</tr>')
 		}
 	}
+	
+/* 	$(document).ready(function(){
+		$('#btnLogin').click(function(){
+			$.ajax({
+				type: 'Get',
+				url: '/Spring03/mlogin.do',
+				data: {
+					id: $('#id').val(),
+					password: $('#password').val()},
+				success: function(result){
+					$('#resultDisplay').html(result);
+				}	
+			})
+		})
+	}) */
 
-	$(window).ready(function() {
-		initMonth();
+
+	$(document).ready(function() {
+		initMonth();		
+		$.ajax({
+			type: 'Post',
+			url : '/WriteYourDay/getJsonByVO.do',
+			dataType : "json",
+			data : {
+				status : '',
+				data : []
+			},
+			success:function(data){
+				if(0 != data.resultCode)
+					alert(data.resultMsg);
+				
+ 				$.each(data.monthEvents, function(i, item){
+ 					show += "<tr><td width='200' align='center'>퀀텀</td>";
+ 					show += "<td>"+item.closing_price+"</td></tr>";
+ 				}
+				$("#qtum").append(show);
+			}, error:function(e){
+			}
+		});
+		
 
 		$('#cal-div').hide();
 		$('input[name=ck-cal1]').on('click', function() {
+			$.ajax({
+				url : "",
+				dataType : "json",
+				data : {
+					status : '',
+					data : []
+				},
+				success:function(data){
+					$("#qtum").html("<tr><th>종목</th><th>실시간 시세</th></tr>");
+//	 				$.each(data, function(i, item){
+//	 					show += "<tr><td width='200' align='center'>퀀텀</td>";
+//	 					show += "<td>"+item.closing_price+"</td></tr>";
+//	 				}
+					$("#qtum").append(show);
+				}, error:function(e){
+				}
+			});
+			
 			if ($('input[name=ck-cal1]').is(":checked")) {
-				/* 				$('label[for=ck-cal1]').text("가계부 사용"); */
 				$('#cal-div').show();
 				$('#cal-body').append('<tr><td class="cal-row">이마트</td><td class="cal-row">2000</td></tr>');
 			} else {
-				/* 				$('label[for=ck-cal1]').text("가계부 미사용"); */
 				$('#cal-div').hide();
 			}
 		})
+		
+		
+
 	})
 </script>
 <style type="text/css">
@@ -126,6 +182,11 @@
 .cal-tb .cal-row {
 	vertical-align: top
 }
+
+.carousel {margin: 0 auto;width:700px;height:50px;overflow:hidden;position:relative;}
+.carousel .next {display:block;height:22px;width:11px;position:absolute;right:0px;top:14px;background:url(resources/images/carousel-control.png) right top no-repeat;background-color: #262626}
+.carousel .prev {display:block;height:22px;width:11px;position:absolute;left:0px;top:14px;background:url(resources/images/carousel-control.png) left top no-repeat;background-color: #262626}
+
 </style>
 </head>
 <body id="mycalendar">
@@ -133,6 +194,11 @@
 	<div class="main">
 		<div class="container_12">
 			<div class="grid_9">
+				<div class="carousel">
+					<a class="prev" href="#"></a>
+					<h3 class="color-3 aligncenter">2018.01</h3>
+					<a class="next" href="#"></a>
+				</div>
 				<table class="month-tb">
 					<tr>
 						<th class="month-row">월</th>
@@ -163,10 +229,11 @@
 				</div>
 				<div class="wrapper">
 					<div class="indent-top"></div>
-					<span class="msg fleft">- 숑숑 고등학교 동창</span><br> <a class="abutton fright" href="#">거절</a><a class="abutton fright"
-						href="#">수락</a><br>
-					<span class="msg fleft">- 숑숑 고등학교 동창</span><br> <a class="abutton fright" href="#">거절</a><a class="abutton fright"
-						href="#">수락</a><br>
+					<span class="msg fleft">- 숑숑 고등학교 동창</span><br> <a
+						class="abutton fright" href="#">거절</a><a class="abutton fright"
+						href="#">수락</a><br> <span class="msg fleft">- 숑숑 고등학교
+						동창</span><br> <a class="abutton fright" href="#">거절</a><a
+						class="abutton fright" href="#">수락</a><br>
 				</div>
 			</div>
 		</div>

@@ -6,7 +6,7 @@ import java.util.List;
 import vo.DMemberVO;
 import vo.DUserVO;
 
-public interface MService {
+public interface MemberService {
 
 	List<DMemberVO> getMemberList();
 

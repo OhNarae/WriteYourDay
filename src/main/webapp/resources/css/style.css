@@ -12,6 +12,7 @@ body {font-family:Arial, Helvetica, sans-serif;font-size:100%;color:#262626;min-
 .bg-top {width:100%; background:url(../images/bg-top-tail.jpg) center top repeat-x}
 .bg-top-2 {width:100%; background:url(../images/bg-top-tail2.jpg) center top repeat-y}
 .bg {width:100%; background:url(../images/bg-top.jpg) center top no-repeat}
+.bg2 {width:100%; background-color:red}
 .bg-bot {width:100%; background:url(../images/bg-bot-tail.gif) center top repeat-x #fff; padding:30px 0 55px}
 	#page3 .bg-bot, #page4 .bg-bot {padding:30px 0 49px}
 .main {width:980px;padding:0;margin:0 auto;font-size:0.8125em;line-height:1.6153em}
@@ -31,6 +32,7 @@ p {margin-bottom:18px}
 .reg {text-transform:uppercase}
 .fleft {float:left}
 .fright {float:right}
+.alignleft {text-align:left}
 .alignright {text-align:right}
 .aligncenter {text-align:center}
 .it {font-style:italic}
@@ -178,9 +180,9 @@ h6 {color:#ff9601}
 dl span {float:left; width:93px}
 dl strong {float:left; width:80px; font-weight:normal}
 /***** carousel-style *****/
-.carousel {margin: 0 auto;width:940px;height:229px;overflow:hidden;position:relative}
-.carousel .next {display:block;height:22px;width:11px;position:absolute;right:0px;top:14px;background:url(../images/carousel-control.png) right top no-repeat;text-indent:-5000px}
-.carousel .prev {display:block;height:22px;width:11px;position:absolute;right:31px;top:14px;background:url(../images/carousel-control.png) left top no-repeat;text-indent:-5000px}
+#carousel {margin: 0 auto;width:700px;height:50px;overflow:hidden;position:relative;background-color: red}
+#carousel #next {display:block;height:22px;width:11px;position:absolute;right:0px;top:14px;background:url(../images/carousel-control.png) right top no-repeat}
+#carousel #prev {display:block;height:22px;width:11px;position:absolute;right:31px;top:14px;background:url(../images/carousel-control.png) left top no-repeat}
 .jCarouselLite {left:-12px !important}
 #carousel li {width:200px !important;height:121px !important;padding:17px 22px 27px;margin-right:-4px;background:url(../images/carousel-li-bg.png) left top no-repeat;position:relative;overflow:hidden}
 	#carousel li a {display:block; position:relative}
@@ -209,5 +211,5 @@ footer {width:100%;padding:40px 0 33px;background:url(../images/footer-tail.gif)
 		.list-services li a {	display:block;width:60px;height:45px;background:url(../images/social-icons.png) left top no-repeat;	}
 		.list-services li a.item-2 {background-position:-80px 0}
 		.list-services li a.item-3 {background-position:-160px 0}
-		.list-services li a.item-4 {background-position:-240px 0}
+		.list-services li a.item-4 {background-position:-240px 0}		
 		

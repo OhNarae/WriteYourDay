@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mappers.memo">
+
+	<select id="getMemoSetList" resultType="vo.MemoSetVO">
+		select ms.* from
+		MEMO_SET_TB ms join MEMBER_TB mb on ms.member_seq = mb.seq where mb.id = #{id}
+	</select>
+
+	<insert id="insertMemoSet">
+		insert into MEMO_SET_TB(member_seq, seq, name)
+		values( #{member_seq}, SEQ_MEMO_SET.NEXTVAL, #{name})
+	</insert>
+
+	<select id="getMemoList" resultType="vo.MemoVO">
+		select seq, name from
+		MEMO_TB where set_seq = #{seq}
+	</select>
+
+	<select id="getMemo" resultType="vo.MemoVO">
+		select set_seq, seq, name,
+		contents from MEMO_TB where seq = #{seq}
+	</select>
+
+	<insert id="insertMemo">
+		insert into MEMO_TB(set_seq, seq, name, contents)
+		values(#{set_seq}, SEQ_MEMO.NEXTVAL, #{name}, #{contents})
+	</insert>
+
+	<update id="updateMemo">
+		update MEMO_TB set name=#{name}, contents=#{contents}
+		where seq = #{seq}
+	</update>
+</mapper>

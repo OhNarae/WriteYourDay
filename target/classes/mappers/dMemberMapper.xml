@@ -3,13 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- CREATE TABLE MEMBER_TB ( seq NUMBER(5) NOT NULL, id VARCHAR2(16) NOT 
-	NULL, ID password VARCHAR2(16) NOT NULL, 패스워드 pnumber VARCHAR2(12), 핸드폰번호 
-	birth DATE, 태어난일자 email VARCHAR2(64) NOT NULL, 이메일 regdate DATE DEFAULT SYSDATE, 
-	등록날짜 CONSTRAINT PK_MEMBER PRIMARY KEY(seq) ); CREATE SEQUENCE SEQ_MEMBER 
-	INCREMENT BY 1 START WITH 1; -->
 <mapper namespace="mappers.dmember">
 
+	<select id="getMemberList" resultType="vo.DMemberVO">
+		select * from MEMBER_TB
+	</select>
+	
 	<select id="getMember" resultType="vo.DMemberVO">
 		select * from MEMBER_TB where
 		id

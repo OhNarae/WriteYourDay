@@ -27,14 +27,13 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
-	<!-- 파일 업로드 시, form에  -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+	<!-- 파일 업로드 시, form에 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="100000" />
 	</beans:bean>
 
 	<context:component-scan base-package="controller"></context:component-scan>
-
-
 
 </beans:beans>

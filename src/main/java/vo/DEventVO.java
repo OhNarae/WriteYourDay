@@ -2,16 +2,25 @@ package vo;
 
 public class DEventVO {
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	int member_seq;
 	int seq;
+	String name;
 	String startdate;
 	String enddate;
 	int memo_seq;
 
 	@Override
 	public String toString() {
-		return "DEvent [member_seq=" + member_seq + ", seq=" + seq + ", startdate=" + startdate + ", enddate=" + enddate
-				+ ", memo_seq=" + memo_seq + "]";
+		return "DEventVO [member_seq=" + member_seq + ", seq=" + seq + ", name=" + name + ", startdate=" + startdate
+				+ ", enddate=" + enddate + ", memo_seq=" + memo_seq + "]";
 	}
 
 	public int getMember_seq() {

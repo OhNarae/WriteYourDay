@@ -2,11 +2,20 @@ package vo;
 
 public class DUserVO {
 
+	int seq;
 	String id;
 	String password;
 	String loginTime;
-	
+
 	public DUserVO() {}
+	
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
 	
 	public DUserVO(String id, String password) {
 		this.id = id;
@@ -21,7 +30,7 @@ public class DUserVO {
 	
 	@Override
 	public String toString() {
-		return "UserVO [id=" + id + ", password=" + password + ", loginTime=" + loginTime + "]";
+		return "DUserVO [seq=" + seq + ", id=" + id + ", password=" + password + ", loginTime=" + loginTime + "]";
 	}
 	
 	public String getId() {

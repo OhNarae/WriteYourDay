@@ -1,165 +1,151 @@
-/*package controller;
+package controller;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import util.MService;
-import vo.MemberVO;
-import vo.UserVO;
+import util.MemberService;
+import vo.DMemberVO;
+import vo.DResultVO;
+import vo.DUserVO;
 
-
+/**
+ * Handles requests for the application home page.
+ */
 @Controller
 public class MemberController {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
 	@Autowired
-	private MService mDAO;
-	
-	@RequestMapping(value="/mlist.do")
-	public ModelAndView mlist(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
-	
-		List<MemberVO> mList= mDAO.getMemberList();
-		mav.addObject("orange", mList);
-		
-		mav.setViewName("mvcMember/memberList");
-		return mav;
-	}
-	
-	@RequestMapping(value="/mdelete.do")
-	public ModelAndView mdelete(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, UserVO uvo) throws Exception {
+	private MemberService mService;
 
-		if (uvo == null  || uvo.getId() == null) {
+
+	@RequestMapping(value = "/login.do")
+	public ModelAndView login(HttpServletRequest request, ModelAndView mav, DUserVO user) {
+
+		if (user == null || user.getId() == null || user.getPassword() == null) {
 			HttpSession session = request.getSession(false);
-			uvo = (UserVO) session.getAttribute("loginInfo");
-		} 
-
-		if (uvo == null) {
-			mav.setViewName("");
-		} else {
-			int cnt = mDAO.mDelete(uvo);
-			if (cnt > 0) {
-				mav.addObject("isDelete", "T");
-				mav.addObject("cnt", cnt);
-				mav.addObject("deleteID", uvo.getId());
-			} else {
-				mav.addObject("isDelete", "F");
+			user = (DUserVO) session.getAttribute("loginInfo");
+			if (null != user) {
+				mav.setViewName("redirect:month.do");
+				return mav; // 로그인 된 상태
 			}
 
-			mav.setViewName("mvcMember/mDeleteFinish");
+			mav.setViewName("main/login");
+			return mav;
 		}
+
+		// 로그인 확인
+		user = mService.loginCheck(user);
+		if (user == null) {
+			mav.addObject("msg", "login fail");
+			mav.setViewName("main/login");
+		} else {
+			HttpSession session = request.getSession();
+			SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date time = new Date();
+			time.setTime(session.getCreationTime());
+			user.setLoginTime(fmt.format(time));
+
+			session.setAttribute("loginInfo", user);
+			mav.setViewName("redirect:month.do");
+		}
+
 		return mav;
 	}
-	
-	@RequestMapping(value="/mdetail.do")
-	public ModelAndView mdetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, UserVO uvo) throws Exception {
-//		UserVO uvo;
-//		String id = request.getParameter("id");
-		if (uvo == null || uvo.getId() == null) {
+
+	@RequestMapping(value = "/join.do")
+	public ModelAndView join(HttpServletRequest request, ModelAndView mav, DMemberVO member) {
+
+		if (member == null || member.getId() == null) {
 			HttpSession session = request.getSession(false);
-			uvo = (UserVO) session.getAttribute("loginInfo");
+			DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+			if (null != user) {
+				mav.setViewName("redirect:month.do");
+				return mav; // 로그인 된 상태
+			}
+
+			mav.setViewName("main/join");
+			return mav;
 		}
-		
-		
-		if(uvo==null) {
-			mav.setViewName("");
-		}else {
-			MemberVO mvo = new MemberVO();
-			mvo.setId(uvo.getId());
-			
-			mvo = mDAO.getMember(mvo);
-			
-			mav.addObject("orange", mvo);
-			mav.setViewName("mvcMember/mDetailView");
-		}
-		
-		return mav;
-	}
-	
-	@RequestMapping(value="/mjoin.do")
-	public ModelAndView mjoin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, MemberVO mvo) throws Exception {
-//		MemberVO mvo = new MemberVO();
-//		mvo.setId(request.getParameter("id"));
-//		mvo.setPassword(request.getParameter("password"));
-//		mvo.setName(request.getParameter("name"));
-//		mvo.setLev(request.getParameter("lev"));
-//		mvo.setBirthd(request.getParameter("birthd"));
-//		mvo.setPoint(Integer.parseInt(request.getParameter("point")));
-//		mvo.setWeight(Float.parseFloat(request.getParameter("weight")));
-		
-		
-		int cnt = mDAO.mInert(mvo);
-		if(cnt > 0) {
+
+		int cnt = mService.insert(member);
+		if (cnt > 0) {
 			mav.addObject("isJoin", "T");
-			mav.addObject("cnt", cnt);
-			mav.addObject("joinID", mvo.getId());
-		}else {
+			mav.addObject("joinID", member.getId());
+		} else {
 			mav.addObject("isJoin", "F");
 		}
-		
-		mav.setViewName("redirect:mlist.do");
+
+		mav.setViewName("redirect:login.do");
 		return mav;
 	}
-	
-	@RequestMapping(value="/mupdate.do")
-	public ModelAndView mupdate(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, MemberVO mvo) throws Exception {
-		
+
+	@RequestMapping(value = "/mypage.do")
+	public ModelAndView mypage(HttpServletRequest request, ModelAndView mav) {
+
 		HttpSession session = request.getSession(false);
-		UserVO uvo = (UserVO) session.getAttribute("loginInfo");
-		if (uvo == null) {
-			mav.setViewName("");
-		} else {
-//			MemberVO mvo = new MemberVO();
-//			mvo.setId(uvo.getId());
-//			mvo.setPassword(uvo.getPassword());
-//			mvo.setName(request.getParameter("name"));
-//			mvo.setLev(request.getParameter("lev"));
-//			mvo.setBirthd(request.getParameter("birthd"));
-//			mvo.setPoint(Integer.parseInt(request.getParameter("point")));
-//			mvo.setWeight(Float.parseFloat(request.getParameter("weight")));
-
-			
-			int cnt = mDAO.mUpdate(mvo);
-			if (cnt > 0) {
-				mav.addObject("isUpdate", "T");
-				mav.addObject("cnt", cnt);
-				mav.addObject("updateID", mvo.getId());
-			} else {
-				mav.addObject("isJoin", "F");
-			}
-
-			mav.setViewName("mvcMember/mUpdateFinish");
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		if (null == user) {
+			mav.setViewName("redirect:login.do");
+			return mav; // 로그인 된 상태
 		}
-		
-		return mav;
-	}
-	
-	@RequestMapping(value="/mlogin.do")
-	public ModelAndView mlogin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, UserVO uvo) throws Exception {
-		uvo = mDAO.loginCheck(uvo);
-		if (uvo ==null) {
-			mav.setViewName("mvcLogin/login_fail");
-		}else {
-			HttpSession session = request.getSession() ;
-			
-			Date time = new Date(session.getCreationTime());
-			SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");				
-			uvo.setLoginTime(fmt.format(time));
-			session.setAttribute("loginInfo", uvo);
 
-			mav.setViewName("mvcLogin/login_success");
-		}		
-		
+		DMemberVO userInfo = mService.getMember(user);
+		if (userInfo != null) {
+			mav.addObject("memberInfo", userInfo);
+			mav.setViewName("main/mypage");
+		} else {
+			mav.setViewName("redirect:login.do");
+		}
+
 		return mav;
 	}
-	
+
+	@RequestMapping(value = "/update.do")
+	public ModelAndView update(HttpServletRequest request, ModelAndView mav, DMemberVO member) {
+
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		if (null == user) {
+			mav.setViewName("redirect:login.do");
+			return mav; // 로그인 된 상태
+		}
+
+		int cnt = mService.update(member);
+		if (cnt > 0) {
+			mav.addObject("memberInfo", member);
+			mav.setViewName("redirect:mypage.do");
+		} else {
+			mav.setViewName("redirect:mypage.do");
+		}
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request) {
+
+		HttpSession session = request.getSession(false);
+		if (null != session)
+			session.invalidate();
+
+		return "home";
+	}	
 }
-*/

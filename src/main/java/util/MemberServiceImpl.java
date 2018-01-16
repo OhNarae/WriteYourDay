@@ -11,14 +11,14 @@ import vo.DMemberVO;
 import vo.DUserVO;
 
 @Service
-public class MServiceImpl implements MService {
+public class MemberServiceImpl implements MemberService {
 
 	@Inject
 	private SqlSession sqlSession;
 
 	private static final String namespace = "mappers.dmember";
 
-	public MServiceImpl() {
+	public MemberServiceImpl() {
 		System.out.println("MServiceImpl 생성");
 	}
 
@@ -29,7 +29,7 @@ public class MServiceImpl implements MService {
 	 */
 	@Override
 	public List<DMemberVO> getMemberList() {
-		return sqlSession.selectList(namespace + ".memberList");
+		return sqlSession.selectList(namespace + ".getMemberList");
 	}
 
 	/*
