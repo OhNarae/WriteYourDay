@@ -124,4 +124,30 @@ public class MemoController {
 		}
 		return out;
 	}
+	
+	@RequestMapping(value = "/memo/update.do")
+	@ResponseBody
+	public ResultVO memoUpdate(HttpServletRequest request, MemoSetVO msVO) {
+
+		ResultVO out = new ResultVO();
+		out.setResult(false);
+		
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			return out;
+		}
+		
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		if (null == user) {
+			out.setResultMsg("wrong user");
+		} else {
+			msVO.setMember_seq(user.getSeq());
+			List<MemoVO> memoSet = mService.getMemoList(msVO);
+			if (memoSet != null) {
+				out.setResult(true);
+				out.setmList(memoSet);
+			}
+		}
+		return out;
+	}
 }
