@@ -6,7 +6,7 @@ import vo.DUserVO;
 import vo.MemoSetVO;
 import vo.MemoVO;
 
-public interface MemoService {
+public interface TalkService {
 	
 	List<MemoSetVO> getMemoSetList(DUserVO user);
 	

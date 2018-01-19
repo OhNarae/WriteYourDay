@@ -87,10 +87,10 @@ h1 {padding:15px 0 0 0;position:relative;font-weight:normal;text-transform:upper
 .menu li a:hover,
 .menu li a.active {color:#fff;background-position:left top;background-repeat:repeat-x;background-color:#000}
 /***** search form *****/
-/* #search-form {padding:35px 0px 0 37px} */
+#search-form {padding:35px 0px 0 37px}
 #search-form fieldset {position:relative; width:100%; display:block; overflow:hidden}
-#search-form .search-field {width:200px;height:29px;background:url(../images/search-input-tail.gif) 0 0 repeat-x;border:1px solid #d7d7d7}
-#search-form input {width:160px;font-size:13px;line-height:1.23em;padding:6px 10px 7px;font-family:Arial, Helvetica, sans-serif;background:none;border:none;margin:0;outline:none}
+#search-form .search-field {width:181px;height:29px;background:url(../images/search-input-tail.gif) 0 0 repeat-x;border:1px solid #d7d7d7}
+#search-form input {width:137px;font-size:13px;line-height:1.23em;padding:6px 10px 7px;font-family:Arial, Helvetica, sans-serif;background:none;border:none;margin:0;outline:none}
 #search-form .search-button {display:block;width:17px;height:16px;text-indent:-5000px;background:url(../images/search-icon.gif) 0 0 no-repeat;position:absolute;right:8px;top:7px}
 /*********************************content*************************************/
 #content {width:100%;padding:0;position:relative;z-index:1}

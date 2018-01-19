@@ -50,23 +50,35 @@ public class MemoController {
 	public ResultVO memosetList(HttpServletRequest request) {
 
 		ResultVO out = new ResultVO();
-		out.setResult(false);
 		
 		HttpSession session = request.getSession(false);
-		if(session == null) {
-			return out;
-		}
-		
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
 		if (null == user) {
 			out.setResultMsg("wrong user");
 		} else {
-
 			List<MemoSetVO> memoSet = mService.getMemoSetList(user);
 			if (memoSet != null) {
-				out.setResult(true);
-				out.setmList(memoSet);
+				out.setResultCode(0);
+				out.setResult(memoSet);
 			}
+		}
+
+		return out;
+	}
+	
+	@RequestMapping(value = "/memoset/insert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ResultVO memosetInsert(HttpServletRequest request, MemoSetVO vo) {
+
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+
+		vo.setMember_seq(user.getSeq());
+		int cnt = mService.insertMemoSet(vo);
+		if(cnt > 0) {
+			out.setResultCode(0);
 		}
 
 		return out;
@@ -74,28 +86,14 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memoset/update.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultVO memosetUpdate(HttpServletRequest request) {
-
+	public ResultVO memosetUpdate(HttpServletRequest request, MemoSetVO vo) {
 		ResultVO out = new ResultVO();
-		out.setResult(false);
 		
-		HttpSession session = request.getSession(false);
-		if(session == null) {
-			return out;
+		int cnt = mService.updateMemoSet(vo);
+		if(cnt > 0) {
+			out.setResult(vo);
+			out.setResultCode(0);
 		}
-		
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			out.setResultMsg("wrong user");
-		} else {
-
-			List<MemoSetVO> memoSet = mService.getMemoSetList(user);
-			if (memoSet != null) {
-				out.setResult(true);
-				out.setmList(memoSet);
-			}
-		}
-
 		return out;
 	}
 	
@@ -104,13 +102,8 @@ public class MemoController {
 	public ResultVO memoList(HttpServletRequest request, MemoSetVO msVO) {
 
 		ResultVO out = new ResultVO();
-		out.setResult(false);
 		
 		HttpSession session = request.getSession(false);
-		if(session == null) {
-			return out;
-		}
-		
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
 		if (null == user) {
 			out.setResultMsg("wrong user");
@@ -118,35 +111,53 @@ public class MemoController {
 			msVO.setMember_seq(user.getSeq());
 			List<MemoVO> memoSet = mService.getMemoList(msVO);
 			if (memoSet != null) {
-				out.setResult(true);
-				out.setmList(memoSet);
+				out.setResultCode(0);
+				out.setResult(memoSet);
 			}
 		}
 		return out;
 	}
 	
-	@RequestMapping(value = "/memo/update.do")
+	@RequestMapping(value = "/memo/insert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultVO memoUpdate(HttpServletRequest request, MemoSetVO msVO) {
+	public ResultVO memoInsert(MemoVO vo) {
 
 		ResultVO out = new ResultVO();
-		out.setResult(false);
 		
-		HttpSession session = request.getSession(false);
-		if(session == null) {
-			return out;
+		mService.insertMemo(vo);
+		System.out.println(vo.toString());
+		if(vo.getSeq() > 0) {
+			out.setResult(vo);
+			out.setResultCode(0);
 		}
+
+		return out;
+	}
+	
+	@RequestMapping(value = "/memo/update.do")
+	@ResponseBody
+	public ResultVO memoUpdate(HttpServletRequest request, MemoVO vo) {
 		
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			out.setResultMsg("wrong user");
-		} else {
-			msVO.setMember_seq(user.getSeq());
-			List<MemoVO> memoSet = mService.getMemoList(msVO);
-			if (memoSet != null) {
-				out.setResult(true);
-				out.setmList(memoSet);
-			}
+		ResultVO out = new ResultVO();
+		
+		int cnt = mService.updateMemo(vo);
+		if(cnt > 0) {
+			out.setResult(vo);
+			out.setResultCode(0);
+		}
+		return out;
+	}
+	
+	@RequestMapping(value = "/memo/get.do")
+	@ResponseBody
+	public ResultVO memoGet(HttpServletRequest request, MemoVO vo) {
+
+		ResultVO out = new ResultVO();
+		
+		vo = mService.getMemo(vo);
+		if(vo != null) {
+			out.setResultCode(0);
+			out.setResult(vo);
 		}
 		return out;
 	}

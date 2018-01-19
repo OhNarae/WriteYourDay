@@ -14,24 +14,34 @@
 		insert into MEMO_SET_TB(member_seq, seq, name)
 		values( #{member_seq}, SEQ_MEMO_SET.NEXTVAL, #{name})
 	</insert>
+	
+	<update id="updateMemoSet">
+		update MEMO_SET_TB set name = #{name}
+		where seq = #{seq}
+	</update>
 
 	<select id="getMemoList" resultType="vo.MemoVO">
-		select seq, name from
+		select * from
 		MEMO_TB where set_seq = #{seq}
 	</select>
 
 	<select id="getMemo" resultType="vo.MemoVO">
 		select set_seq, seq, name,
-		contents from MEMO_TB where seq = #{seq}
+		contents from MEMO_TB where set_seq = #{set_seq} and seq = #{seq}
 	</select>
 
 	<insert id="insertMemo">
 		insert into MEMO_TB(set_seq, seq, name, contents)
-		values(#{set_seq}, SEQ_MEMO.NEXTVAL, #{name}, #{contents})
+		values(#{set_seq}, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = #{set_seq}), #{name}, '')
+		<selectKey keyProperty="seq" resultType="Integer" order="AFTER">
+			select nvl(max(seq), 0) from MEMO_TB where set_seq = #{set_seq}
+		</selectKey>
 	</insert>
 
-	<update id="updateMemo">
-		update MEMO_TB set name=#{name}, contents=#{contents}
-		where seq = #{seq}
+	<update id="updateMemo">		
+		update MEMO_TB set 
+			<if test="name != null">name=#{name}</if>
+			<if test="contents != null"><if test="name != null">,</if>contents=#{contents}</if>
+		where set_seq = #{set_seq} and seq = #{seq}
 	</update>
 </mapper>

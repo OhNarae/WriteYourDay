@@ -56,7 +56,7 @@
 								<!-- <li style="width:540px;"><a class="active" href="index.html" style="width:540px;"><h2>2018.01.05</h2></a></li> -->
 								<li><a href="month.do" target="article">2018.01.05</a></li>
 								<li><a href="memo.do" target="article">Memo</a></li>
-								<li><a href="catalogue.html">Talk</a></li>
+								<li><a href="talk.do" target="article">Talk</a></li>
 							</ul>
 						</nav>
 					</div>

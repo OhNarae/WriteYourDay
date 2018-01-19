@@ -12,7 +12,7 @@ import vo.MemoSetVO;
 import vo.MemoVO;
 
 @Service
-public class MemoServiceImpl implements MemoService {
+public class TalkServiceImpl implements MemoService {
 
 	@Inject
 	private SqlSession sqlSession;

@@ -1,26 +1,28 @@
 package vo;
 
-import java.util.List;
-
 public class ResultVO {
-	Object mList;
-	Boolean result;
+	Object result;
+	int resultCode;
 	String resultMsg;
 
-	public Object getmList() {
-		return mList;
+	public ResultVO() {
+		resultCode = -1;
 	}
-
-	public void setmList(Object mList) {
-		this.mList = mList;
-	}
-
-	public Boolean getResult() {
+	
+	public Object getResult() {
 		return result;
 	}
 
-	public void setResult(Boolean result) {
+	public void setResult(Object result) {
 		this.result = result;
+	}
+
+	public int getResultCode() {
+		return resultCode;
+	}
+
+	public void setResultCode(int resultCode) {
+		this.resultCode = resultCode;
 	}
 
 	public String getResultMsg() {

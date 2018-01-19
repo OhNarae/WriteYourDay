@@ -20,8 +20,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		if(logger.isDebugEnabled()) {
 			logger.debug("==========START============");
 			logger.debug("Request URI \t: " + request.getRequestURI());
-		}
-		System.out.println("START : " + request.getRequestURI());
+		}		
 		
 		return super.preHandle(request, response, handler);
 	}
