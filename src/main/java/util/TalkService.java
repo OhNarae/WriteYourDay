@@ -1,24 +1,11 @@
 package util;
 
 import java.util.List;
-
-import vo.DUserVO;
-import vo.MemoSetVO;
-import vo.MemoVO;
+import vo.TalkVO;
 
 public interface TalkService {
 	
-	List<MemoSetVO> getMemoSetList(DUserVO user);
+	List<TalkVO> getTalkList(TalkVO vo);
 	
-	int insertMemoSet(MemoSetVO vo);
-	
-	int updateMemoSet(MemoSetVO vo);
-	
-	List<MemoVO> getMemoList(MemoSetVO vo);
-	
-	MemoVO getMemo(MemoVO vo);
-	
-	MemoVO insertMemo(MemoVO mvo);
-
-	int updateMemo(MemoVO mvo);
+	int insertTalk(TalkVO vo);
 }

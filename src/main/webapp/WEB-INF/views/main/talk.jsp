@@ -54,25 +54,25 @@
 	vertical-align: top
 }
 
-.memo-tb {
+.talk-tb {
 	border-collapse: collapse;
 	border-spacing: 0;
 	width: 100%;
-	/* 	border-style: solid;
-	border-width: 1px;  */
 }
 
-.memo-tb td {
+.talk-tb td {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	padding: 10px;
 	overflow: hidden;
 	word-break: normal;
 	height: 10px;
-	background-color: #ff9601;
+/* 	background-color: #ff9601; */
+	border-style: solid;
+	border-width: 1px; 
 }
 
-.memo-tb .memo-row {
+.talk-tb .talk-row {
 	vertical-align: top
 }
 
@@ -109,8 +109,7 @@ textarea {
 						</tr>
 						<tr>
 							<td>
-								<form id="search-form" method="post"
-									enctype="multipart/form-data">
+								<form id="search-form" method="post">
 									<fieldset>
 										<div class="search-field">
 											<input name="search" type="text" /> <a class="search-button"
@@ -126,22 +125,23 @@ textarea {
 				</table>
 			</div>
 			<div class="grid_9">
-				<table class="memo-tb" style="width: 100%;" id="tbContent">
-					<tbody id="memo-body">
-						<tr>
-							<td>
-								<form action="post" target="">
-									<!-- <input type="text" id="member_seq" style="visibility:hidden;"> -->
-									<div>
-										<img id="thumbnail" src="">&nbsp;<input type="file"
-											id="getfile" accept="image/*">
-									</div>
-									<textarea id="memoContents"></textarea>
-									<input type="submit" class="fright" value="입력">
-								</form>
-							</td>
-						</tr>
-					</tbody>
+				<table class="talk-tb" style="width: 100%;" id="tbContent">
+					<tr>
+						<td>
+							<form id="iTalkForm" enctype="multipart/form-data">
+								<input type="text" id="member_seq" name="member_seq"
+									value="${sessionScope.loginInfo.seq}"
+									style="visibility: hidden;">
+								<div>
+									<img id="thumbnail" src="">&nbsp; <input type="file"
+										id="getfile" accept="image/*">
+								</div>
+								<textarea name="contents_talk"></textarea>
+								<input type="submit" class="fright" id="iTalkBtn" value="입력">
+							</form>
+						</td>
+					</tr>
+					<tbody id="talk-body"></tbody>
 				</table>
 			</div>
 		</div>

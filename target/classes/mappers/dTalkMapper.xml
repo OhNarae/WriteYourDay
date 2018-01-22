@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mappers.dtalk">
+
+	<select id="getTalkList" resultType="vo.TalkVO">
+		select * from TALK_TB where member_seq = #{member_seq} order by talk_seq desc
+	</select>
+	
+	<insert id="insertTalk">
+		insert into TALK_TB ( member_seq, talk_seq, writer_seq, contents_talk, contents_uploadfile_path, create_date) 
+		values( #{member_seq}, (select nvl(max(talk_seq), 0)+1 from TALK_TB where member_seq = #{member_seq}) , #{writer_seq}, #{contents_talk}, #{contents_uploadfile_path}, sysdate)
+	</insert>
+
+</mapper>

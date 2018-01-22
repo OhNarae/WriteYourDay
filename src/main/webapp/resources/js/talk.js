@@ -1,9 +1,54 @@
 
-$(document).ready(function(){
 
+$(document).ready(function(){
+	getlist();
+	readythumbnail();	
+	
+	$("#iTalkBtn").click(function(){
+      var form = $('#iTalkForm')[0];
+        var formData = new FormData(form);
+        if($("#getfile")[0].files.length > 0)
+        	formData.append("contents_uploadfile", $("#getfile")[0].files[0]);
+        
+		$.ajax({
+			type: 'Post',
+			url: '/WriteYourDay/talk/insert.do',
+			processData: false,
+            contentType: false,
+            data: formData,
+			success: getlist
+		})
+	})
+})
+
+function getlist(){
+	$.ajax({
+		type: 'Post',
+		url: '/WriteYourDay/talk/list.do',
+		data:{
+			member_seq: $('#member_seq').val()
+		},
+		success: function(out){
+			$('#talk-body').html('');
+            $.each(out.result, function(i, item){
+            	var tr = '<tr><td>';
+            	if(item.contents_uploadfile_path != null && item.contents_uploadfile_path.length > 0)
+            		tr += '<img alt="사진" src="' + item.contents_uploadfile_path + '" ><br>';
+            	if(item.contents_talk != null && item.contents_talk.length > 0)
+            		tr += item.contents_talk + '<br>';
+            	tr += '</td></tr>';
+				$('#talk-body').append(tr);
+            })
+         }	
+	})
+}
+
+function readythumbnail(){
+	
 	$('#thumbnail').hide();
+	
 	var file = document.querySelector('#getfile');
-	file.onchange = function () { 
+	file.onchange = function () { 		
 		var fileList = file.files ;
     
 	    // 읽기
@@ -43,11 +88,8 @@ $(document).ready(function(){
 	            var dataURI = canvas.toDataURL("image/jpeg");
 	            //썸네일 이미지 보여주기
 	            document.querySelector('#thumbnail').src = dataURI;
-	            //썸네일 이미지를 다운로드할 수 있도록 링크 설정
-	            /*document.querySelector('#download').href = dataURI;*/
 	            $('#thumbnail').show();
 	        };
 	    }; 
 	}; 
-})
-
+}

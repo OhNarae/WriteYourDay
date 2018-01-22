@@ -12,6 +12,11 @@ public class TalkVO {
 	private String create_date;
 	private MultipartFile contents_uploadfile;
 
+	public TalkVO() {
+		contents_talk ="";
+		contents_uploadfile_path ="";
+	}
+	
 	@Override
 	public String toString() {
 		return "TalkVO [member_seq=" + member_seq + ", talk_seq=" + talk_seq + ", writer_seq=" + writer_seq
