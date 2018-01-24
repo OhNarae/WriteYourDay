@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -53,44 +54,6 @@
 .menu-tb .menu-row {
 	vertical-align: top
 }
-
-.talk-tb {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-}
-
-.talk-tb td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding: 10px;
-	overflow: hidden;
-	word-break: normal;
-	height: 10px;
-/* 	background-color: #ff9601; */
-	border-style: solid;
-	border-width: 1px; 
-}
-
-.talk-tb .talk-row {
-	vertical-align: top
-}
-
-textarea {
-	float: left;
-	height: 50px;
-	overflow: auto;
-	width: 100%;
-	font-size: 13px;
-	line-height: 1.23em;
-	color: #404040;
-	/* 	padding: 6px;*/
-	margin: 10px 0px 10px 0px;
-	font-family: Arial, Helvetica, sans-serif;
-	border: 1px solid #d9d9d9;
-	background: #fcfcfc;
-	outline: none
-}
 </style>
 </head>
 <body>
@@ -100,49 +63,36 @@ textarea {
 			<div class="grid_3">
 				<table class="menu-tb">
 					<tr>
-						<th class="menu-row aligncenter">me</th>
+						<th class="menu-row aligncenter"><a
+							href="talkbody.do?seq=${sessionScope.loginInfo.seq}"
+							target="talkbody" class="color-3">me</a></th>
 					</tr>
-					<tbody id="menuL-body">
+					<tbody id="menuL-fbody">
 						<tr>
-							<td>친구1<br> 친구2<br> 친구3<br>
-							</td>
+							<td><c:forEach var="item" items="${friendList}">
+									<li><a href="talkbody.do?seq=${item.seq}"
+										target="talkbody">${item.id}</a></li>
+								</c:forEach></td>
 						</tr>
 						<tr>
 							<td>
-								<form id="search-form" method="post">
+								<div id="search-form">
 									<fieldset>
 										<div class="search-field">
-											<input name="search" type="text" /> <a class="search-button"
-												href="#"
-												onClick="document.getElementById('search-form').submit()"><span>search</span></a>
+											<input id="searchId" name="searchId" type="text" /> <a
+												class="search-button" href="#" id="sMemberBtn"><span>search</span></a>
 										</div>
 									</fieldset>
-								</form>
-
+								</div>
 							</td>
 						</tr>
 					</tbody>
+					<tbody id="menuL-body"></tbody>
 				</table>
 			</div>
 			<div class="grid_9">
-				<table class="talk-tb" style="width: 100%;" id="tbContent">
-					<tr>
-						<td>
-							<form id="iTalkForm" enctype="multipart/form-data">
-								<input type="text" id="member_seq" name="member_seq"
-									value="${sessionScope.loginInfo.seq}"
-									style="visibility: hidden;">
-								<div>
-									<img id="thumbnail" src="">&nbsp; <input type="file"
-										id="getfile" accept="image/*">
-								</div>
-								<textarea name="contents_talk"></textarea>
-								<input type="submit" class="fright" id="iTalkBtn" value="입력">
-							</form>
-						</td>
-					</tr>
-					<tbody id="talk-body"></tbody>
-				</table>
+				<iframe id="talkbody" src="talkbody.do" name="talkbody"
+					style="width: 650px; height: 900px"></iframe>
 			</div>
 		</div>
 	</div>

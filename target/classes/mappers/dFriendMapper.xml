@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mappers.dfriend">
+
+	<select id="getFriendList" resultType="vo.DUserVO">
+		SELECT m.seq, m.id, m.seq, m.name 
+		FROM FRIEND_TB f JOIN MEMBER_TB m ON f.you_member_seq = m.seq 
+		WHERE f.me_member_seq = #{seq}
+	</select>
+	
+	<insert id="insert" parameterType="hashMap" >
+		INSERT INTO FRIEND_TB( friend_seq, me_member_seq, you_member_seq, create_date) 
+		VALUES( SEQ_FRIEND.NEXTVAL, #{me.seq}, #{you.seq}, sysdate)
+	</insert>
+
+</mapper>

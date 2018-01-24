@@ -21,4 +21,8 @@ public interface MemberService {
 	int delete(DUserVO uvo);
 
 	int idCheck(DMemberVO mvo);
+	
+	DUserVO getMemberInfo(DUserVO user);
+	
+	List<DUserVO> searchMemberList(DUserVO user);
 }

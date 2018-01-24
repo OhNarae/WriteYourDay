@@ -73,7 +73,7 @@ CREATE TABLE FRIEND_TB(
 	CONSTRAINT FK_FRIEND_YOU_MEMBER FOREIGN KEY(you_member_seq) REFERENCES MEMBER_TB(seq)
 );
 CREATE SEQUENCE SEQ_FRIEND INCREMENT BY 1 START WITH 1;
-
+INSERT INTO FRIEND_TB( friend_seq, me_member_seq, you_member_seq, create_date) VALUES( SEQ_FRIEND.NEXTVAL, ?, ?, sysdate);
 
 CREATE TABLE TALK_TB(
 	member_seq NUMBER(5),
@@ -86,6 +86,6 @@ CREATE TABLE TALK_TB(
 	CONSTRAINT FK_TALK_ME_MEMBER FOREIGN KEY(member_seq) REFERENCES MEMBER_TB(seq),
 	CONSTRAINT FK_TALK_WRITER_MEMBER FOREIGN KEY(writer_seq) REFERENCES MEMBER_TB(seq)
 );
-
+SELECT m.seq, m.id, m.seq, m.name from FRIEND_TB f join MEMBER_TB m on f.you_member_seq = m.seq where f.me_member_seq = 1;
 
 

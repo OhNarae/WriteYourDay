@@ -67,8 +67,8 @@
 	</nav>
 	<!--==============================content=============================-->
 	<section id="content">
-	<div class="main">
-	<iframe class="container_12" id="article" src="login.do" name="article" style="width: 960px;height: 1000px"></iframe>
-	</div>
+		<div class="container_12">
+		<iframe id="article" src="login.do" name="article" style="width: 960px;height: 1000px"></iframe>
+		</div>
 	</section>
 </body>

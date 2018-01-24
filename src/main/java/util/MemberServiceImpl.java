@@ -86,5 +86,15 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(DMemberVO member) {
 		return (int) sqlSession.selectOne(namespace + ".idCheck", member);
 	}
+	
+	@Override
+	public DUserVO getMemberInfo(DUserVO user) {
+		return sqlSession.selectOne(namespace + ".getMemberInfo", user);
+	}
+
+	@Override
+	public List<DUserVO> searchMemberList(DUserVO user) {
+		return sqlSession.selectList(namespace + ".searchMemberList", user);
+	}
 
 }

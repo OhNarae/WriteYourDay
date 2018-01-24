@@ -39,4 +39,12 @@
 		select count(id) count from
 		member where id = #{id}
 	</select>
+	
+	<select id="getMemberInfo" resultType="vo.DUserVO">
+		select * from MEMBER_TB where seq = #{seq}
+	</select>
+	
+	<select id="searchMemberList" resultType="vo.DUserVO">
+		select * from MEMBER_TB where id like '%'||#{id}||'%'
+	</select>
 </mapper>

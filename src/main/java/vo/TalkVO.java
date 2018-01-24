@@ -11,6 +11,8 @@ public class TalkVO {
 	private String contents_uploadfile_path;
 	private String create_date;
 	private MultipartFile contents_uploadfile;
+	private String writer_id;
+	private String writer_name;
 
 	public TalkVO() {
 		contents_talk ="";
@@ -21,7 +23,8 @@ public class TalkVO {
 	public String toString() {
 		return "TalkVO [member_seq=" + member_seq + ", talk_seq=" + talk_seq + ", writer_seq=" + writer_seq
 				+ ", contents_talk=" + contents_talk + ", contents_uploadfile_path=" + contents_uploadfile_path
-				+ ", create_date=" + create_date + ", contents_uploadfile=" + contents_uploadfile + "]";
+				+ ", create_date=" + create_date + ", contents_uploadfile=" + contents_uploadfile + ", writer_id="
+				+ writer_id + ", writer_name=" + writer_name + "]";
 	}
 
 	public int getMember_seq() {
@@ -78,5 +81,21 @@ public class TalkVO {
 
 	public void setContents_uploadfile(MultipartFile contents_uploadfile) {
 		this.contents_uploadfile = contents_uploadfile;
+	}
+	
+	public String getWriter_id() {
+		return writer_id;
+	}
+
+	public void setWriter_id(String writer_id) {
+		this.writer_id = writer_id;
+	}
+
+	public String getWriter_name() {
+		return writer_name;
+	}
+
+	public void setWriter_name(String writer_name) {
+		this.writer_name = writer_name;
 	}
 }

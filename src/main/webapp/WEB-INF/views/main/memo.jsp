@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/popup.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/memo.js?version=201801 " type="text/javascript"></script>
+<script src="resources/js/memo.js?version=000001 " type="text/javascript"></script>
 <script>
 
 

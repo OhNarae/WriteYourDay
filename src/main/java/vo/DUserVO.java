@@ -6,6 +6,7 @@ public class DUserVO {
 	String id;
 	String password;
 	String loginTime;
+	String name;
 
 	public DUserVO() {}
 	
@@ -30,7 +31,8 @@ public class DUserVO {
 	
 	@Override
 	public String toString() {
-		return "DUserVO [seq=" + seq + ", id=" + id + ", password=" + password + ", loginTime=" + loginTime + "]";
+		return "DUserVO [seq=" + seq + ", id=" + id + ", password=" + password + ", loginTime=" + loginTime + ", name="
+				+ name + "]";
 	}
 	
 	public String getId() {
@@ -50,5 +52,12 @@ public class DUserVO {
 	}
 	public void setLoginTime(String loginTime) {
 		this.loginTime = loginTime;
+	}
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

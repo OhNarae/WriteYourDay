@@ -2,6 +2,7 @@ package controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import util.MemberService;
 import vo.DMemberVO;
 import vo.DUserVO;
+import vo.ResultVO;
 
 /**
  * Handles requests for the application home page.
@@ -27,7 +30,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
-	private MemberService mService;
+	private MemberService sMember;
 
 
 	@RequestMapping(value = "/login.do")
@@ -46,7 +49,7 @@ public class MemberController {
 		}
 
 		// 로그인 확인
-		user = mService.loginCheck(user);
+		user = sMember.loginCheck(user);
 		if (user == null) {
 			mav.addObject("msg", "login fail");
 			mav.setViewName("main/login");
@@ -79,7 +82,7 @@ public class MemberController {
 			return mav;
 		}
 
-		int cnt = mService.insert(member);
+		int cnt = sMember.insert(member);
 		if (cnt > 0) {
 			mav.addObject("isJoin", "T");
 			mav.addObject("joinID", member.getId());
@@ -101,7 +104,7 @@ public class MemberController {
 			return mav; // 로그인 된 상태
 		}
 
-		DMemberVO userInfo = mService.getMember(user);
+		DMemberVO userInfo = sMember.getMember(user);
 		if (userInfo != null) {
 			mav.addObject("memberInfo", userInfo);
 			mav.setViewName("main/mypage");
@@ -122,7 +125,7 @@ public class MemberController {
 			return mav; // 로그인 된 상태
 		}
 
-		int cnt = mService.update(member);
+		int cnt = sMember.update(member);
 		if (cnt > 0) {
 			mav.addObject("memberInfo", member);
 			mav.setViewName("redirect:mypage.do");
@@ -142,4 +145,16 @@ public class MemberController {
 
 		return "home";
 	}	
+	
+	@RequestMapping(value = "/member/search.do")
+	@ResponseBody
+	public ResultVO search(HttpServletRequest request, ModelAndView mav, DUserVO user) {
+
+		ResultVO out = new ResultVO();
+		
+		List<DUserVO> list  = sMember.searchMemberList(user);
+		out.setResult(list);
+
+		return out;
+	}
 }

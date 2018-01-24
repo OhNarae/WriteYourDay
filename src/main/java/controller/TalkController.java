@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import util.FriendService;
+import util.MemberService;
+import util.MemoService;
 import util.TalkService;
 import vo.DUserVO;
 import vo.ResultVO;
@@ -33,8 +36,12 @@ public class TalkController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
+	private MemberService sMember;
+	@Autowired
 	private TalkService sTalk;
-
+	@Autowired
+	private FriendService sFriend;
+	
 	@RequestMapping(value = "/talk.do")
 	public ModelAndView talk(HttpServletRequest request, ModelAndView mav) {
 
@@ -44,8 +51,28 @@ public class TalkController {
 			mav.setViewName("redirect:login.do");
 			return mav; // 로그인 된 상태
 		}
-
+		
+		List<DUserVO> friendList = sFriend.getFriendList(user);
+		mav.addObject("friendList", friendList);
+		
 		mav.setViewName("main/talk");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/talkbody.do")
+	public ModelAndView talkbody(HttpServletRequest request, ModelAndView mav, DUserVO targetUser) {
+
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		if (null == user) {
+			mav.setViewName("redirect:login.do");
+			return mav; // 로그인 된 상태
+		}
+		
+		targetUser = sMember.getMemberInfo(targetUser);
+		mav.addObject("target", targetUser);
+
+		mav.setViewName("main/talkbody");
 		return mav;
 	}
 	
