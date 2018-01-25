@@ -31,7 +31,8 @@
 	border-width: 1px;
 	overflow: hidden;
 	word-break: normal;
-	height: 100px
+	height: 100px;
+	width: 100px;
 }
 
 .month-tb th {

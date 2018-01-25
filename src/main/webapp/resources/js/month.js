@@ -1,22 +1,4 @@
 
-
-
-/* 	$(document).ready(function(){
-		$('#btnLogin').click(function(){
-			$.ajax({
-				type: 'Get',
-				url: '/Spring03/mlogin.do',
-				data: {
-					id: $('#id').val(),
-					password: $('#password').val()},
-				success: function(result){
-					$('#resultDisplay').html(result);
-				}	
-			})
-		})
-	}) */
-
-
 $(document).ready(function() {
 	var today = new Date();
 	
@@ -35,9 +17,10 @@ $(document).ready(function() {
 })
 
 var events = [
-	{start_date: '2018-01-03',end_date: '2018-01-05',title: '가나다라마바사아자차카타파하123456789'},
-	{start_date: '2018-01-06',end_date: '2018-01-07',title: '123456789가나다라마바사아자차카타파하'}
-];
+	{start_date: '2018-01-03',end_date: '2018-01-06',title: '기린은 길어 길으면 기차 기차는 빨라123456789', color:'#FFE05C'},
+	{start_date: '2018-01-05',end_date: '2018-01-08',title: '빠르면비행기비행기는높아높으면백두산', color:'#C6D6F7'},
+	{start_date: '2018-01-08',end_date: '2018-01-09',title: '새로운이벤트입니다.', color:'#E18060'}
+];//
 
 function setMonth(year, month){//, events){//var year, var month, var eventInfos) {
 	
@@ -46,7 +29,7 @@ function setMonth(year, month){//, events){//var year, var month, var eventInfos
 	
 	//events 준비
 	var dayEventsLimit = 4;//하루에 이벤트 몇개를 보여줄지 
-	var dayEventsStrLens = 5; //하루에 보여줄 수 있는 이벤트 제목의 글자 갯수
+	var dayEventsStrLens = 6; //하루에 보여줄 수 있는 이벤트 제목의 글자 갯수
 	var dayEvents = new Array(lastDate.getDate());
 	for(var i = 0 ; i < dayEvents.length ; i++) 
 		dayEvents[i] = new Array(dayEventsLimit);
@@ -60,13 +43,13 @@ function setMonth(year, month){//, events){//var year, var month, var eventInfos
 			start = 0;
 		var term = end_date.getDate() - start;
 	   
-	    for(var i = 0; i < term ; i++){
-	    	var place = -1;
+		var place = -1;
+	    for(var i = 0; i < term ; i++){	    	
 	    	var day = i + start;
 	    	for(var j = 0 ; j < dayEventsLimit ; j++){
 	    		if(j < place || dayEvents[day][j]) continue;
 	    		else{
-	    			dayEvents[day][j] = events[e].title.substring(i*dayEventsStrLens, (i+1)*dayEventsStrLens)
+	    			dayEvents[day][j] = [events[e].color, events[e].title.substring(i*dayEventsStrLens, (i+1)*dayEventsStrLens)]
 	    			place = j;
 	    			break;
 	    		}
@@ -88,10 +71,10 @@ function setMonth(year, month){//, events){//var year, var month, var eventInfos
 			}
 
 			if (dates > 0 && dates <= lastDate.getDate()){
-				td += '<a href="">' + dates + '</a><br>';
+				td += '<a href="/WriteYourDay/myday.do">' + dates + '</a><br>';
 				for(var k = 0 ; k < dayEventsLimit ; k++){
 					if(dayEvents[dates-1][k]){
-						td += '<div>' + dayEvents[dates-1][k] + '</div>';
+						td += '<div style="background-color: ' + dayEvents[dates-1][k][0] + '"><strong><FONT face="Arial Black">' + dayEvents[dates-1][k][1] + '</FONT><strong></div>';
 					}
 					else
 						td += '<br>';

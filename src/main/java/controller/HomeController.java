@@ -73,6 +73,20 @@ public class HomeController {
 		mav.setViewName("main/month");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/myday.do", method = RequestMethod.GET)
+	public ModelAndView myday(HttpServletRequest request, ModelAndView mav) {
+
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		if (null == user) {
+			mav.setViewName("redirect:login.do");
+			return mav; // 로그인 된 상태
+		}
+
+		mav.setViewName("main/myday");
+		return mav;
+	}
 
 	@RequestMapping(value = "/getJsonByVO.do")
 	@ResponseBody
