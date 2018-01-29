@@ -1,9 +1,8 @@
 
 $(document).ready(function() {
-	var today = new Date();
-	
-	$('#monthTitle').text(today.getFullYear() + '.' + today.getMonth() + 1)
-	setMonth(today.getFullYear(), today.getMonth());		
+
+	var monthInfo = new Date($('#monthTitle').text()+'.01');
+	setMonth(monthInfo.getFullYear(), monthInfo.getMonth());		
 
 	$('#cal-div').hide();
 	$('input[name=ck-cal1]').on('click', function() {
@@ -16,15 +15,29 @@ $(document).ready(function() {
 	})
 })
 
-var events = [
+/*var events = [
 	{start_date: '2018-01-03',end_date: '2018-01-06',title: '기린은 길어 길으면 기차 기차는 빨라123456789', color:'#FFE05C'},
 	{start_date: '2018-01-05',end_date: '2018-01-08',title: '빠르면비행기비행기는높아높으면백두산', color:'#C6D6F7'},
 	{start_date: '2018-01-08',end_date: '2018-01-09',title: '새로운이벤트입니다.', color:'#E18060'}
 ];//
+*/
+function getMSetList(){
+	$.ajax({
+		type: 'Get',
+		url: '/WriteYourDay/events/list.do',
+		data:{
+			startdate : $('#monthTitle').text()+'.01'
+		},
+		success: function(out){
+			var monthInfo = new Date($('#monthTitle').text()+'.01');
+			setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), out);	
+         }	
+	})
+}
 
-function setMonth(year, month){//, events){//var year, var month, var eventInfos) {
+function setMonth(year, month, events){
 	
-	var firstDate = new Date(year, month, 1);
+	var firstDate = new Date(year, month, 1);  
 	var lastDate = new Date(year, month + 1, 0);
 	
 	//events 준비
@@ -33,7 +46,7 @@ function setMonth(year, month){//, events){//var year, var month, var eventInfos
 	var dayEvents = new Array(lastDate.getDate());
 	for(var i = 0 ; i < dayEvents.length ; i++) 
 		dayEvents[i] = new Array(dayEventsLimit);
-		
+
 	for(var e = 0 ; e < events.length ; e++){
 		var start_date = new Date(events[e].start_date);
 		var end_date = new Date(events[e].end_date);
@@ -57,16 +70,16 @@ function setMonth(year, month){//, events){//var year, var month, var eventInfos
 	    }
 	}
 
-	var start = firstDate.getDay();
+	var start = firstDate.getDay(); 
 	var dates = 0;
 	
 	for (var i = 0; i < 5; i++) {
 		$('#month-body').append('<tr>')
-		for (var j = 1; j < 8; j++) {
+		for (var j = 0; j < 7; j++) {
 			var td = '<td class="month-row">';
 
 			if (start == j) {
-				start = 0;
+				start = -1;
 				dates = 1;
 			}
 

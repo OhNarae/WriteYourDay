@@ -16,16 +16,24 @@ CREATE SEQUENCE SEQ_MEMBER INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE EVENT_TB (
 	member_seq NUMBER(5),		--해당 이벤트를 소유하는 유저
-	seq NUMBER(5),
-	name VARCHAR2(60),			--메모셋 이름
-	startdate DATE,				--event시작시각
-	enddate DATE,				--event종료시각	
-	memo_seq NUMBER(3),			--연관 메모
-	CONSTRAINT PK_EVENT PRIMARY KEY(seq),
-	CONSTRAINT FK_MEMO FOREIGN KEY(member_seq) REFERENCES MEMBER_TB(seq)
+	event_seq NUMBER(5),
+	title VARCHAR2(60),			--메모셋 이름
+	start_date DATE,				--event시작시각
+	end_date DATE,				--event종료시각	
+	color VARCHAR2(8),
+	CONSTRAINT PK_EVENT PRIMARY KEY(member_seq, event_seq),
+	CONSTRAINT FK_EVENT_MEMBER FOREIGN KEY(member_seq) REFERENCES MEMBER_TB(seq)
 );
-CREATE SEQUENCE SEQ_EVENT INCREMENT BY 1 START WITH 1;
--- INSERT INTO EVENT ( seq, startdate, enddate ) VALUES ( SEQ_EVENT.NEXTVAL , ?, ?, ?);
+
+
+CREATE TABLE EVENT_MEMO_TB (
+	member_seq NUMBER(5),		--해당 이벤트를 소유하는 유저
+	event_seq NUMBER(5),
+	memo_set_seq NUMBER(3),		--해당 메모가 포함된 메모셋
+	memo_seq NUMBER(3),
+	CONSTRAINT PK_EVENT_MEMO PRIMARY KEY(member_seq, event_seq),
+	CONSTRAINT FK_EVENT_MEMO_EVENT FOREIGN KEY(member_seq, event_seq) REFERENCES EVENT_TB(member_seq, event_seq)
+);
 
 CREATE TABLE MEMO_SET_TB(
 	member_seq NUMBER(5),		--해당 메모셋를 소유하는 유저

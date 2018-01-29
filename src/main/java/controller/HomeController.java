@@ -1,9 +1,12 @@
 package controller;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.spi.CalendarDataProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import util.MemberService;
 import vo.DResultVO;
 import vo.DUserVO;
+import vo.WMonth;
 
 /**
  * Handles requests for the application home page.
@@ -60,58 +64,28 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/month.do", method = RequestMethod.GET)
-	public ModelAndView month(HttpServletRequest request, ModelAndView mav) {
 
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
 
-		mav.setViewName("main/month");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/myday.do", method = RequestMethod.GET)
-	public ModelAndView myday(HttpServletRequest request, ModelAndView mav) {
+	/*
+	 * @RequestMapping(value = "/getJsonByVO.do")
+	 * 
+	 * @ResponseBody public DResultVO getJsonByVO() { DResultVO result = new
+	 * DResultVO(); result.setmList(mService.getMemberList());
+	 * result.setResult(true); result.setResultMsg("성공");
+	 * 
+	 * return result; }
+	 */
 
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
-
-		mav.setViewName("main/myday");
-		return mav;
-	}
-
-	@RequestMapping(value = "/getJsonByVO.do")
-	@ResponseBody
-	public DResultVO getJsonByVO() {
-		DResultVO result = new DResultVO();
-		result.setmList(mService.getMemberList());
-		result.setResult(true);
-		result.setResultMsg("성공");
-
-		return result;
-	}
-	
-/*	@RequestMapping(value = "/memo.do", method = RequestMethod.GET)
-	public ModelAndView memo(HttpServletRequest request, ModelAndView mav) {
-
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
-
-		mav.setViewName("main/memo");
-		return mav;
-	}*/
+	/*
+	 * @RequestMapping(value = "/memo.do", method = RequestMethod.GET) public
+	 * ModelAndView memo(HttpServletRequest request, ModelAndView mav) {
+	 * 
+	 * HttpSession session = request.getSession(false); DUserVO user = (DUserVO)
+	 * session.getAttribute("loginInfo"); if (null == user) {
+	 * mav.setViewName("redirect:login.do"); return mav; // 로그인 된 상태 }
+	 * 
+	 * mav.setViewName("main/memo"); return mav; }
+	 */
 
 	/*
 	 * @RequestMapping( value="/json/{id}", method = RequestMethod.GET)
@@ -123,35 +97,27 @@ public class HomeController {
 	 * return user; }
 	 */
 
-/*	@RequestMapping(value = " /jsonPostSingle", method = RequestMethod.GET)
-	@ResponseBody
-	public PostModel generateJSONPostsingle(@ModelAttribute("postModel") PostModel postModel) {
-
-		if (postModel.getPostId() == 1) {
-			postModel.setTitle("post title for id 1");
-		} else {
-			postModel.setTitle("default post title");
-		}
-		return postModel;
-	}
-
-	@RequestMapping(value = " /jsonPosts", method = RequestMethod.GET)
-	@ResponseBody
-	public List<PostModel> generateJSONPosts() {
-
-		List<PostModel> list = new ArrayList<PostModel>();
-
-		PostModel p1 = new PostModel();
-		p1.setPostId(1);
-		p1.setTitle("Post title 1");
-
-		PostModel p2 = new PostModel();
-		p2.setPostId(2);
-		p2.setTitle("Post title 2");
-
-		list.add(p1);
-		list.add(p2);
-
-		return list;
-	}*/
+	/*
+	 * @RequestMapping(value = " /jsonPostSingle", method = RequestMethod.GET)
+	 * 
+	 * @ResponseBody public PostModel
+	 * generateJSONPostsingle(@ModelAttribute("postModel") PostModel postModel) {
+	 * 
+	 * if (postModel.getPostId() == 1) { postModel.setTitle("post title for id 1");
+	 * } else { postModel.setTitle("default post title"); } return postModel; }
+	 * 
+	 * @RequestMapping(value = " /jsonPosts", method = RequestMethod.GET)
+	 * 
+	 * @ResponseBody public List<PostModel> generateJSONPosts() {
+	 * 
+	 * List<PostModel> list = new ArrayList<PostModel>();
+	 * 
+	 * PostModel p1 = new PostModel(); p1.setPostId(1); p1.setTitle("Post title 1");
+	 * 
+	 * PostModel p2 = new PostModel(); p2.setPostId(2); p2.setTitle("Post title 2");
+	 * 
+	 * list.add(p1); list.add(p2);
+	 * 
+	 * return list; }
+	 */
 }

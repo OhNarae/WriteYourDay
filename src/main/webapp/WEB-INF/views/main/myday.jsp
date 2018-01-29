@@ -92,7 +92,8 @@ textarea {
 						<a href="#none" style="padding:0 0 5px 20px;margin-left:5px;background-color: #FFE05C"></a>
 						<a href="#none" style="padding:0 0 5px 20px;margin-left:5px;background-color: #DDFFAA"></a>
 						<a href="#none" style="padding:0 0 5px 20px;margin-left:5px;background-color: #C6D6F7"></a>
-						<label class="indent-left" for="start_date">Date : </label><input type="text" id="start_date"> - <input type="text" id="end_date">
+						<label class="indent-left" for="start_date">Date : </label>
+						<input type="text" id="start_date" value="2018.01.29 12:40"> - <input type="text" id="end_date" value="2018.02.01 19:00">
 						<br>
 					</td>
 				</tr>

@@ -1,26 +1,22 @@
 package vo;
 
+import java.util.List;
+
 public class DEventVO {
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	int member_seq;
-	int seq;
-	String name;
-	String startdate;
-	String enddate;
-	int memo_seq;
+	int event_seq;
+	String title;
+	String start_date;
+	String end_date;
+	String color;
 
+	public List<MemoVO> memo_list;
+	
 	@Override
 	public String toString() {
-		return "DEventVO [member_seq=" + member_seq + ", seq=" + seq + ", name=" + name + ", startdate=" + startdate
-				+ ", enddate=" + enddate + ", memo_seq=" + memo_seq + "]";
+		return "DEventVO [member_seq=" + member_seq + ", event_seq=" + event_seq + ", title=" + title + ", start_date="
+				+ start_date + ", end_date=" + end_date + ", color=" + color + "]";
 	}
 
 	public int getMember_seq() {
@@ -31,36 +27,44 @@ public class DEventVO {
 		this.member_seq = member_seq;
 	}
 
-	public int getSeq() {
-		return seq;
+	public int getEvent_seq() {
+		return event_seq;
 	}
 
-	public void setSeq(int seq) {
-		this.seq = seq;
+	public void setEvent_seq(int event_seq) {
+		this.event_seq = event_seq;
 	}
 
-	public String getStartdate() {
-		return startdate;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setStartdate(String startdate) {
-		this.startdate = startdate;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getEnddate() {
-		return enddate;
+	public String getStart_date() {
+		return start_date;
 	}
 
-	public void setEnddate(String enddate) {
-		this.enddate = enddate;
+	public void setStart_date(String start_date) {
+		this.start_date = start_date;
 	}
 
-	public int getMemo_seq() {
-		return memo_seq;
+	public String getEnd_date() {
+		return end_date;
 	}
 
-	public void setMemo_seq(int memo_seq) {
-		this.memo_seq = memo_seq;
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 }

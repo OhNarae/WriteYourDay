@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="resources/css/grid.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/month.js?version=1" type="text/javascript"></script>
+<script src="resources/js/month.js?version=00001" type="text/javascript"></script>
 <style type="text/css">
 
 /* 월별 스케쥴 테이블 스타일 */
@@ -96,19 +96,19 @@
 		<div class="container_12">
 			<div class="grid_9">
 				<div class="carousel">
-					<a class="prev" href="#"></a>
-					<h3 class="color-3 aligncenter"><span id="monthTitle"></span></h3>
-					<a class="next" href="#"></a>
+					<a class="prev" href="/WriteYourDay/month.do?month=${month}&direction=pre"></a>
+					<h3 class="color-3 aligncenter"><span id="monthTitle">${month}</span></h3>
+					<a class="next" href="/WriteYourDay/month.do?month=${month}&direction=next"></a>
 				</div>
 				<table class="month-tb">
 					<tr>
+						<th class="month-row">일</th>
 						<th class="month-row">월</th>
 						<th class="month-row">화</th>
 						<th class="month-row">수</th>
 						<th class="month-row">목</th>
 						<th class="month-row">금</th>
 						<th class="month-row">토</th>
-						<th class="month-row">일</th>
 					</tr>
 					<tbody id="month-body"></tbody>
 				</table>
