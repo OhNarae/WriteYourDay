@@ -79,7 +79,7 @@ public class DiaryController {
 	}
 
 	@RequestMapping(value = "/myday.do", method = RequestMethod.GET)
-	public ModelAndView myday(HttpServletRequest request, ModelAndView mav) {
+	public ModelAndView myday(HttpServletRequest request, ModelAndView mav, WMonth monthInfo) {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
@@ -88,6 +88,17 @@ public class DiaryController {
 			return mav; // 로그인 된 상태
 		}
 
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		Date currDate = null;
+		try {
+			currDate = dateFormat.parse(monthInfo.getDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String formattedDate = dateFormat.format(currDate);
+		mav.addObject("date", formattedDate);
+		
 		mav.setViewName("main/myday");
 		return mav;
 	}

@@ -1,9 +1,9 @@
 
 $(document).ready(function() {
+	var monthInfo = new Date($('#monthTitle').text()+'.01');	
 
-	var monthInfo = new Date($('#monthTitle').text()+'.01');
-	setMonth(monthInfo.getFullYear(), monthInfo.getMonth());		
-
+	setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), null);	
+	
 	$('#cal-div').hide();
 	$('input[name=ck-cal1]').on('click', function() {
 		if ($('input[name=ck-cal1]').is(":checked")) {
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	{start_date: '2018-01-08',end_date: '2018-01-09',title: '새로운이벤트입니다.', color:'#E18060'}
 ];//
 */
-function getMSetList(){
+/*function getMSetList(){
 	$.ajax({
 		type: 'Get',
 		url: '/WriteYourDay/events/list.do',
@@ -30,10 +30,10 @@ function getMSetList(){
 		},
 		success: function(out){
 			var monthInfo = new Date($('#monthTitle').text()+'.01');
-			setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), out);	
-         }	
+			setMonth(monthInfo.getFullYear(), monthInfo.getMonth());	
+        }	
 	})
-}
+}*/
 
 function setMonth(year, month, events){
 	
@@ -47,29 +47,31 @@ function setMonth(year, month, events){
 	for(var i = 0 ; i < dayEvents.length ; i++) 
 		dayEvents[i] = new Array(dayEventsLimit);
 
-	for(var e = 0 ; e < events.length ; e++){
-		var start_date = new Date(events[e].start_date);
-		var end_date = new Date(events[e].end_date);
-		
-		var start = start_date.getDate() - 1;
-		if(start_date.getTime() < firstDate.getTime())
-			start = 0;
-		var term = end_date.getDate() - start;
-	   
-		var place = -1;
-	    for(var i = 0; i < term ; i++){	    	
-	    	var day = i + start;
-	    	for(var j = 0 ; j < dayEventsLimit ; j++){
-	    		if(j < place || dayEvents[day][j]) continue;
-	    		else{
-	    			dayEvents[day][j] = [events[e].color, events[e].title.substring(i*dayEventsStrLens, (i+1)*dayEventsStrLens)]
-	    			place = j;
-	    			break;
-	    		}
-	    	}	    		
-	    }
-	}
-
+	if(events != null){		
+		for(var e = 0 ; e < events.length ; e++){
+			var start_date = new Date(events[e].start_date);
+			var end_date = new Date(events[e].end_date);
+			
+			var start = start_date.getDate() - 1;
+			if(start_date.getTime() < firstDate.getTime())
+				start = 0;
+			var term = end_date.getDate() - start;
+		   
+			var place = -1;
+		    for(var i = 0; i < term ; i++){	    	
+		    	var day = i + start;
+		    	for(var j = 0 ; j < dayEventsLimit ; j++){
+		    		if(j < place || dayEvents[day][j]) continue;
+		    		else{
+		    			dayEvents[day][j] = [events[e].color, events[e].title.substring(i*dayEventsStrLens, (i+1)*dayEventsStrLens)]
+		    			place = j;
+		    			break;
+		    		}
+		    	}	    		
+		    }
+		}
+	}	
+	
 	var start = firstDate.getDay(); 
 	var dates = 0;
 	
@@ -84,7 +86,7 @@ function setMonth(year, month, events){
 			}
 
 			if (dates > 0 && dates <= lastDate.getDate()){
-				td += '<a href="/WriteYourDay/myday.do">' + dates + '</a><br>';
+				td += '<a href="/WriteYourDay/myday.do?date='+year+'.'+(month+1)+'.'+dates+'">' + dates + '</a><br>';
 				for(var k = 0 ; k < dayEventsLimit ; k++){
 					if(dayEvents[dates-1][k]){
 						td += '<div style="background-color: ' + dayEvents[dates-1][k][0] + '"><strong><FONT face="Arial Black">' + dayEvents[dates-1][k][1] + '</FONT><strong></div>';

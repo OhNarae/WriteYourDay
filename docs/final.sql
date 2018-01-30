@@ -58,15 +58,15 @@ CREATE TABLE MEMO_TB(
 -- INSERT INTO MEMO_TB ( sSeq, seq,  ) VALUES ( ?, SEQ_MEMO.NEXTVAL, ?);
 INSERT INTO MEMO_TB VALUES ( 1, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = 1), 'test중이지욥', '어쩌고');
 
-CREATE TABLE HOUSE_KEEPING_BOOK_TB(
+CREATE TABLE CASHBOOK_TB(
 	member_seq NUMBER(5),		--해당 가계부를 소유하는 유저
 	seq NUMBER(5),
-	pay_date DATE,				--구매날짜
+	pay_date DATE,			--구매날짜
 	pay_place VARCHAR2(32),		--구매장소 
-	pay_things VARCHAR2(64),	--구매상품
-	price NUMBER(10),			--구매가격
+	pay_things VARCHAR2(64),		--구매상품
+	price NUMBER(10),		--구매가격
 	CONSTRAINT PK_HOUSE_KEEPING_BOOK PRIMARY KEY(member_seq, seq),
-	CONSTRAINT FK_MEMO FOREIGN KEY(member_seq) REFERENCES MEMO_SET(seq)
+	CONSTRAINT FK_MEMO FOREIGN KEY(member_seq) REFERENCES MEMBER_TB(seq)
 )
 -- CREATE SEQUENCE SEQ_HOUSE_KEEPING_BOOK INCREMENT BY 1 START WITH 1;
 -- INSERT INTO HOUSE_KEEPING_BOOK_TB ( sSeq, seq,  ) VALUES ( ?, SEQ_MEMO.NEXTVAL, ?);
@@ -95,5 +95,6 @@ CREATE TABLE TALK_TB(
 	CONSTRAINT FK_TALK_WRITER_MEMBER FOREIGN KEY(writer_seq) REFERENCES MEMBER_TB(seq)
 );
 SELECT m.seq, m.id, m.seq, m.name from FRIEND_TB f join MEMBER_TB m on f.you_member_seq = m.seq where f.me_member_seq = 1;
+
 
 

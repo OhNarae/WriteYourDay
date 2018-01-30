@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="resources/css/grid.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/month.js?version=00001" type="text/javascript"></script>
+<script src="resources/js/month.js?version=0127" type="text/javascript"></script>
 <style type="text/css">
 
 /* 월별 스케쥴 테이블 스타일 */

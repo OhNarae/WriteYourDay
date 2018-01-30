@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="resources/css/reset.css" type="text/css"
 	media="screen">
-<link rel="stylesheet" href="resources/css/style.css" type="text/css"
+<link rel="stylesheet" href="resources/css/style.css?version=00001" type="text/css"
 	media="screen">
 <link rel="stylesheet" href="resources/css/grid.css" type="text/css"
 	media="screen">

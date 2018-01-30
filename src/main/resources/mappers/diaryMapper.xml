@@ -17,7 +17,7 @@
 		where member_seq = #{member_seq} and event_seq = #{event_seq}
 	</select>
 	
-	<select id="getEventMemo" resultType="vo.DMemoVO">
+	<select id="getEventMemo" resultType="vo.MemoVO">
 		select * from EVENT_MEMO_TB em 
 			join MEMO_SET_TB ms on em.member_seq = ms.member_seq and em.memo_set_seq = ms.seq
 			join MEMO_TB m on ms.seq = m.set_seq and em.memo_seq = m.seq
