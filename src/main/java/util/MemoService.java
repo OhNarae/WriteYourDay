@@ -8,6 +8,8 @@ import vo.MemoVO;
 
 public interface MemoService {
 	
+	int MEMO_SET_DIARY = 1;
+	
 	List<MemoSetVO> getMemoSetList(DUserVO user);
 	
 	int insertMemoSet(MemoSetVO vo);
@@ -18,7 +20,7 @@ public interface MemoService {
 	
 	MemoVO getMemo(MemoVO vo);
 	
-	MemoVO insertMemo(MemoVO mvo);
+	int insertMemo(MemoVO mvo);
 
 	int updateMemo(MemoVO mvo);
 }

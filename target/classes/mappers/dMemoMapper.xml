@@ -12,7 +12,7 @@
 
 	<insert id="insertMemoSet">
 		insert into MEMO_SET_TB(member_seq, seq, name)
-		values( #{member_seq}, SEQ_MEMO_SET.NEXTVAL, #{name})
+		values( #{member_seq}, (select nvl(max(seq), 0)+1 from MEMO_SET_TB where member_seq = #{member_seq}), #{name})
 	</insert>
 	
 	<update id="updateMemoSet">
@@ -27,15 +27,19 @@
 
 	<select id="getMemo" resultType="vo.MemoVO">
 		select set_seq, seq, name,
-		contents from MEMO_TB where set_seq = #{set_seq} and seq = #{seq}
+		contents from MEMO_TB where set_seq = #{set_seq} 
+			<if test="seq > 0">and seq = #{seq}</if>
+			<if test="name != null">and name = #{name}</if>
 	</select>
 
 	<insert id="insertMemo">
 		insert into MEMO_TB(set_seq, seq, name, contents)
-		values(#{set_seq}, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = #{set_seq}), #{name}, '')
-		<selectKey keyProperty="seq" resultType="Integer" order="AFTER">
+		values(#{set_seq}, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = #{set_seq}), #{name}
+			, #{contents})
+		
+<!-- 		<selectKey keyProperty="seq" resultType="Integer" order="AFTER">
 			select nvl(max(seq), 0) from MEMO_TB where set_seq = #{set_seq}
-		</selectKey>
+		</selectKey> -->
 	</insert>
 
 	<update id="updateMemo">		

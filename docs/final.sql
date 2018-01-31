@@ -39,21 +39,18 @@ CREATE TABLE MEMO_SET_TB(
 	member_seq NUMBER(5),		--해당 메모셋를 소유하는 유저
 	seq NUMBER(3),	
 	name VARCHAR2(60),			--메모셋 이름
-	CONSTRAINT PK_MEMO_SET PRIMARY KEY(seq),
+	CONSTRAINT PK_MEMO_SET PRIMARY KEY(member_seq, seq),
 	CONSTRAINT FK_MEMO_SET_MEMBER FOREIGN KEY(member_seq) REFERENCES MEMBER_TB(seq)
 );
-CREATE SEQUENCE SEQ_MEMO_SET INCREMENT BY 1 START WITH 3;
 -- seq=1(월별메모), seq=2(이벤트메모) 
--- INSERT INTO MEMO_SET_TB ( seq ) VALUES ( ?, SEQ_MEMO_SET.NEXTVAL , ?);
-INSERT INTO MEMO_SET_TB ( seq ) VALUES (1, 1, 'Diary');
+insert into MEMO_SET_TB(member_seq, seq, name) select seq, 1, 'Diary' from member_tb
 
 CREATE TABLE MEMO_TB(
 	set_seq NUMBER(3),		--해당 메모가 포함된 메모셋
 	seq NUMBER(3),	
 	name VARCHAR2(60),			--메모 제목
 	contents VARCHAR2(256),		--메모 내용
-	CONSTRAINT PK_MEMO PRIMARY KEY(set_seq, seq),
-	CONSTRAINT FK_MEMO_MEMO_SET FOREIGN KEY(set_seq) REFERENCES MEMO_SET_TB(seq)
+	CONSTRAINT PK_MEMO PRIMARY KEY(set_seq, seq)
 );
 -- INSERT INTO MEMO_TB ( sSeq, seq,  ) VALUES ( ?, SEQ_MEMO.NEXTVAL, ?);
 INSERT INTO MEMO_TB VALUES ( 1, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = 1), 'test중이지욥', '어쩌고');

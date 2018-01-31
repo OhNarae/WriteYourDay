@@ -125,7 +125,6 @@ public class MemoController {
 		ResultVO out = new ResultVO();
 		
 		mService.insertMemo(vo);
-		System.out.println(vo.toString());
 		if(vo.getSeq() > 0) {
 			out.setResult(vo);
 			out.setResultCode(0);
@@ -137,14 +136,21 @@ public class MemoController {
 	@RequestMapping(value = "/memo/update.do")
 	@ResponseBody
 	public ResultVO memoUpdate(HttpServletRequest request, MemoVO vo) {
+		System.out.println("MemoVO: " + vo.toString());
 		
 		ResultVO out = new ResultVO();
 		
-		int cnt = mService.updateMemo(vo);
+		int cnt;
+		if(vo.getSeq() == 0) {
+			cnt = mService.insertMemo(vo);
+		}else {
+			cnt = mService.updateMemo(vo);
+		}
 		if(cnt > 0) {
 			out.setResult(vo);
 			out.setResultCode(0);
 		}
+		
 		return out;
 	}
 	

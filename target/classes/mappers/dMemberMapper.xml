@@ -24,6 +24,9 @@
 	<insert id="insert">
 		insert into MEMBER_TB ( seq, id, password, name, pnumber,
 		birth, email, regdate) values( SEQ_MEMBER.NEXTVAL , #{id}, #{password}, #{name}, #{pnumber}, #{birth}, #{email}, sysdate)
+		
+		insert into MEMO_SET_TB(member_seq, seq, name)
+		values( SEQ_MEMBER.CURRVAL, 1, 'Diary')
 	</insert>
 
 	<update id="update">

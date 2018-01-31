@@ -7,6 +7,10 @@ public class MemoVO {
 	String name;
 	String contents;
 	
+	public MemoVO() {
+		contents="";
+	}
+	
 	@Override
 	public String toString() {
 		return "MemoVO [set_seq=" + set_seq + ", seq=" + seq + ", name=" + name + ", contents=" + contents + "]";

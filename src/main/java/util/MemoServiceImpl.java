@@ -50,10 +50,9 @@ public class MemoServiceImpl implements MemoService {
 	}
 
 	@Override
-	public MemoVO insertMemo(MemoVO vo) {
+	public int insertMemo(MemoVO vo) {
 		// TODO Auto-generated method stub
-		sqlSession.insert(namespace + ".insertMemo", vo);
-		return vo;
+		return sqlSession.insert(namespace + ".insertMemo", vo);
 	}
 
 	@Override

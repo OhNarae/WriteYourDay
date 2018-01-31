@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
 <title>Day</title>
-<script src="resources/js/myday.js?version=00001" type="text/javascript"></script>
+<script src="resources/js/myday.js?version=01031" type="text/javascript"></script>
 <style type="text/css">
 .day-tb {
 	border-collapse: collapse;
@@ -58,10 +58,11 @@ textarea {
 }
 
 .select-editable {
+	float: left;
 	position: relative;
 	background-color: white;
 	border: solid grey 1px;
-	width: 220px;
+	width: 120px;
 	height: 18px;
 }
 
@@ -71,7 +72,7 @@ textarea {
 	left: 0px;
 	font-size: 14px;
 	border: none;
-	width: 220px;
+	width: 120px;
 	margin: 0
 }
 
@@ -79,7 +80,7 @@ textarea {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 200px;
+	width: 100px;
 	padding: 1px;
 	font-size: 12px;
 	border: none;
@@ -88,6 +89,7 @@ textarea {
 .select-editable select:focut, .select-editable input:focus {
 	outline: none;
 }
+
 </style>
 </head>
 <body>
@@ -105,8 +107,8 @@ textarea {
 				</tr>
 				<tbody id="day-body">
 					<tr>
-						<td><textarea id="memoContents"></textarea><br> <a
-							class="fright" id="updateMemo">저장</a></td>
+						<td><textarea id="memoContents">${memo.contents}</textarea><br> <a
+							class="fright" href="javascript:updateMemo(${memo.set_seq}, ${memo.seq}, '${memo.name}')">저장</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -116,22 +118,13 @@ textarea {
 					<th class="day-row aligncenter">Event</th>
 				</tr>
 				<tr>
-					<td><label for="title">Title : </label><input type="text"
-						id="title"> <a href="#none"
-						style="padding: 0 0 5px 20px; margin-left: 5px; background-color: #E18060"></a>
-						<a href="#none"
-						style="padding: 0 0 5px 20px; margin-left: 5px; background-color: #FFA556"></a>
-						<a href="#none"
-						style="padding: 0 0 5px 20px; margin-left: 5px; background-color: #FFE05C"></a>
-						<a href="#none"
-						style="padding: 0 0 5px 20px; margin-left: 5px; background-color: #DDFFAA"></a>
-						<a href="#none"
-						style="padding: 0 0 5px 20px; margin-left: 5px; background-color: #C6D6F7"></a>
-						<label class="indent-left" for="start_date">Date : </label> <input
-						type="text" id="start_date" value="${date} 00:00"> - <input
-						type="checkbox" name="use_end_date" /><input type="text"
-						id="end_date" value="${date} 23:59" readonly="readonly"> <a
-						class="fright" id="insertEvent">저장</a></td>
+					<td><label for="e_title">Title : </label><input type="text" id="e_title"> 
+						<span id="ecolor"></span>
+						<label class="indent-left" for="e_start_date">Date : </label> 
+						<input type="text" id="e_start_date" value="${date} 00:00"> 
+						- <input type="checkbox" name="e_use_end_date" id="e_use_end_date" />
+						<input type="text" id="e_end_date" value="${date} 23:59" readonly="readonly"> 
+						<a class="fright" id="insertEvent">저장</a></td>
 				</tr>
 				<tbody id="eventT-body"></tbody>
 			</table>
@@ -140,7 +133,7 @@ textarea {
 				<tr>
 					<th class="day-row aligncenter" colspan="4">가계부</th>
 				</tr>
-				<%-- 				<tr>
+				<tr>
 					<td><input type="text" id="pay_date" value="${date} 00:00:00" class="fleft spacing2">
 						<span class="select-editable spacing2"> <select
 							onchange="this.nextElementSibling.value=this.value">
@@ -158,32 +151,7 @@ textarea {
 						</select> <input type="text" id="pay_things" value="">
 					</span> <input type="text" id="price" value="2,000" class="fleft"> <a
 						class="fright" id="insertCashBook">저장</a></td>
-				</tr> --%>
-				<tr>
-					<td><input type="text" id="pay_date" value="${date} 00:00:00"
-						class="fleft spacing2"></td>
-					<td><span class="select-editable"> 
-					<select onchange="this.nextElementSibling.value=this.value">
-								<option value=""></option>
-								<option value="#마트">#마트</option>
-								<option value="#식료품">#식료품</option>
-								<option value="살구">살구</option>
-						</select> <input type="text" id="pay_place" value="#수지#이마트"></span></td>
-					<td>	 <span class="select-editable"> 
-						<select onchange="this.nextElementSibling.value=this.value">
-							<option value=""></option>
-							<option value="#마트">#마트</option>
-							<option value="#식료품">#식료품</option>
-							<option value="살구">살구</option>
-					</select> <input type="text" id="pay_things" value="">
-					</span>
-					</td>
-					<td><input type="text" id="price" value="2,000" class="fleft">
-					<a class="fright" id="insertCashBook">저장</a>
-					</td>
-					
-				
-				</tr>
+				</tr> 
 				<tbody id="cashbookT-body"></tbody>
 			</table>
 		</div>

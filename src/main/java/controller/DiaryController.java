@@ -21,8 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import util.DiaryService;
+import util.MemoService;
 import vo.DEventVO;
 import vo.DUserVO;
+import vo.MemoVO;
+import vo.ResultVO;
 import vo.WMonth;
 
 /**
@@ -35,7 +38,9 @@ public class DiaryController {
 
 	@Autowired
 	private DiaryService sDiary;
-
+	
+	@Autowired
+	private MemoService sMemo;
 	
 	@RequestMapping(value = "/month.do", method = RequestMethod.GET)
 	public ModelAndView month(HttpServletRequest request, ModelAndView mav, WMonth monthInfo) {
@@ -88,6 +93,7 @@ public class DiaryController {
 			return mav; // 로그인 된 상태
 		}
 
+		//해당 날짜 포맷 맞추어 주기
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 		Date currDate = null;
 		try {
@@ -99,17 +105,61 @@ public class DiaryController {
 		String formattedDate = dateFormat.format(currDate);
 		mav.addObject("date", formattedDate);
 		
+		//해당 날짜의 메모 가져오기 
+		MemoVO memo = new MemoVO();
+		memo.setSet_seq(MemoService.MEMO_SET_DIARY);
+		memo.setName(formattedDate);
+		MemoVO rMemo = sMemo.getMemo(memo);		
+		if(null == rMemo)
+			mav.addObject("memo", memo);
+		else mav.addObject("memo", rMemo);
+		
 		mav.setViewName("main/myday");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/events/list.do", method = RequestMethod.GET)
-	public ModelAndView month(HttpServletRequest request, ModelAndView mav, DEventVO eventInfo) {
-	
+	@ResponseBody
+	public ResultVO eventsList(HttpServletRequest request, ModelAndView mav, DEventVO event) {
+		ResultVO out = new ResultVO();
 		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
 		
+		event.setMember_seq(user.getSeq());
+		if(event.getEnd_date() == null) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+			Date endDate = null;
+			Date startDate;
+			try {
+				startDate = dateFormat.parse(event.getStart_date());
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(startDate);
+				cal.add(Calendar.MONTH, 1);
+				endDate = cal.getTime();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String strEndDate = dateFormat.format(endDate);
+			event.setEnd_date(strEndDate);
+		}
+		out.setResult(sDiary.getEventList(event));
 		
-		return mav;
+		return out;
 	}
-	
+
+	@RequestMapping(value = "/events/insert.do", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultVO eventsInsert(HttpServletRequest request, ModelAndView mav, DEventVO event) {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		event.setMember_seq(user.getSeq());
+		sDiary.insertEvent(event);
+		
+		return out;
+	}
 }
