@@ -8,7 +8,7 @@
 	<select id="getEventList" resultType="vo.DEventVO">
 		select * from EVENT_TB 
 		where member_seq = #{member_seq} and 
-			(start_date between #{start_date} and #{end_date} || end_date between #{start_date} and #{end_date})
+			((start_date >= #{start_date} and start_date <![CDATA[<]]> #{end_date}) or (end_date > #{start_date} and end_date <![CDATA[<]]> #{end_date}))
 		order by event_seq desc
 	</select>
 	
@@ -17,7 +17,7 @@
 		where member_seq = #{member_seq} and event_seq = #{event_seq}
 	</select>
 	
-	<select id="getEventMemo" resultType="vo.MemoVO">
+	<select id="getEventMemo" resultType="vo.DMemoVO">
 		select * from EVENT_MEMO_TB em 
 			join MEMO_SET_TB ms on em.member_seq = ms.member_seq and em.memo_set_seq = ms.seq
 			join MEMO_TB m on ms.seq = m.set_seq and em.memo_seq = m.seq
@@ -25,17 +25,43 @@
 	</select>
 	
 	<insert id="insertEvent">
-		<selectKey resultType="string" keyProperty="EventSeq" order="BEFORE">
+		<selectKey resultType="integer" keyProperty="event_seq" order="BEFORE">
 	        select nvl(max(event_seq), 0)+1 from EVENT_TB where member_seq = #{member_seq}  
 	    </selectKey>  
 	    
 		insert into EVENT_TB ( member_seq, event_seq, title, start_date, end_date, color) 
-		values( #{member_seq}, #{EventSeq}, #{title}, #{start_date}, #{end_date},  #{color})
-			
+		values( #{member_seq}, #{event_seq}, #{title}, TO_DATE(#{start_date}, 'YYYY.MM.dd HH24:mi'), TO_DATE(#{end_date}, 'YYYY.MM.dd HH24:mi'), #{color})
+		
+		<if test="memo_list!=null">
 		insert into EVENT_MEMO_TB(member_seq, event_seq, memo_set_seq, memo_seq) values	
 		<foreach collection="memo_list" item="item" separator=" , ">
             (#{member_seq}, #{EventSeq}, #{item.set_seq}, #{item.seq})
         </foreach>	
+        </if>
 	</insert>
+	
+	<delete id="deleteEvent">
+		delete EVENT_TB 
+		where member_seq = #{member_seq} and event_seq = #{event_seq}
+	</delete>
+	
+	<select id="getCashList" resultType="vo.DCashbookVO">
+		select * from CASHBOOK_TB 
+		where member_seq = #{member_seq} and (pay_date >= #{start_date} and pay_date <![CDATA[<]]> #{end_date})
+		order by pay_date
+	</select>
 
+	<insert id="insertCash">
+		<selectKey resultType="integer" keyProperty="seq" order="BEFORE">
+	        select nvl(max(seq), 0)+1 from CASHBOOK_TB where member_seq = #{member_seq}  
+	    </selectKey>  
+	    
+		insert into CASHBOOK_TB ( member_seq, seq, pay_date, pay_place, pay_things, price) 
+		values( #{member_seq}, #{seq}, TO_DATE(#{pay_date}, 'YYYY.MM.dd HH24:mi:ss'), #{pay_place}, #{pay_things}, #{price})
+	</insert>
+	
+	<delete id="deleteCash">
+		delete CASHBOOK_TB 
+		where member_seq = #{member_seq} and seq = #{seq}
+	</delete>
 </mapper>

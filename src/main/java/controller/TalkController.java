@@ -25,7 +25,7 @@ import util.MemoService;
 import util.TalkService;
 import vo.DUserVO;
 import vo.ResultVO;
-import vo.TalkVO;
+import vo.DTalkVO;
 
 /**
  * Handles requests for the application home page.
@@ -105,7 +105,7 @@ public class TalkController {
 	
 	@RequestMapping(value = "/talk/insert.do")
 	@ResponseBody
-	public ResultVO talkInsert(HttpServletRequest request, TalkVO vo)
+	public ResultVO talkInsert(HttpServletRequest request, DTalkVO vo)
 			throws Exception {
 		ResultVO out = new ResultVO();
 		
@@ -133,11 +133,11 @@ public class TalkController {
 
 	@RequestMapping(value = "/talk/list.do")
 	@ResponseBody
-	public ResultVO memosetList(HttpServletRequest request, TalkVO vo) {
+	public ResultVO memosetList(HttpServletRequest request, DTalkVO vo) {
 
 		ResultVO out = new ResultVO();
 		
-		List<TalkVO> memoSet = sTalk.getTalkList(vo);
+		List<DTalkVO> memoSet = sTalk.getTalkList(vo);
 		out.setResult(memoSet);
 
 		return out;

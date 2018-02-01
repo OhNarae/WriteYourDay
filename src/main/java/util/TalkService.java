@@ -1,11 +1,11 @@
 package util;
 
 import java.util.List;
-import vo.TalkVO;
+import vo.DTalkVO;
 
 public interface TalkService {
 	
-	List<TalkVO> getTalkList(TalkVO vo);
+	List<DTalkVO> getTalkList(DTalkVO vo);
 	
-	int insertTalk(TalkVO vo);
+	int insertTalk(DTalkVO vo);
 }

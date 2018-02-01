@@ -1,6 +1,6 @@
 package vo;
 
-public class MemoSetVO {
+public class DMemoSetVO {
 	
 	int member_seq;
 	int seq;

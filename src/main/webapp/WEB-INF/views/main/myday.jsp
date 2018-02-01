@@ -6,23 +6,25 @@
 <html lang="ko">
 <head>
 <title>Day</title>
-<script src="resources/js/myday.js?version=01031" type="text/javascript"></script>
+<script src="resources/js/myday.js?version=180202" type="text/javascript"></script>
 <style type="text/css">
 .day-tb {
 	border-collapse: collapse;
 	border-spacing: 0;
 	width: 100%;
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-width: 1px;
 }
 
 .day-tb td {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
 	overflow: hidden;
 	word-break: normal;
-	height: 10px
+	height: 10px;
+	width: 250px;
 }
 
 .day-tb th {
@@ -30,16 +32,25 @@
 	font-size: 14px;
 	font-weight: normal;
 	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
 	overflow: hidden;
 	word-break: normal;
 	background-color: #ff9601;
 }
 
+.day-input-tb {
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-width: 1px;
+}
+
 .day-tb .day-row {
 	vertical-align: top
 }
+
+.day-tb input {
+	padding-left: 10px;
+}
+
 
 textarea {
 	float: left;
@@ -62,7 +73,7 @@ textarea {
 	position: relative;
 	background-color: white;
 	border: solid grey 1px;
-	width: 120px;
+	width: 220px;
 	height: 18px;
 }
 
@@ -72,7 +83,7 @@ textarea {
 	left: 0px;
 	font-size: 14px;
 	border: none;
-	width: 120px;
+	width: 220px;
 	margin: 0
 }
 
@@ -80,9 +91,9 @@ textarea {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 100px;
+	width: 200px;
 	padding: 1px;
-	font-size: 12px;
+	font-size: 14px;
 	border: none;
 }
 
@@ -105,25 +116,23 @@ textarea {
 				<tr>
 					<th class="day-row aligncenter">Today's Memo</th>
 				</tr>
-				<tbody id="day-body">
-					<tr>
-						<td><textarea id="memoContents">${memo.contents}</textarea><br> <a
-							class="fright" href="javascript:updateMemo(${memo.set_seq}, ${memo.seq}, '${memo.name}')">저장</a></td>
-					</tr>
-				</tbody>
+				<tr class="day-input-tb">
+					<td><textarea id="memoContents">${memo.contents}</textarea><br> <a
+						class="fright" href="javascript:updateMemo(${memo.set_seq}, ${memo.seq}, '${memo.name}')">저장</a></td>
+				</tr>
 			</table>
 			<div class="indent-top"></div>
 			<table class="day-tb" style="width: 100%;">
 				<tr>
-					<th class="day-row aligncenter">Event</th>
+					<th colspan="3" class="day-row aligncenter">Event</th>
 				</tr>
-				<tr>
-					<td><label for="e_title">Title : </label><input type="text" id="e_title"> 
+				<tr class="day-input-tb">
+					<td colspan="3"><label for="e_title">Title : </label><input type="text" id="e_title"> 
 						<span id="ecolor"></span>
 						<label class="indent-left" for="e_start_date">Date : </label> 
 						<input type="text" id="e_start_date" value="${date} 00:00"> 
 						- <input type="checkbox" name="e_use_end_date" id="e_use_end_date" />
-						<input type="text" id="e_end_date" value="${date} 23:59" readonly="readonly"> 
+						<input type="text" id="e_end_date" readonly="readonly"> 
 						<a class="fright" id="insertEvent">저장</a></td>
 				</tr>
 				<tbody id="eventT-body"></tbody>
@@ -131,26 +140,30 @@ textarea {
 			<div class="indent-top"></div>
 			<table class="day-tb" style="width: 100%;">
 				<tr>
-					<th class="day-row aligncenter" colspan="4">가계부</th>
+					<th class="day-row aligncenter" colspan="5">가계부</th>
 				</tr>
-				<tr>
-					<td><input type="text" id="pay_date" value="${date} 00:00:00" class="fleft spacing2">
+				<tr class="day-input-tb">
+					<td colspan="5"><input type="text" id="pay_date" value="${date} 00:00:00" class="fleft spacing2">
 						<span class="select-editable spacing2"> <select
 							onchange="this.nextElementSibling.value=this.value">
 								<option value=""></option>
-								<option value="#마트">#마트</option>
-								<option value="#식료품">#식료품</option>
-								<option value="살구">살구</option>
-						</select> <input type="text" id="pay_place" value="#수지#이마트"></span>
+								<option value="#스타벅스">#스타벅스</option>
+								<option value="#이디아">#이디아</option>
+								<optgroup label="#수지">
+							        <option value="#수지#이마트">#수지#이마트</option>
+							        <option value="#수지#롯데리아">#수지#롯데리아</option>
+							     </optgroup>
+						</select> <input type="text" id="pay_place" value="#"></span>
 						 <span class="select-editable spacing2"> <select
 							onchange="this.nextElementSibling.value=this.value">
 								<option value=""></option>
 								<option value="#마트">#마트</option>
 								<option value="#식료품">#식료품</option>
-								<option value="살구">살구</option>
-						</select> <input type="text" id="pay_things" value="">
+								<option value="#간식">#간식</option>
+						</select> <input type="text" id="pay_things" value="#">
 					</span> <input type="text" id="price" value="2,000" class="fleft"> <a
-						class="fright" id="insertCashBook">저장</a></td>
+						class="fright" id="insertCashBook">저장</a>
+					</td>
 				</tr> 
 				<tbody id="cashbookT-body"></tbody>
 			</table>

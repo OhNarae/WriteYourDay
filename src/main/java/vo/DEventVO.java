@@ -11,7 +11,7 @@ public class DEventVO {
 	String end_date;
 	String color;
 
-	public List<MemoVO> memo_list;
+	public List<DMemoVO> memo_list;
 	
 	@Override
 	public String toString() {

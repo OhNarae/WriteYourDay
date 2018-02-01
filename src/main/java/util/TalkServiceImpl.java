@@ -8,9 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import vo.DUserVO;
-import vo.MemoSetVO;
-import vo.MemoVO;
-import vo.TalkVO;
+import vo.DMemoSetVO;
+import vo.DMemoVO;
+import vo.DTalkVO;
 
 @Service
 public class TalkServiceImpl implements TalkService {
@@ -21,13 +21,13 @@ public class TalkServiceImpl implements TalkService {
 	private static final String namespace = "mappers.dtalk";
 
 	@Override
-	public List<TalkVO> getTalkList(TalkVO vo) {
+	public List<DTalkVO> getTalkList(DTalkVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + ".getTalkList", vo);
 	}
 
 	@Override
-	public int insertTalk(TalkVO vo) {
+	public int insertTalk(DTalkVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(namespace + ".insertTalk", vo);
 	}

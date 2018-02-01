@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import util.MemoService;
 import vo.DUserVO;
-import vo.MemoSetVO;
-import vo.MemoVO;
+import vo.DMemoSetVO;
+import vo.DMemoVO;
 import vo.ResultVO;
 
 /**
@@ -56,7 +56,7 @@ public class MemoController {
 		if (null == user) {
 			out.setResultMsg("wrong user");
 		} else {
-			List<MemoSetVO> memoSet = mService.getMemoSetList(user);
+			List<DMemoSetVO> memoSet = mService.getMemoSetList(user);
 			if (memoSet != null) {
 				out.setResultCode(0);
 				out.setResult(memoSet);
@@ -68,7 +68,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memoset/insert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultVO memosetInsert(HttpServletRequest request, MemoSetVO vo) {
+	public ResultVO memosetInsert(HttpServletRequest request, DMemoSetVO vo) {
 
 		ResultVO out = new ResultVO();
 		
@@ -86,7 +86,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memoset/update.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultVO memosetUpdate(HttpServletRequest request, MemoSetVO vo) {
+	public ResultVO memosetUpdate(HttpServletRequest request, DMemoSetVO vo) {
 		ResultVO out = new ResultVO();
 		
 		int cnt = mService.updateMemoSet(vo);
@@ -99,7 +99,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memo/list.do")
 	@ResponseBody
-	public ResultVO memoList(HttpServletRequest request, MemoSetVO msVO) {
+	public ResultVO memoList(HttpServletRequest request, DMemoSetVO msVO) {
 
 		ResultVO out = new ResultVO();
 		
@@ -109,7 +109,7 @@ public class MemoController {
 			out.setResultMsg("wrong user");
 		} else {
 			msVO.setMember_seq(user.getSeq());
-			List<MemoVO> memoSet = mService.getMemoList(msVO);
+			List<DMemoVO> memoSet = mService.getMemoList(msVO);
 			if (memoSet != null) {
 				out.setResultCode(0);
 				out.setResult(memoSet);
@@ -120,7 +120,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memo/insert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultVO memoInsert(MemoVO vo) {
+	public ResultVO memoInsert(DMemoVO vo) {
 
 		ResultVO out = new ResultVO();
 		
@@ -135,7 +135,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memo/update.do")
 	@ResponseBody
-	public ResultVO memoUpdate(HttpServletRequest request, MemoVO vo) {
+	public ResultVO memoUpdate(HttpServletRequest request, DMemoVO vo) {
 		System.out.println("MemoVO: " + vo.toString());
 		
 		ResultVO out = new ResultVO();
@@ -156,7 +156,7 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memo/get.do")
 	@ResponseBody
-	public ResultVO memoGet(HttpServletRequest request, MemoVO vo) {
+	public ResultVO memoGet(HttpServletRequest request, DMemoVO vo) {
 
 		ResultVO out = new ResultVO();
 		

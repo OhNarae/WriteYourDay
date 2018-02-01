@@ -3,24 +3,24 @@ package util;
 import java.util.List;
 
 import vo.DUserVO;
-import vo.MemoSetVO;
-import vo.MemoVO;
+import vo.DMemoSetVO;
+import vo.DMemoVO;
 
 public interface MemoService {
 	
 	int MEMO_SET_DIARY = 1;
 	
-	List<MemoSetVO> getMemoSetList(DUserVO user);
+	List<DMemoSetVO> getMemoSetList(DUserVO user);
 	
-	int insertMemoSet(MemoSetVO vo);
+	int insertMemoSet(DMemoSetVO vo);
 	
-	int updateMemoSet(MemoSetVO vo);
+	int updateMemoSet(DMemoSetVO vo);
 	
-	List<MemoVO> getMemoList(MemoSetVO vo);
+	List<DMemoVO> getMemoList(DMemoSetVO vo);
 	
-	MemoVO getMemo(MemoVO vo);
+	DMemoVO getMemo(DMemoVO vo);
 	
-	int insertMemo(MemoVO mvo);
+	int insertMemo(DMemoVO mvo);
 
-	int updateMemo(MemoVO mvo);
+	int updateMemo(DMemoVO mvo);
 }

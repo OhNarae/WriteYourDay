@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.lf5.util.DateFormatManager;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import util.DiaryService;
 import util.MemoService;
+import vo.DCashbookVO;
 import vo.DEventVO;
 import vo.DUserVO;
-import vo.MemoVO;
+import vo.DMemoVO;
 import vo.ResultVO;
+import vo.WDay;
 import vo.WMonth;
 
 /**
@@ -106,10 +109,10 @@ public class DiaryController {
 		mav.addObject("date", formattedDate);
 		
 		//해당 날짜의 메모 가져오기 
-		MemoVO memo = new MemoVO();
+		DMemoVO memo = new DMemoVO();
 		memo.setSet_seq(MemoService.MEMO_SET_DIARY);
 		memo.setName(formattedDate);
-		MemoVO rMemo = sMemo.getMemo(memo);		
+		DMemoVO rMemo = sMemo.getMemo(memo);		
 		if(null == rMemo)
 			mav.addObject("memo", memo);
 		else mav.addObject("memo", rMemo);
@@ -118,7 +121,7 @@ public class DiaryController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/events/list.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/list.do", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultVO eventsList(HttpServletRequest request, ModelAndView mav, DEventVO event) {
 		ResultVO out = new ResultVO();
@@ -149,17 +152,85 @@ public class DiaryController {
 		return out;
 	}
 
-	@RequestMapping(value = "/events/insert.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/insert.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultVO eventsInsert(HttpServletRequest request, ModelAndView mav, DEventVO event) {
+	public ResultVO eventsInsert(HttpServletRequest request, DEventVO event) throws ParseException {
 		ResultVO out = new ResultVO();
 		
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
 		
 		event.setMember_seq(user.getSeq());
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		Date endDate = dateFormat.parse(event.getEnd_date());		
+		event.setEnd_date(dateFormat.format(endDate));
+		
 		sDiary.insertEvent(event);
 		
+		return out;
+	}
+	
+	@RequestMapping(value = "/event/delete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO eventsDelete(HttpServletRequest request, DEventVO event) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		event.setMember_seq(user.getSeq());
+		sDiary.deleteEvent(event);
+		
+		return out;
+	}
+	
+	@RequestMapping(value = "/cashbook/insert.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO cashbookInsert(HttpServletRequest request, DCashbookVO cash) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		cash.setMember_seq(user.getSeq());		
+		sDiary.insertCashbook(cash);
+		
+		return out;
+	}
+	
+	@RequestMapping(value = "/cashbook/delete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO cashbookDelete(HttpServletRequest request, DCashbookVO cash) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		cash.setMember_seq(user.getSeq());
+		sDiary.deleteCashbook(cash);
+		
+		return out;
+	}
+	
+	@RequestMapping(value = "/cashbook/list.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO cashbookList(HttpServletRequest request, WDay wday) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		wday.setMember_seq(user.getSeq());
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		Date startDate = dateFormat.parse(wday.getStart_date());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(startDate);
+		cal.add(Calendar.DATE, 1);
+		wday.setEnd_date(dateFormat.format(cal.getTime()));
+		
+		out.setResult(sDiary.getCashbookList(wday));
 		return out;
 	}
 }

@@ -1,13 +1,13 @@
 package vo;
 
-public class MemoVO {
+public class DMemoVO {
 	
 	int set_seq;
 	int seq;
 	String name;
 	String contents;
 	
-	public MemoVO() {
+	public DMemoVO() {
 		contents="";
 	}
 	

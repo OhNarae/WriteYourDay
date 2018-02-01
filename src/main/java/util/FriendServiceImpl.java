@@ -9,9 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import vo.DUserVO;
-import vo.MemoSetVO;
-import vo.MemoVO;
-import vo.TalkVO;
+import vo.DMemoSetVO;
+import vo.DMemoVO;
+import vo.DTalkVO;
 
 @Service
 public class FriendServiceImpl implements FriendService {

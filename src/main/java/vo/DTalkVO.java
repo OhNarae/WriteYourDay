@@ -2,7 +2,7 @@ package vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class TalkVO {
+public class DTalkVO {
 
 	private int member_seq;
 	private int talk_seq;
@@ -14,7 +14,7 @@ public class TalkVO {
 	private String writer_id;
 	private String writer_name;
 
-	public TalkVO() {
+	public DTalkVO() {
 		contents_talk ="";
 		contents_uploadfile_path ="";
 	}

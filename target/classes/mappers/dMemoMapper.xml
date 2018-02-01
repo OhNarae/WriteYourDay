@@ -5,7 +5,7 @@
 
 <mapper namespace="mappers.memo">
 
-	<select id="getMemoSetList" resultType="vo.MemoSetVO">
+	<select id="getMemoSetList" resultType="vo.DMemoSetVO">
 		select ms.* from
 		MEMO_SET_TB ms join MEMBER_TB mb on ms.member_seq = mb.seq where mb.id = #{id}
 	</select>
@@ -20,12 +20,12 @@
 		where seq = #{seq}
 	</update>
 
-	<select id="getMemoList" resultType="vo.MemoVO">
+	<select id="getMemoList" resultType="vo.DMemoVO">
 		select * from
 		MEMO_TB where set_seq = #{seq}
 	</select>
 
-	<select id="getMemo" resultType="vo.MemoVO">
+	<select id="getMemo" resultType="vo.DMemoVO">
 		select set_seq, seq, name,
 		contents from MEMO_TB where set_seq = #{set_seq} 
 			<if test="seq > 0">and seq = #{seq}</if>

@@ -5,7 +5,7 @@
 
 <mapper namespace="mappers.dtalk">
 
-	<select id="getTalkList" resultType="vo.TalkVO">
+	<select id="getTalkList" resultType="vo.DTalkVO">
 		select t.*, m.id writer_id, m.name writer_name from TALK_TB t join MEMBER_TB m on t.writer_seq = m.seq where t.member_seq = #{member_seq} order by talk_seq desc
 	</select>
 	

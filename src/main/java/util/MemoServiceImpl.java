@@ -8,8 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import vo.DUserVO;
-import vo.MemoSetVO;
-import vo.MemoVO;
+import vo.DMemoSetVO;
+import vo.DMemoVO;
 
 @Service
 public class MemoServiceImpl implements MemoService {
@@ -20,43 +20,43 @@ public class MemoServiceImpl implements MemoService {
 	private static final String namespace = "mappers.memo";
 	
 	@Override
-	public List<MemoSetVO> getMemoSetList(DUserVO user) {
+	public List<DMemoSetVO> getMemoSetList(DUserVO user) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + ".getMemoSetList", user);
 	}
 
 	@Override
-	public int insertMemoSet(MemoSetVO vo) {
+	public int insertMemoSet(DMemoSetVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(namespace + ".insertMemoSet", vo);
 	}
 	
 	@Override
-	public int updateMemoSet(MemoSetVO vo) {
+	public int updateMemoSet(DMemoSetVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(namespace + ".updateMemoSet", vo);
 	}
 
 	@Override
-	public List<MemoVO> getMemoList(MemoSetVO vo) {
+	public List<DMemoVO> getMemoList(DMemoSetVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + ".getMemoList", vo);
 	}
 
 	@Override
-	public MemoVO getMemo(MemoVO vo) {
+	public DMemoVO getMemo(DMemoVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + ".getMemo", vo);
 	}
 
 	@Override
-	public int insertMemo(MemoVO vo) {
+	public int insertMemo(DMemoVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(namespace + ".insertMemo", vo);
 	}
 
 	@Override
-	public int updateMemo(MemoVO vo) {
+	public int updateMemo(DMemoVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(namespace + ".updateMemo", vo);
 	}

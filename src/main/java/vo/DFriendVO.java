@@ -1,6 +1,6 @@
 package vo;
 
-public class FriendVO {
+public class DFriendVO {
 
 	private int friend_seq;
 	private int me_member_seq;
