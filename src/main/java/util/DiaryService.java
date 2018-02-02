@@ -3,6 +3,7 @@ package util;
 import java.util.List;
 
 import vo.DCashbookVO;
+import vo.DEventShareVO;
 import vo.DEventVO;
 import vo.DUserVO;
 import vo.WDay;
@@ -10,7 +11,7 @@ import vo.DMemoVO;
 
 public interface DiaryService {
 	
-	List<DEventVO> getEventList(DEventVO event);
+	List<DEventVO> getEventList(WDay wday);
 	
 	DEventVO getEvent(DEventVO event);
 	
@@ -23,4 +24,6 @@ public interface DiaryService {
 	int insertCashbook(DCashbookVO cash);
 	
 	int deleteCashbook(DCashbookVO cash);
+	
+	int insertEventShare(DEventShareVO share);
 }

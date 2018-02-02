@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.spi.CalendarDataProvider;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import util.FriendService;
 import util.MemberService;
 import vo.DResultVO;
 import vo.DUserVO;
@@ -36,6 +38,9 @@ public class HomeController {
 
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private FriendService sFriend;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -64,7 +69,22 @@ public class HomeController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/pickfriend.do")
+	public ModelAndView talk(HttpServletRequest request, ModelAndView mav) {
 
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		if (null == user) {
+			mav.setViewName("redirect:login.do");
+			return mav; // 로그인 된 상태
+		}
+		
+		List<DUserVO> friendList = sFriend.getFriendList(user);
+		mav.addObject("friendList", friendList);
+		
+		mav.setViewName("popup/pickfriend");
+		return mav;
+	}
 
 	/*
 	 * @RequestMapping(value = "/getJsonByVO.do")

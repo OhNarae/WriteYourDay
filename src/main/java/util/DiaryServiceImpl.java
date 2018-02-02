@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import vo.DCashbookVO;
+import vo.DEventShareVO;
 import vo.DEventVO;
 import vo.DUserVO;
 import vo.WDay;
@@ -25,9 +26,8 @@ public class DiaryServiceImpl implements DiaryService {
 	private static final String namespace = "mappers.diary";
 
 	@Override
-	public List<DEventVO> getEventList(DEventVO event) {
-		System.out.println("getEventList DEventVO: " + event.toString());
-		return sqlSession.selectList(namespace + ".getEventList", event);
+	public List<DEventVO> getEventList(WDay wday) {
+		return sqlSession.selectList(namespace + ".getEventList", wday);
 	}
 	
 	@Override
@@ -50,7 +50,6 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	@Override
 	public List<DEventVO> getCashbookList(WDay days) {
-		System.out.println("getCashbookList WDay: " + days.toString());
 		return sqlSession.selectList(namespace + ".getCashList", days);
 	}
 	
@@ -61,6 +60,12 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	@Override
 	public int deleteCashbook(DCashbookVO cash) {
+		System.out.println("DCashbookVO" + cash.toString());
 		return sqlSession.delete(namespace + ".deleteCash", cash);
+	}
+	
+	@Override
+	public int insertEventShare(DEventShareVO share) {
+		return sqlSession.insert(namespace + ".insertEventShare", share);
 	}
 }

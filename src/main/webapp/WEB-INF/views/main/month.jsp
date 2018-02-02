@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="resources/css/grid.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/month.js?version=0127" type="text/javascript"></script>
+<script src="resources/js/month.js?version=0202" type="text/javascript"></script>
 <style type="text/css">
 
 /* 월별 스케쥴 테이블 스타일 */
@@ -118,8 +118,7 @@
 					for="ck-cal1" class="text-2">가계부 사용</label>
 				<div id="cal-div">
 					<div class="indent-top"></div>
-					<div align="right">총 지출: 2000원</div>
-					<div align="right">총 수입: 1000원</div>
+					<div align="right">총 지출: <span id="totalCal"></span>원</div>
 					<table class="cal-tb">
 						<tr>
 							<th class="cal-row">장소</th>

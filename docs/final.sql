@@ -24,6 +24,18 @@ CREATE TABLE EVENT_TB (
 	CONSTRAINT FK_EVENT_MEMBER FOREIGN KEY(member_seq) REFERENCES MEMBER_TB(seq)
 );
 
+
+CREATE TABLE EVENT_SHARE_TB(
+	member_seq NUMBER(5),		--해당 이벤트를 소유하는 유저
+	event_seq NUMBER(5),
+	you_member_seq NUMBER(5),
+	status NUMBER(2),	--0:요청, 1:승낙, 2:거절, 3:취소
+	req_date DATE,	--요청날짜
+	resp_date DATE,	--응답날짜
+	cancle_date DATE,
+	CONSTRAINT PK_EVENT_SHARE PRIMARY KEY(member_seq, event_seq, you_member_seq)
+);
+
 CREATE TABLE EVENT_MEMO_TB (
 	member_seq NUMBER(5),		--해당 이벤트를 소유하는 유저
 	event_seq NUMBER(5),

@@ -11,16 +11,15 @@
 <link rel="stylesheet" href="resources/css/grid.css" type="text/css"
 	media="screen">
 <script src="./resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script>
+ <script>
 	$(document).ready(function(){
-		/* alert('${member.id}') */
-		if(${member.id != ""})
+ 		if(${not empty loginInfo.id})
 			$('#top_menu').html('<a class="menu" href="mypage.do" target="article"><span><strong>M</strong>yPage</span></a>'+
 					'&nbsp;&nbsp;&nbsp;<a class="menu" href="logout.do"><span><strong>L</strong>ogout</span></a>')
-		else
-			$('#top_menu').html('<a class="menu" href="index.html"><span><strong>L</strong>ogin</span></a>')
+/* 		else
+			$('#top_menu').html('<a class="menu" href="index.html"><span><strong>L</strong>ogin</span></a>') */
 	})
-</script>
+</script> 
 </head>
 <body id="page1">
 	<!--==============================header==============================-->
@@ -30,15 +29,14 @@
 				<div class="container_12">
 					<div class="grid_8">
 						<h1>
-							<a class="logo" href="index.do"><span>Write</span><strong>Y</strong>our<strong>D</strong>ay
+							<a class="logo" href="/WriteYourDay/"><span>Write</span><strong>Y</strong>our<strong>D</strong>ay
 							</a>
 						</h1>
 					</div>
 					<div class="grid_4" align="right">
 						<h1 id="top_menu">
-							<!-- <a class="menu" href="index.html"><span><strong>L</strong>ogin</span></a> -->
-							<!-- <a class="menu" href="index.html"><span><strong>M</strong>yPage</span></a> -->
-							<!-- <a class="menu" href="index.html"><span><strong>L</strong>ogout</span></a> -->
+<!-- 							<a class="menu" href="mypage.do" target="article"><span><strong>M</strong>yPage</span></a> 
+							&nbsp;&nbsp;&nbsp;<a class="menu" href="logout.do"><span><strong>L</strong>ogout</span></a> -->
 						</h1>
 					</div>
 				</div>

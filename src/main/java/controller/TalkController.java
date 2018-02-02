@@ -59,6 +59,22 @@ public class TalkController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/friends/list.do")
+	@ResponseBody
+	public ResultVO friendsList(HttpServletRequest request, DTalkVO vo) {
+
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		List<DUserVO> friendList = sFriend.getFriendList(user);
+		out.setResult(friendList);
+
+		return out;
+	}	
+	
+	
 	@RequestMapping(value = "/talkbody.do")
 	public ModelAndView talkbody(HttpServletRequest request, ModelAndView mav, DUserVO targetUser) {
 

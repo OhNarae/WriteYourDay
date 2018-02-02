@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import util.DiaryService;
 import util.MemoService;
 import vo.DCashbookVO;
+import vo.DEventShareVO;
 import vo.DEventVO;
 import vo.DUserVO;
 import vo.DMemoVO;
@@ -85,6 +86,38 @@ public class DiaryController {
 		mav.setViewName("main/month");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/month/event/list.do", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultVO monthEventsList(HttpServletRequest request, WDay wday) {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		wday.setMember_seq(user.getSeq());
+		if(wday.getEnd_date() == null) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+			Date endDate = null;
+			Date startDate;
+			try {
+				startDate = dateFormat.parse(wday.getStart_date());
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(startDate);
+				cal.add(Calendar.MONTH, 1);
+				endDate = cal.getTime();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String strEndDate = dateFormat.format(endDate);
+			wday.setEnd_date(strEndDate);
+		}
+		out.setResult(sDiary.getEventList(wday));
+		
+		return out;
+	}
+	
 
 	@RequestMapping(value = "/myday.do", method = RequestMethod.GET)
 	public ModelAndView myday(HttpServletRequest request, ModelAndView mav, WMonth monthInfo) {
@@ -123,31 +156,31 @@ public class DiaryController {
 	
 	@RequestMapping(value = "/event/list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultVO eventsList(HttpServletRequest request, ModelAndView mav, DEventVO event) {
+	public ResultVO eventsList(HttpServletRequest request, ModelAndView mav, WDay wday) {
 		ResultVO out = new ResultVO();
 		
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
 		
-		event.setMember_seq(user.getSeq());
-		if(event.getEnd_date() == null) {
+		wday.setMember_seq(user.getSeq());
+		if(wday.getEnd_date() == null) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 			Date endDate = null;
 			Date startDate;
 			try {
-				startDate = dateFormat.parse(event.getStart_date());
+				startDate = dateFormat.parse(wday.getStart_date());
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(startDate);
-				cal.add(Calendar.MONTH, 1);
+				cal.add(Calendar.DATE, 1);
 				endDate = cal.getTime();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String strEndDate = dateFormat.format(endDate);
-			event.setEnd_date(strEndDate);
+			wday.setEnd_date(strEndDate);
 		}
-		out.setResult(sDiary.getEventList(event));
+		out.setResult(sDiary.getEventList(wday));
 		
 		return out;
 	}
@@ -223,14 +256,30 @@ public class DiaryController {
 		
 		wday.setMember_seq(user.getSeq());
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-		Date startDate = dateFormat.parse(wday.getStart_date());
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(startDate);
-		cal.add(Calendar.DATE, 1);
-		wday.setEnd_date(dateFormat.format(cal.getTime()));
+		if(wday.getEnd_date() == null) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+			Date startDate = dateFormat.parse(wday.getStart_date());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(startDate);
+			cal.add(Calendar.DATE, 1);
+			wday.setEnd_date(dateFormat.format(cal.getTime()));
+		}
 		
 		out.setResult(sDiary.getCashbookList(wday));
+		return out;
+	}
+	
+	@RequestMapping(value = "/event/share/insert.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO eventShareInsert(HttpServletRequest request, DEventShareVO share) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		share.setMember_seq(user.getSeq());		
+		sDiary.insertEventShare(share);
+		
 		return out;
 	}
 }

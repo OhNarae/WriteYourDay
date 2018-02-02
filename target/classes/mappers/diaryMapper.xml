@@ -64,4 +64,9 @@
 		delete CASHBOOK_TB 
 		where member_seq = #{member_seq} and seq = #{seq}
 	</delete>
+	
+	<insert id="insertEventShare">
+		insert into EVENT_SHARE_TB ( member_seq, event_seq, you_member_seq, status, req_date) 
+		values( #{member_seq}, #{event_seq}, #{you_member_seq}, 0, sysdate)
+	</insert>
 </mapper>

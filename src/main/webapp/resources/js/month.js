@@ -2,26 +2,30 @@
 $(document).ready(function() {
 	var monthInfo = new Date($('#monthTitle').text()+'.01');	
 
-	setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), null);	
-	
 	$('#cal-div').hide();
 	$('input[name=ck-cal1]').on('click', function() {
 		if ($('input[name=ck-cal1]').is(":checked")) {
-			$('#cal-body').append('<tr><td class="cal-row">이마트</td><td class="cal-row">2000</td></tr>');
+			/*$('#cal-body').append('<tr><td class="cal-row">이마트</td><td class="cal-row">2000</td></tr>');*/
 			$('#cal-div').show();
+			cashbookList();			
 		} else {
 			$('#cal-div').hide();
 		}
 	})
+	
+	$.ajax({
+		type: 'Get',
+		url: '/WriteYourDay/month/event/list.do',
+		data:{
+			start_date : $('#monthTitle').text()+'.01'
+		},
+		success: function(out){
+			setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), out.result);	
+        }	
+	})
 })
 
-/*var events = [
-	{start_date: '2018-01-03',end_date: '2018-01-06',title: '기린은 길어 길으면 기차 기차는 빨라123456789', color:'#FFE05C'},
-	{start_date: '2018-01-05',end_date: '2018-01-08',title: '빠르면비행기비행기는높아높으면백두산', color:'#C6D6F7'},
-	{start_date: '2018-01-08',end_date: '2018-01-09',title: '새로운이벤트입니다.', color:'#E18060'}
-];//
-*/
-/*function getMSetList(){
+/*function getCashbookList(){
 	$.ajax({
 		type: 'Get',
 		url: '/WriteYourDay/events/list.do',
@@ -34,6 +38,35 @@ $(document).ready(function() {
         }	
 	})
 }*/
+
+function cashbookList(){
+	var monthInfo = new Date($('#monthTitle').text()+'.01');
+	var lastDate = new Date(monthInfo.getFullYear(), monthInfo.getMonth() + 1, 0);
+
+	$.ajax({
+		type: 'Post',
+		url: '/WriteYourDay/cashbook/list.do',
+        data: {
+        	start_date: $('#monthTitle').text() +'.01',
+        	end_date: $('#monthTitle').text() + '.' + lastDate.getDate()
+        },
+		success: function(out){
+			var totalCal = 0;
+			$('#cal-body').html('');
+            $.each(out.result, function(i, item){
+            	//<tr><td class="cal-row">이마트</td><td class="cal-row">2000</td></tr>
+            	var tr = '<tr>';
+            	tr += '<td class="cal-row">' + item.pay_place + '</td>'
+            	tr += '<td class="cal-row">' + item.price + '</td></tr>';
+            	$('#cal-body').append(tr);
+            	
+            	totalCal += item.price;
+            })
+            
+            $('#totalCal').text(totalCal);
+         }	
+	})
+}
 
 function setMonth(year, month, events){
 	
@@ -55,9 +88,11 @@ function setMonth(year, month, events){
 			var start = start_date.getDate() - 1;
 			if(start_date.getTime() < firstDate.getTime())
 				start = 0;
+			
 			var term = end_date.getDate() - start;
-		   
-			var place = -1;
+		    if(0==end_date.getHours() && 0==end_date.getMinutes()) --term;//event의 종료날짜가 00시00분일경우
+			
+		    var place = -1;
 		    for(var i = 0; i < term ; i++){	    	
 		    	var day = i + start;
 		    	for(var j = 0 ; j < dayEventsLimit ; j++){
@@ -67,7 +102,8 @@ function setMonth(year, month, events){
 		    			place = j;
 		    			break;
 		    		}
-		    	}	    		
+		    	}	
+		    	if(place == -1) break;
 		    }
 		}
 	}	
@@ -89,7 +125,8 @@ function setMonth(year, month, events){
 				td += '<a href="/WriteYourDay/myday.do?date='+year+'.'+(month+1)+'.'+dates+'">' + dates + '</a><br>';
 				for(var k = 0 ; k < dayEventsLimit ; k++){
 					if(dayEvents[dates-1][k]){
-						td += '<div style="background-color: ' + dayEvents[dates-1][k][0] + '"><strong><FONT face="Arial Black">' + dayEvents[dates-1][k][1] + '</FONT><strong></div>';
+						/*alert(dates + 'k: ' + k + ',color: ' + dayEvents[dates-1][k][1])*/
+						td += '<div style="background-color: ' + dayEvents[dates-1][k][0] + ';margin-bottom:1px"><strong><FONT face="Arial Black">' + (dayEvents[dates-1][k][1].length==0?'&nbsp;':dayEvents[dates-1][k][1]) + '</FONT><strong></div>';
 					}
 					else
 						td += '<br>';

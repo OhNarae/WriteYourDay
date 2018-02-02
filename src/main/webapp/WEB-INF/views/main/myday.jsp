@@ -7,6 +7,7 @@
 <head>
 <title>Day</title>
 <script src="resources/js/myday.js?version=180202" type="text/javascript"></script>
+<link rel="stylesheet" href="resources/css/popup.css?version=180202" type="text/css" media="screen">
 <style type="text/css">
 .day-tb {
 	border-collapse: collapse;
@@ -25,6 +26,9 @@
 	word-break: normal;
 	height: 10px;
 	width: 250px;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: white;
 }
 
 .day-tb th {
@@ -135,8 +139,29 @@ textarea {
 						<input type="text" id="e_end_date" readonly="readonly"> 
 						<a class="fright" id="insertEvent">저장</a></td>
 				</tr>
-				<tbody id="eventT-body"></tbody>
+				<tbody id="eventT-body">
+				</tbody>
 			</table>
+			<div class="dim-layer">
+					<div class="dimBg"></div>
+					<div id="layer" class="pop-layer">
+						<a href="#" class="btn-layerClose" id="popBtnClose"><img
+							src="resources/images/close.png" alt="닫기" /></a>
+						<div class="pop-container">
+							<div class="pop-conts">
+<!-- 								<label for="#">event:</label><span class="pop-input">숭구리당당</span> <br> -->
+								<label for="#">event:</label><input id="pop-title" value="숭구리당당"> <br>
+								<label for="#">start:</label><input id="pop-start"value="2018-01-16 12:00"> <br>
+								<label for="#">end:</label><input id="pop-end"value="2018-01-17 12:00"> <br>
+								<label for="#">friend:</label><select id="pop-friends"></select>
+								<div class="btn-r">
+									<input id="popName" type=text> 									
+									<a href="#" class="btn-layer" id="popBtn">공유</a>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
 			<div class="indent-top"></div>
 			<table class="day-tb" style="width: 100%;">
 				<tr>
@@ -144,7 +169,7 @@ textarea {
 				</tr>
 				<tr class="day-input-tb">
 					<td colspan="5"><input type="text" id="pay_date" value="${date} 00:00:00" class="fleft spacing2">
-						<span class="select-editable spacing2"> <select
+						<span class="select-editable spacing2"> <select 
 							onchange="this.nextElementSibling.value=this.value">
 								<option value=""></option>
 								<option value="#스타벅스">#스타벅스</option>
