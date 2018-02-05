@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="resources/css/popup.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/talk.js?version=201801" type="text/javascript"></script>
+<script src="resources/js/talk.js?version=20180205" type="text/javascript"></script>
 <script>
 
 
@@ -68,25 +68,25 @@
 							target="talkbody" class="color-3">me</a></th>
 					</tr>
 					<tbody id="menuL-fbody">
-						<tr>
+<%-- 						<tr>
 							<td><c:forEach var="item" items="${friendList}">
 									<li><a href="talkbody.do?seq=${item.seq}"
 										target="talkbody">${item.id}</a></li>
 								</c:forEach></td>
-						</tr>
-						<tr>
-							<td>
-								<div id="search-form">
-									<fieldset>
-										<div class="search-field">
-											<input id="searchId" name="searchId" type="text" /> <a
-												class="search-button" href="#" id="sMemberBtn"><span>search</span></a>
-										</div>
-									</fieldset>
-								</div>
-							</td>
-						</tr>
+						</tr> --%>
 					</tbody>
+					<tr>
+						<td>
+							<div id="search-form">
+								<fieldset>
+									<div class="search-field">
+										<input id="searchId" name="searchId" type="text" /> <a
+											class="search-button" href="#" id="sMemberBtn"><span>search</span></a>
+									</div>
+								</fieldset>
+							</div>
+						</td>
+					</tr>
 					<tbody id="menuL-body"></tbody>
 				</table>
 			</div>

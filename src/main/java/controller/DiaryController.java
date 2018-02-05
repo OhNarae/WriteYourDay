@@ -282,4 +282,50 @@ public class DiaryController {
 		
 		return out;
 	}
+	
+	@RequestMapping(value = "/event/share/list.do")
+	@ResponseBody
+	public ResultVO eventShareList(HttpServletRequest request) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		DEventShareVO share = new DEventShareVO();
+		share.setYou_member_seq(user.getSeq());		
+		share.setStatus(DiaryService.EVENTSHARE_STATUS_REQ);
+		out.setResult(sDiary.getEventShareList(share));
+
+		return out;
+	}
+	
+	@RequestMapping(value = "/event/share/ok.do")
+	@ResponseBody
+	public ResultVO eventShareOk(HttpServletRequest request, DEventShareVO share) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		share.setYou_member_seq(user.getSeq());		
+		share.setStatus(DiaryService.EVENTSHARE_STATUS_OK);
+		sDiary.copyEvent(share);
+
+		return out;
+	}
+	
+	@RequestMapping(value = "/event/share/reject.do")
+	@ResponseBody
+	public ResultVO eventShareReject(HttpServletRequest request, DEventShareVO share) throws ParseException {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		share.setYou_member_seq(user.getSeq());		
+		share.setStatus(DiaryService.EVENTSHARE_STATUS_REJECT);
+		sDiary.updateEventShare(share);
+
+		return out;
+	}
 }

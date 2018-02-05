@@ -1,6 +1,7 @@
 
 
 $(document).ready(function(){
+	fList();
 	$("#sMemberBtn").click(function(){
 		$.ajax({
 			type: 'Post',
@@ -20,4 +21,20 @@ $(document).ready(function(){
 		})	
 	})
 })
+
+function fList(){
+	$.ajax({
+		type: 'Post',
+		url: '/WriteYourDay/friends/list.do',
+		success: function(out){
+			$('#menuL-fbody').html('');
+			var tr = '<tr><td>';
+            $.each(out.result, function(i, item){
+            	tr += '<li><a href="talkbody.do?seq=' + item.seq + '" target="talkbody">'+item.id+'</a></li>';
+            })
+            tr += '</td></tr>';
+            $('#menuL-fbody').append(tr);
+         }	
+	})	
+}
 

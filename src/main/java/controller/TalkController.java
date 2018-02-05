@@ -25,6 +25,7 @@ import util.MemoService;
 import util.TalkService;
 import vo.DUserVO;
 import vo.ResultVO;
+import vo.DFriendVO;
 import vo.DTalkVO;
 
 /**
@@ -41,7 +42,7 @@ public class TalkController {
 	private TalkService sTalk;
 	@Autowired
 	private FriendService sFriend;
-	
+
 	@RequestMapping(value = "/talk.do")
 	public ModelAndView talk(HttpServletRequest request, ModelAndView mav) {
 
@@ -51,30 +52,31 @@ public class TalkController {
 			mav.setViewName("redirect:login.do");
 			return mav; // 로그인 된 상태
 		}
-		
+
 		List<DUserVO> friendList = sFriend.getFriendList(user);
 		mav.addObject("friendList", friendList);
-		
+
 		mav.setViewName("main/talk");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/friends/list.do")
 	@ResponseBody
-	public ResultVO friendsList(HttpServletRequest request, DTalkVO vo) {
+	public ResultVO friendsList(HttpServletRequest request) {
 
 		ResultVO out = new ResultVO();
-		
+
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		
+
 		List<DUserVO> friendList = sFriend.getFriendList(user);
 		out.setResult(friendList);
+		
+		System.out.print(friendList.size());
 
 		return out;
-	}	
-	
-	
+	}
+
 	@RequestMapping(value = "/talkbody.do")
 	public ModelAndView talkbody(HttpServletRequest request, ModelAndView mav, DUserVO targetUser) {
 
@@ -84,56 +86,63 @@ public class TalkController {
 			mav.setViewName("redirect:login.do");
 			return mav; // 로그인 된 상태
 		}
-		
-		targetUser = sMember.getMemberInfo(targetUser);
+
+		if(targetUser.getSeq() == 0) targetUser = user;
+		else targetUser = sMember.getMemberInfo(targetUser);
 		mav.addObject("target", targetUser);
+
+		if (targetUser != user) {
+			DFriendVO fvo = new DFriendVO();
+			fvo.setMe_member_seq(user.getSeq());
+			fvo.setYou_member_seq(targetUser.getSeq());
+			mav.addObject("friendInfo", sFriend.getFriend(fvo));
+		}
 
 		mav.setViewName("main/talkbody");
 		return mav;
 	}
-	
-	/** * 썸네일을 생성합니다. * 250 x 150 크기의 썸네일을 만듭니다. */ 
-	private void makeThumbnail(File oldFile, String fileExt) throws Exception { 
-		// 저장된 원본파일로부터 BufferedImage 객체를 생성합니다. 
-		BufferedImage srcImg = ImageIO.read(oldFile); 
-		// 썸네일의 너비와 높이 입니다. 
-		int MAX_WIDTH = 400, MAX_HEIGHT = 300; 
-		// 원본 이미지의 너비와 높이 입니다. 
-		int tempW = srcImg.getWidth(); 
-		int tempH = srcImg.getHeight(); 
-        if (tempW > tempH) {
-            if (tempW > MAX_WIDTH) {
-               tempH *= MAX_WIDTH / tempW;
-               tempW = MAX_WIDTH;
-            }
-        } else {
-            if (tempH > MAX_HEIGHT) {
-               tempW *= MAX_HEIGHT / tempH;
-               tempH = MAX_HEIGHT;
-            }
-        }
- 
-		BufferedImage destImg = Scalr.resize(srcImg, tempW, tempH); 
-		// 썸네일을 저장합니다. 기존 파일을 덮어씁니다. 
-		ImageIO.write(destImg, fileExt.toUpperCase(), oldFile); 
+
+	/** * 썸네일을 생성합니다. * 250 x 150 크기의 썸네일을 만듭니다. */
+	private void makeThumbnail(File oldFile, String fileExt) throws Exception {
+		// 저장된 원본파일로부터 BufferedImage 객체를 생성합니다.
+		BufferedImage srcImg = ImageIO.read(oldFile);
+		// 썸네일의 너비와 높이 입니다.
+		int MAX_WIDTH = 400, MAX_HEIGHT = 300;
+		// 원본 이미지의 너비와 높이 입니다.
+		int tempW = srcImg.getWidth();
+		int tempH = srcImg.getHeight();
+		if (tempW > tempH) {
+			if (tempW > MAX_WIDTH) {
+				tempH *= MAX_WIDTH / tempW;
+				tempW = MAX_WIDTH;
+			}
+		} else {
+			if (tempH > MAX_HEIGHT) {
+				tempW *= MAX_HEIGHT / tempH;
+				tempH = MAX_HEIGHT;
+			}
+		}
+
+		BufferedImage destImg = Scalr.resize(srcImg, tempW, tempH);
+		// 썸네일을 저장합니다. 기존 파일을 덮어씁니다.
+		ImageIO.write(destImg, fileExt.toUpperCase(), oldFile);
 	}
 
-	
 	@RequestMapping(value = "/talk/insert.do")
 	@ResponseBody
-	public ResultVO talkInsert(HttpServletRequest request, DTalkVO vo)
-			throws Exception {
+	public ResultVO talkInsert(HttpServletRequest request, DTalkVO vo) throws Exception {
 		ResultVO out = new ResultVO();
-		
+
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		
+
 		vo.setWriter_seq(user.getSeq());
 		// UploadFile 처리
-		MultipartFile uploadfile = vo.getContents_uploadfile() ; 
+		MultipartFile uploadfile = vo.getContents_uploadfile();
 		String filename = "No Image";
 		if (uploadfile != null && !uploadfile.isEmpty()) {
-			filename = "C:\\eclipse-workspace\\WriteYourDay\\src\\main\\webapp\\resources\\upload_images\\" + uploadfile.getOriginalFilename();
+			filename = "C:\\eclipse-workspace\\WriteYourDay\\src\\main\\webapp\\resources\\upload_images\\"
+					+ uploadfile.getOriginalFilename();
 			File upFile = new File(filename);
 			uploadfile.transferTo(upFile);
 			int index = filename.lastIndexOf(".");
@@ -152,11 +161,24 @@ public class TalkController {
 	public ResultVO memosetList(HttpServletRequest request, DTalkVO vo) {
 
 		ResultVO out = new ResultVO();
-		
+
 		List<DTalkVO> memoSet = sTalk.getTalkList(vo);
 		out.setResult(memoSet);
 
 		return out;
-	}	
+	}
 	
+	@RequestMapping(value = "/talk/insertFriend.do")
+	@ResponseBody
+	public ResultVO insertFriend(HttpServletRequest request, DUserVO vo) {
+
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		
+		ResultVO out = new ResultVO();
+
+		sFriend.insertFriend(user, vo);
+		return out;
+	}
+
 }

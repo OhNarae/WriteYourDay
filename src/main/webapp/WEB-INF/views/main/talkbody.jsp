@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/popup.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/talkbody.js?version=201801" type="text/javascript"></script>
+<script src="resources/js/talkbody.js?version=0225" type="text/javascript"></script>
 <style type="text/css">
 .talk-tb {
 	border-collapse: collapse;
@@ -59,7 +60,17 @@ textarea {
  		<div class="grid_8"> 
 				<table class="talk-tb" style="width: 98%;" id="tbContent">
 					<tr>
-						<td>${target == null ? sessionScope.loginInfo.id : target.id}님의 Talk</td>
+						<td>
+							${target.id}님의 Talk 
+  						    <span id="checkFriend">
+  						    <c:if test="${sessionScope.loginInfo.seq != target.seq}">
+  						    	<c:if test="${friendInfo == null}">
+									<a href="javascript:getFriend(${target.seq})">[친구요청]</a>
+								</c:if>
+								<c:if test="${friendInfo != null}">[친구]</c:if>
+							</c:if>
+							</span> 
+						</td>
 					</tr>	
 					<tr>
 						<td>

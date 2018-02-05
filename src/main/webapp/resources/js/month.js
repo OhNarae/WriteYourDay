@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-	var monthInfo = new Date($('#monthTitle').text()+'.01');	
+/*	var monthInfo = new Date($('#monthTitle').text()+'.01');	*/
 
 	$('#cal-div').hide();
 	$('input[name=ck-cal1]').on('click', function() {
@@ -13,6 +13,23 @@ $(document).ready(function() {
 		}
 	})
 	
+/*	$.ajax({
+		type: 'Get',
+		url: '/WriteYourDay/month/event/list.do',
+		data:{
+			start_date : $('#monthTitle').text()+'.01'
+		},
+		success: function(out){
+			setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), out.result);	
+        }	
+	})*/
+	eventList();
+	eventShareList();
+})
+
+function eventList(){
+	var monthInfo = new Date($('#monthTitle').text()+'.01');	
+	
 	$.ajax({
 		type: 'Get',
 		url: '/WriteYourDay/month/event/list.do',
@@ -23,21 +40,38 @@ $(document).ready(function() {
 			setMonth(monthInfo.getFullYear(), monthInfo.getMonth(), out.result);	
         }	
 	})
-})
+} 
 
-/*function getCashbookList(){
+function eventShareList(){
 	$.ajax({
 		type: 'Get',
-		url: '/WriteYourDay/events/list.do',
-		data:{
-			startdate : $('#monthTitle').text()+'.01'
-		},
+		url: '/WriteYourDay/event/share/list.do',
 		success: function(out){
-			var monthInfo = new Date($('#monthTitle').text()+'.01');
-			setMonth(monthInfo.getFullYear(), monthInfo.getMonth());	
+			var divs='';
+            $.each(out.result, function(i, item){
+            	divs += '<span class="msg fleft">&nbsp;&nbsp;&nbsp;&nbsp;' + item.event_title + ' </span><br>'
+            	divs += '<a class="abutton fright" href="javascript:updateEventShare(\'reject\','+item.member_seq+','+item.event_seq+')">거절</a>'
+            	divs += '<a class="abutton fright" href="javascript:updateEventShare(\'ok\','+item.member_seq+','+item.event_seq+')">수락</a><br>' 
+            });
+            $('#eventShareList').html(divs)
         }	
 	})
-}*/
+}
+
+function updateEventShare(type, m_seq, e_seq){
+	$.ajax({
+		type: 'Get',
+		url: '/WriteYourDay/event/share/'+type+'.do',
+		data:{
+			member_seq: m_seq,
+			event_seq: e_seq
+		},
+		success: function(){
+			eventList();
+			eventShareList();
+		}
+	})
+}
 
 function cashbookList(){
 	var monthInfo = new Date($('#monthTitle').text()+'.01');
@@ -111,6 +145,7 @@ function setMonth(year, month, events){
 	var start = firstDate.getDay(); 
 	var dates = 0;
 	
+	$('#month-body').html('')
 	for (var i = 0; i < 5; i++) {
 		$('#month-body').append('<tr>')
 		for (var j = 0; j < 7; j++) {
@@ -125,7 +160,6 @@ function setMonth(year, month, events){
 				td += '<a href="/WriteYourDay/myday.do?date='+year+'.'+(month+1)+'.'+dates+'">' + dates + '</a><br>';
 				for(var k = 0 ; k < dayEventsLimit ; k++){
 					if(dayEvents[dates-1][k]){
-						/*alert(dates + 'k: ' + k + ',color: ' + dayEvents[dates-1][k][1])*/
 						td += '<div style="background-color: ' + dayEvents[dates-1][k][0] + ';margin-bottom:1px"><strong><FONT face="Arial Black">' + (dayEvents[dates-1][k][1].length==0?'&nbsp;':dayEvents[dates-1][k][1]) + '</FONT><strong></div>';
 					}
 					else

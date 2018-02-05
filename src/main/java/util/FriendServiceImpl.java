@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import vo.DUserVO;
+import vo.DFriendVO;
 import vo.DMemoSetVO;
 import vo.DMemoVO;
 import vo.DTalkVO;
@@ -36,4 +37,12 @@ public class FriendServiceImpl implements FriendService {
 		
 		return sqlSession.insert(namespace + ".insert", input);
 	}
+
+	@Override
+	public DFriendVO getFriend(DFriendVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + ".getFriend", vo);
+	}
+	
+	
 }

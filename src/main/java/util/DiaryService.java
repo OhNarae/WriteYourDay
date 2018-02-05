@@ -11,6 +11,12 @@ import vo.DMemoVO;
 
 public interface DiaryService {
 	
+	//0:요청, 1:승낙, 2:거절, 3:취소
+	int EVENTSHARE_STATUS_REQ = 0;
+	int EVENTSHARE_STATUS_OK = 1;
+	int EVENTSHARE_STATUS_REJECT = 2;
+	int EVENTSHARE_STATUS_CANCEL = 3;
+	
 	List<DEventVO> getEventList(WDay wday);
 	
 	DEventVO getEvent(DEventVO event);
@@ -26,4 +32,10 @@ public interface DiaryService {
 	int deleteCashbook(DCashbookVO cash);
 	
 	int insertEventShare(DEventShareVO share);
+	
+	List<DEventShareVO> getEventShareList(DEventShareVO share);
+	
+	int updateEventShare(DEventShareVO share);
+	
+	int copyEvent(DEventShareVO share);
 }

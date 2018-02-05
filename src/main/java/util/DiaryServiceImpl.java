@@ -68,4 +68,24 @@ public class DiaryServiceImpl implements DiaryService {
 	public int insertEventShare(DEventShareVO share) {
 		return sqlSession.insert(namespace + ".insertEventShare", share);
 	}
+	
+	@Override
+	public List<DEventShareVO> getEventShareList(DEventShareVO share) {
+		return sqlSession.selectList(namespace + ".getEventShareList", share);
+	}
+	
+	@Override
+	public int updateEventShare(DEventShareVO share) {
+		return sqlSession.update(namespace + ".updateEventShare", share);
+	}
+
+	@Override
+	public int copyEvent(DEventShareVO share) {
+
+		int cnt = 0;
+		cnt = sqlSession.insert(namespace + ".copyEvent", share);
+		cnt = sqlSession.update(namespace + ".updateEventShare", share);
+		
+		return cnt;
+	}
 }

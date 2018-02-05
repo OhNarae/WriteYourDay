@@ -136,7 +136,7 @@ function eventlist() {
 				tr += '<td>' + item.title + '</td>'
 				tr += '<td>' + item.start_date.substring(0, 16) + '&nbsp;&nbsp;-&nbsp;&nbsp;' + item.end_date.substring(0, 16) + '</td>';
 				tr += '<td><a class="fright" href="javascript:deleteEvent(' + item.event_seq + ')">삭제</a>';
-				tr += '<a class="fright" href="javascript:layer_popup(' + item.event_seq + ')">공유</a></td></tr>';
+				tr += '<a class="fright indent-right2" href="javascript:layer_popup(' + item.event_seq + ')">공유</a></td></tr>';
 				$('#eventT-body').append(tr);
 			})
 		}

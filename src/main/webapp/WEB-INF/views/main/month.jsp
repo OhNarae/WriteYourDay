@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="resources/css/grid.css" type="text/css"
 	media="screen">
 <script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/month.js?version=0202" type="text/javascript"></script>
+<script src="resources/js/month.js?version=0205" type="text/javascript"></script>
 <style type="text/css">
 
 /* 월별 스케쥴 테이블 스타일 */
@@ -129,11 +129,7 @@
 				</div>
 				<div class="wrapper">
 					<div class="indent-top"></div>
-					<span class="msg fleft">- 숑숑 고등학교 동창</span><br> <a
-						class="abutton fright" href="#">거절</a><a class="abutton fright"
-						href="#">수락</a><br> <span class="msg fleft">- 숑숑 고등학교
-						동창</span><br> <a class="abutton fright" href="#">거절</a><a
-						class="abutton fright" href="#">수락</a><br>
+					<div id="eventShareList"></div>	
 				</div>
 			</div>
 		</div>

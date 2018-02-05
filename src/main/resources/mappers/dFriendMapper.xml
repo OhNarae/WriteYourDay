@@ -6,14 +6,19 @@
 <mapper namespace="mappers.dfriend">
 
 	<select id="getFriendList" resultType="vo.DUserVO">
-		SELECT m.seq, m.id, m.seq, m.name 
+		SELECT m.seq, m.id, m.name 
 		FROM FRIEND_TB f JOIN MEMBER_TB m ON f.you_member_seq = m.seq 
 		WHERE f.me_member_seq = #{seq}
 	</select>
 	
 	<insert id="insert" parameterType="hashMap" >
-		INSERT INTO FRIEND_TB( friend_seq, me_member_seq, you_member_seq, create_date) 
-		VALUES( SEQ_FRIEND.NEXTVAL, #{me.seq}, #{you.seq}, sysdate)
+		INSERT INTO FRIEND_TB( me_member_seq, you_member_seq, create_date) 
+		VALUES(#{me.seq}, #{you.seq}, sysdate)
 	</insert>
 
+	<select id="getFriend" resultType="vo.DFriendVO">
+		SELECT * 
+		FROM FRIEND_TB
+		WHERE me_member_seq = #{me_member_seq} and you_member_seq = #{you_member_seq}
+	</select>
 </mapper>

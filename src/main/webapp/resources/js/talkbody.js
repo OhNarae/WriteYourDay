@@ -21,6 +21,20 @@ $(document).ready(function(){
 	})
 })
 
+function getFriend(target_m_seq){
+	$.ajax({
+		type: 'Post',
+		url: '/WriteYourDay/talk/insertFriend.do',
+		data:{
+			seq: target_m_seq
+		},
+		success: function(){
+			$('#checkFriend').text('[친구]')
+			parent.fList();
+		}
+	});
+}
+
 function getlist(){	
 	$.ajax({
 		type: 'Post',

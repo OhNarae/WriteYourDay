@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
 <title>Day</title>
-<script src="resources/js/myday.js?version=180202" type="text/javascript"></script>
+<script src="resources/js/myday.js?version=0205" type="text/javascript"></script>
 <link rel="stylesheet" href="resources/css/popup.css?version=180202" type="text/css" media="screen">
 <style type="text/css">
 .day-tb {
