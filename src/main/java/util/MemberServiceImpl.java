@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import vo.DMemberVO;
+import vo.DMemoSetVO;
 import vo.DUserVO;
 
 @Service
@@ -59,7 +60,15 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public int insert(DMemberVO member) {
-		return sqlSession.insert(namespace + ".insert", member);
+		int cnt;
+		cnt = sqlSession.insert(namespace + ".insert", member);
+		
+		DMemoSetVO vo = new DMemoSetVO();
+		vo.setMember_seq(member.getSeq());
+		vo.setName("Diary");
+		cnt = sqlSession.insert("mappers.memo" + ".insertMemoSet", vo);
+		
+		return cnt;
 	}
 
 	/*

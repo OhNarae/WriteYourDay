@@ -25,8 +25,9 @@
 		insert into MEMBER_TB ( seq, id, password, name, pnumber,
 		birth, email, regdate) values( SEQ_MEMBER.NEXTVAL , #{id}, #{password}, #{name}, #{pnumber}, #{birth}, #{email}, sysdate)
 		
-		insert into MEMO_SET_TB(member_seq, seq, name)
-		values( SEQ_MEMBER.CURRVAL, 1, 'Diary')
+		<selectKey keyProperty="seq" resultType="Integer" order="AFTER">
+			select SEQ_MEMBER.CURRVAL from dual
+		</selectKey> 
 	</insert>
 
 	<update id="update">

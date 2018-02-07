@@ -1,4 +1,4 @@
-http://blog.daum.net/mindus/15564655
+sqlplus mysystem/myoracle@myoracledb.carphrhrboim.ap-northeast-2.rds.amazonaws.com:1521/ORCL
 
 CREATE TABLE MEMBER_TB (    
 	seq 		NUMBER(5) NOT NULL,

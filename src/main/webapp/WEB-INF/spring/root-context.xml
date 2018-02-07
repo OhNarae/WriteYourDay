@@ -9,12 +9,18 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<!-- 데이터베이스 연결 -->
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"></property> 
+		<property name="username" value="system"></property> <property name="password" 
+		value="oracle"></property> </bean> -->
+
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"></property>
-		<property name="username" value="system"></property>
-		<property name="password" value="oracle"></property>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@myoracledb.carphrhrboim.ap-northeast-2.rds.amazonaws.com:1521:ORCL" />
+		<property name="username" value="mysystem" />
+		<property name="password" value="myoracle" />
 	</bean>
 
 	<!-- SqlSessionFactory 객체 설정 - MyBatis 와 연동시 핵심 클래스 - DB 연결과 SQL 실행의 핵심 
