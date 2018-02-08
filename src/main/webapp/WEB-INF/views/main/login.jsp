@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../libs.jsp"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login 페이지</title>
-<meta charset="utf-8">
-<link rel="stylesheet" href="resources/css/reset.css" type="text/css"
-	media="screen">
-<link rel="stylesheet" href="resources/css/style.css" type="text/css"
-	media="screen">
-<link rel="stylesheet" href="resources/css/grid.css" type="text/css"
-	media="screen">
-<script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<title>Login</title>
 <script>
 	$(document).ready(function() {
 /* 		$('#msg').text(''); */
@@ -23,21 +16,11 @@
 		if ($('#password').val() == ""){ $('#msg').text('패스워드를 입력해주세요'); return; }
 		
 		if ($('#msg').text().length > 0) return;
-		
 
-/* 		$('#contact-form').id.value = $('#id').val(); //POST방식으로 넘기고 싶은 값
-		$('#contact-form').password.value = $('#password').val(); //POST방식으로 넘기고 싶은 값 */
-/* 		    f.src_name.value = s_name; //POST방식으로 넘기고 싶은 값
-		    f.src_value.value = s_value;//POST방식으로 넘기고 싶은 값
-		    f.action="XXXXXXX.php";//이동할 페이지
-		    f.method="post";//POST방식 */
 		$('#contact-form').action = "login.do";
 		$('#contact-form').method="post";
 		$('#contact-form').submit();
-
-
 		
-		/* document.getElementById('contact-form').submit(); */
 	}
 </script>
 </head>

@@ -11,7 +11,7 @@
 	
 	<insert id="insertTalk">
 		insert into TALK_TB ( member_seq, talk_seq, writer_seq, contents_talk, contents_uploadfile_path, create_date) 
-		values( #{member_seq}, (select nvl(max(talk_seq), 0)+1 from TALK_TB where member_seq = #{member_seq}) , #{writer_seq}, #{contents_talk}, #{contents_uploadfile_path}, sysdate)
+		values( #{member_seq}, (select nvl(max(talk_seq), 0)+1 from TALK_TB where member_seq = #{member_seq}) , #{writer_seq}, #{contents_talk}, #{contents_uploadfile_path}, TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss'))
 	</insert>
 
 </mapper>

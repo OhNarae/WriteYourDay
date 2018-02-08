@@ -1,20 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../libs.jsp"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <title>talkbody</title>
-<meta charset="utf-8">
-<link rel="stylesheet" href="resources/css/reset.css" type="text/css"
-	media="screen">
-<link rel="stylesheet" href="resources/css/style.css?version=201801"
-	type="text/css" media="screen">
-<link rel="stylesheet" href="resources/css/grid.css" type="text/css"
-	media="screen">
 <link rel="stylesheet" href="resources/css/popup.css" type="text/css"
 	media="screen">
-<script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="resources/js/talkbody.js?version=0225" type="text/javascript"></script>
+<script src="resources/js/talkbody.js?version=${sysVer}" type="text/javascript"></script>
 <style type="text/css">
 .talk-tb {
 	border-collapse: collapse;

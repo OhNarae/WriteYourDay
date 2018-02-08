@@ -71,8 +71,6 @@ public class TalkController {
 
 		List<DUserVO> friendList = sFriend.getFriendList(user);
 		out.setResult(friendList);
-		
-		System.out.print(friendList.size());
 
 		return out;
 	}

@@ -5,9 +5,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>Day</title>
-<script src="resources/js/myday.js?version=0205" type="text/javascript"></script>
-<link rel="stylesheet" href="resources/css/popup.css?version=180202" type="text/css" media="screen">
+<title>MyDay</title>
+<script src="resources/js/myday.js?version=${sysVer}" type="text/javascript"></script>
+<link rel="stylesheet" href="resources/css/popup.css?version=${sysVer}" type="text/css" media="screen">
 <style type="text/css">
 .day-tb {
 	border-collapse: collapse;

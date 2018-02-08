@@ -7,16 +7,24 @@
 <head>
 <title>Write Your Day</title>
 <meta charset="utf-8">
-<script>
-	$(document).ready(function(){
-		if(${not empty loginInfo.id}) topMenu();
-	})	
-	
-	function topMenu(){
-		$('#top_menu').html('<a class="menu" href="mypage.do" target="article"><span><strong>M</strong>yPage</span></a>'+
-		'&nbsp;&nbsp;&nbsp;<a class="menu" href="logout.do"><span><strong>L</strong>ogout</span></a>') 
-	}
-</script>
+<style type="text/css">
+
+ h2 {
+	font-family: Rubik, sans-serif;
+	display: block;
+	font-size: 2em;
+	font-weight: bold;
+	margin-left: 10px;
+} 
+
+p {
+	display: block;
+	font-weight: 300;
+	color: #817586;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+</style>
 </head>
 <body id="page1">
 	<!--==============================header==============================-->
@@ -31,7 +39,8 @@
 						</h1>
 					</div>
 					<div class="grid_4" align="right">
-						<h1 id="top_menu"></h1>
+						<h1 id="top_menu">
+						</h1>
 					</div>
 				</div>
 			</div>
@@ -46,9 +55,9 @@
 						<nav>
 							<ul class="menu">
 								<!-- <li style="width:540px;"><a class="active" href="index.html" style="width:540px;"><h2>2018.01.05</h2></a></li> -->
-								<li><a href="month.do" target="article">Month</a></li>
-								<li><a href="memo.do" target="article">Memo</a></li>
-								<li><a href="talk.do" target="article">Talk</a></li>
+								<li><a href="javascript:void(0)" target="article">Error</a></li>
+								<li><a href="javascript:void(0)" target="article">Error</a></li>
+								<li><a href="javascript:void(0)" target="article">Error</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -60,8 +69,21 @@
 	<!--==============================content=============================-->
 	<section id="content">
 		<div class="container_12">
-			<iframe id="article" src="login.do" name="article"
-				style="width: 960px; height: 1000px"></iframe>
+			<div class="wrapper">
+				<div class="grid_12">
+					<div class="indent-top3">
+						<div class="lmain">
+							<div class="indent-left">
+								<div>
+									<h2>ERROR</h2>
+									<p>${error_msg}</p>
+								</div>
+								<img src="./resources/images/error.png" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 </body>

@@ -60,7 +60,6 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	@Override
 	public int deleteCashbook(DCashbookVO cash) {
-		System.out.println("DCashbookVO" + cash.toString());
 		return sqlSession.delete(namespace + ".deleteCash", cash);
 	}
 	

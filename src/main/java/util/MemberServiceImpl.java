@@ -20,7 +20,6 @@ public class MemberServiceImpl implements MemberService {
 	private static final String namespace = "mappers.dmember";
 
 	public MemberServiceImpl() {
-		System.out.println("MServiceImpl 생성");
 	}
 
 	/*

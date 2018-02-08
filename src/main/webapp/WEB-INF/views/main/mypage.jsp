@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../libs.jsp"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <title>MyPage</title>
-<meta charset="utf-8">
-<link rel="stylesheet" href="resources/css/reset.css" type="text/css"
-	media="screen">
-<link rel="stylesheet" href="resources/css/style.css" type="text/css"
-	media="screen">
-<link rel="stylesheet" href="resources/css/grid.css" type="text/css"
-	media="screen">
-<script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script>
 	$(document).ready(function() {
 		

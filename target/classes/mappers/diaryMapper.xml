@@ -8,7 +8,7 @@
 	<select id="getEventList" resultType="vo.DEventVO">
 		select * from EVENT_TB 
 		where member_seq = #{member_seq} and 
-			((start_date >= #{start_date} and start_date <![CDATA[<]]> #{end_date}) or (end_date > #{start_date} and end_date <![CDATA[<]]> #{end_date}))
+			((start_date >= TO_DATE(#{start_date}, 'YYYY.MM.dd') and start_date <![CDATA[<]]> TO_DATE(#{end_date}, 'YYYY.MM.dd')) or (end_date > TO_DATE(#{start_date}, 'YYYY.MM.dd') and end_date <![CDATA[<]]> TO_DATE(#{end_date}, 'YYYY.MM.dd')))
 		order by event_seq desc
 	</select>
 	
@@ -32,12 +32,12 @@
 		insert into EVENT_TB ( member_seq, event_seq, title, start_date, end_date, color) 
 		values( #{member_seq}, #{event_seq}, #{title}, TO_DATE(#{start_date}, 'YYYY.MM.dd HH24:mi'), TO_DATE(#{end_date}, 'YYYY.MM.dd HH24:mi'), #{color})
 		
-		<if test="memo_list!=null">
+<!-- 		<if test="memo_list!=null">
 		insert into EVENT_MEMO_TB(member_seq, event_seq, memo_set_seq, memo_seq) values	
 		<foreach collection="memo_list" item="item" separator=" , ">
             (#{member_seq}, #{EventSeq}, #{item.set_seq}, #{item.seq})
         </foreach>	
-        </if>
+        </if> -->
 	</insert>
 	
 	<insert id="copyEvent">
@@ -53,7 +53,7 @@
 	
 	<select id="getCashList" resultType="vo.DCashbookVO">
 		select * from CASHBOOK_TB 
-		where member_seq = #{member_seq} and (pay_date >= #{start_date} and pay_date <![CDATA[<]]> #{end_date})
+		where member_seq = #{member_seq} and (pay_date >= TO_DATE(#{start_date}, 'YYYY.MM.dd') and pay_date <![CDATA[<]]> TO_DATE(#{end_date}, 'YYYY.MM.dd'))
 		order by pay_date
 	</select>
 
@@ -73,7 +73,7 @@
 	
 	<insert id="insertEventShare">
 		insert into EVENT_SHARE_TB ( member_seq, event_seq, you_member_seq, status, req_date) 
-		values( #{member_seq}, #{event_seq}, #{you_member_seq}, 0, sysdate)
+		values( #{member_seq}, #{event_seq}, #{you_member_seq}, 0, TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss'))
 	</insert>
 	
 	<select id="getEventShareList" resultType="vo.DEventShareVO">
@@ -88,8 +88,8 @@
 	<update id="updateEventShare">
 		update EVENT_SHARE_TB set status = #{status}
 		<choose>
-			<when test="status==1 or status==2">, resp_date = sysdate </when>
-			<when test="status==3">, cancle_date = sysdate </when>
+			<when test="status==1 or status==2">, resp_date = TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss') </when>
+			<when test="status==3">, cancle_date = TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss') </when>
 		</choose>
 		where member_seq=#{member_seq} and event_seq = #{event_seq} and you_member_seq=#{you_member_seq}
 	</update>

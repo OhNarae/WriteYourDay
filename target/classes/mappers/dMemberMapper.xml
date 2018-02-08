@@ -23,7 +23,7 @@
 
 	<insert id="insert">
 		insert into MEMBER_TB ( seq, id, password, name, pnumber,
-		birth, email, regdate) values( SEQ_MEMBER.NEXTVAL , #{id}, #{password}, #{name}, #{pnumber}, #{birth}, #{email}, sysdate)
+		birth, email, regdate) values( SEQ_MEMBER.NEXTVAL , #{id}, #{password}, #{name}, #{pnumber}, #{birth}, #{email}, TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss'))
 		
 		<selectKey keyProperty="seq" resultType="Integer" order="AFTER">
 			select SEQ_MEMBER.CURRVAL from dual

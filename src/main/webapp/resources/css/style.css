@@ -148,6 +148,7 @@ h1 {padding:15px 0 0 0;position:relative;font-weight:normal;text-transform:upper
 .quote {padding-left:30px;background:url(../images/quote.png) 0 3px no-repeat;position:relative}
 .spacer-1 {width:100%;background:url(../images/pic-1.gif) 217px 0 repeat-y}
 h3 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;font-size:36px;line-height:1.2em;margin:0 0 22px 0;color:#262626;font-weight:normal;letter-spacing:-2px}
+h4 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;font-size:24px;line-height:1.2em;margin:0 0 22px 0;color:#262626;font-weight:normal;letter-spacing:-2px}
 h6 {color:#ff9601}
 .title {display:inline-block;font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;font-size:49px;line-height:71px;text-transform:uppercase;letter-spacing:-3px;color:#ff9601;padding:0 25px 0 0;background:url(../images/pic-2.gif) right 0 repeat-y}
 	.title.t2 {font-size:60px;	line-height:1.3em;	padding:0 40px 0 0;	background:url(../images/pic-3.gif) right 0 no-repeat}

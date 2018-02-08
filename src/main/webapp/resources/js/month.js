@@ -25,6 +25,8 @@ $(document).ready(function() {
 	})*/
 	eventList();
 	eventShareList();
+	
+	parent.topMenu();
 })
 
 function eventList(){

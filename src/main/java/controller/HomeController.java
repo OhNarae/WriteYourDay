@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.spi.CalendarDataProvider;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -53,6 +54,20 @@ public class HomeController {
 		}
 
 		return "home";
+	}
+	
+	@RequestMapping(value = "/error")
+	public String error(HttpServletRequest request, HttpServletResponse response) {
+		
+		switch(request.getParameter("code")) {
+		case "404":
+			request.setAttribute("error_msg", "페이지를 찾을 수 없습니다.");
+			break;
+		}
+		
+		response.setStatus(HttpServletResponse.SC_OK);
+
+		return "error";
 	}
 
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
