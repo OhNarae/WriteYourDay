@@ -34,13 +34,6 @@ public class MemoController {
 	@RequestMapping(value = "/memo.do")
 	public ModelAndView memo(HttpServletRequest request, ModelAndView mav) {
 
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
-
 		mav.setViewName("main/memo");
 		return mav;
 	}

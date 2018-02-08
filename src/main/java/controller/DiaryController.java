@@ -49,13 +49,6 @@ public class DiaryController {
 	@RequestMapping(value = "/month.do", method = RequestMethod.GET)
 	public ModelAndView month(HttpServletRequest request, ModelAndView mav, WMonth monthInfo) {
 
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
-
 		Date date = null;
 		if (monthInfo.getMonth() == null) {
 			date = new Date();
@@ -121,13 +114,6 @@ public class DiaryController {
 
 	@RequestMapping(value = "/myday.do", method = RequestMethod.GET)
 	public ModelAndView myday(HttpServletRequest request, ModelAndView mav, WMonth monthInfo) {
-
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
 
 		//해당 날짜 포맷 맞추어 주기
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");

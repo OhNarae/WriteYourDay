@@ -49,10 +49,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 
-		if (null != session.getAttribute("id")) {
-			model.addAttribute("loginid", session.getAttribute("id"));
-		}
-
 		return "home";
 	}
 	
@@ -70,89 +66,4 @@ public class HomeController {
 		return "error";
 	}
 
-	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
-	public String index(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
-		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "index";
-	}
-
-	@RequestMapping(value = "/pickfriend.do")
-	public ModelAndView talk(HttpServletRequest request, ModelAndView mav) {
-
-		HttpSession session = request.getSession(false);
-		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
-		
-		List<DUserVO> friendList = sFriend.getFriendList(user);
-		mav.addObject("friendList", friendList);
-		
-		mav.setViewName("popup/pickfriend");
-		return mav;
-	}
-
-	/*
-	 * @RequestMapping(value = "/getJsonByVO.do")
-	 * 
-	 * @ResponseBody public DResultVO getJsonByVO() { DResultVO result = new
-	 * DResultVO(); result.setmList(mService.getMemberList());
-	 * result.setResult(true); result.setResultMsg("성공");
-	 * 
-	 * return result; }
-	 */
-
-	/*
-	 * @RequestMapping(value = "/memo.do", method = RequestMethod.GET) public
-	 * ModelAndView memo(HttpServletRequest request, ModelAndView mav) {
-	 * 
-	 * HttpSession session = request.getSession(false); DUserVO user = (DUserVO)
-	 * session.getAttribute("loginInfo"); if (null == user) {
-	 * mav.setViewName("redirect:login.do"); return mav; // 로그인 된 상태 }
-	 * 
-	 * mav.setViewName("main/memo"); return mav; }
-	 */
-
-	/*
-	 * @RequestMapping( value="/json/{id}", method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public UserModel getByIdInJSON( @PathVariable String id){
-	 * 
-	 * UserModel user = new UserModel(); user.setId( id); user.setName( "ellie");
-	 * 
-	 * return user; }
-	 */
-
-	/*
-	 * @RequestMapping(value = " /jsonPostSingle", method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public PostModel
-	 * generateJSONPostsingle(@ModelAttribute("postModel") PostModel postModel) {
-	 * 
-	 * if (postModel.getPostId() == 1) { postModel.setTitle("post title for id 1");
-	 * } else { postModel.setTitle("default post title"); } return postModel; }
-	 * 
-	 * @RequestMapping(value = " /jsonPosts", method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public List<PostModel> generateJSONPosts() {
-	 * 
-	 * List<PostModel> list = new ArrayList<PostModel>();
-	 * 
-	 * PostModel p1 = new PostModel(); p1.setPostId(1); p1.setTitle("Post title 1");
-	 * 
-	 * PostModel p2 = new PostModel(); p2.setPostId(2); p2.setTitle("Post title 2");
-	 * 
-	 * list.add(p1); list.add(p2);
-	 * 
-	 * return list; }
-	 */
 }

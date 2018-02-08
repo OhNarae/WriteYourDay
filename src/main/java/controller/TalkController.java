@@ -48,10 +48,6 @@ public class TalkController {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
 
 		List<DUserVO> friendList = sFriend.getFriendList(user);
 		mav.addObject("friendList", friendList);
@@ -80,10 +76,6 @@ public class TalkController {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
 
 		if(targetUser.getSeq() == 0) targetUser = user;
 		else targetUser = sMember.getMemberInfo(targetUser);

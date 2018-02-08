@@ -99,10 +99,6 @@ public class MemberController {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
 
 		DMemberVO userInfo = sMember.getMember(user);
 		if (userInfo != null) {
@@ -120,10 +116,6 @@ public class MemberController {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		if (null == user) {
-			mav.setViewName("redirect:login.do");
-			return mav; // 로그인 된 상태
-		}
 
 		int cnt = sMember.update(member);
 		if (cnt > 0) {
