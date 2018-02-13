@@ -12,6 +12,8 @@ import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +44,9 @@ public class TalkController {
 	private TalkService sTalk;
 	@Autowired
 	private FriendService sFriend;
+
+	@Value("#{config['UPLOAD_FILE_DIR']}")
+	String UPLOAD_FILE_DIR;
 
 	@RequestMapping(value = "/talk.do")
 	public ModelAndView talk(HttpServletRequest request, ModelAndView mav) {
@@ -77,8 +82,10 @@ public class TalkController {
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
 
-		if(targetUser.getSeq() == 0) targetUser = user;
-		else targetUser = sMember.getMemberInfo(targetUser);
+		if (targetUser.getSeq() == 0)
+			targetUser = user;
+		else
+			targetUser = sMember.getMemberInfo(targetUser);
 		mav.addObject("target", targetUser);
 
 		if (targetUser != user) {
@@ -125,14 +132,13 @@ public class TalkController {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-
 		vo.setWriter_seq(user.getSeq());
+
 		// UploadFile 처리
 		MultipartFile uploadfile = vo.getContents_uploadfile();
 		String filename = "No Image";
-		if (uploadfile != null && !uploadfile.isEmpty()) {
-			filename = "C:\\eclipse-workspace\\WriteYourDay\\src\\main\\webapp\\resources\\upload_images\\"
-					+ uploadfile.getOriginalFilename();
+		if (uploadfile != null && !uploadfile.isEmpty()) {			
+			filename = UPLOAD_FILE_DIR + uploadfile.getOriginalFilename();
 			File upFile = new File(filename);
 			uploadfile.transferTo(upFile);
 			int index = filename.lastIndexOf(".");
@@ -142,6 +148,7 @@ public class TalkController {
 		}
 		sTalk.insertTalk(vo);
 
+		vo.setContents_uploadfile(null);
 		out.setResult(vo);
 		return out;
 	}
@@ -157,14 +164,14 @@ public class TalkController {
 
 		return out;
 	}
-	
+
 	@RequestMapping(value = "/talk/insertFriend.do")
 	@ResponseBody
 	public ResultVO insertFriend(HttpServletRequest request, DUserVO vo) {
 
 		HttpSession session = request.getSession(false);
 		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
-		
+
 		ResultVO out = new ResultVO();
 
 		sFriend.insertFriend(user, vo);

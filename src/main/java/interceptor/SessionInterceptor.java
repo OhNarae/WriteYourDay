@@ -29,16 +29,14 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			logger.debug("Request URI \t: " + request.getRequestURI());
 		}
 
-		if (!request.getServletPath().equals("/login.do") && !request.getServletPath().equals("/") && !request.getServletPath().equals("/error") && !request.getServletPath().equals("/logout.do") && !request.getServletPath().equals("/join.do")) {
-			try {
-				HttpSession session = request.getSession(false);
-				if (session == null || session.getAttribute("loginInfo") == null) {
-					response.sendRedirect("/");
-					return false;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			HttpSession session = request.getSession(false);
+			if (session == null || session.getAttribute("loginInfo") == null) {
+				response.sendRedirect("/");
+				return false;
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return super.preHandle(request, response, handler);

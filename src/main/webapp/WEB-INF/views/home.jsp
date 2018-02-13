@@ -15,7 +15,13 @@
 	function topMenu(){
 		$('#top_menu').html('<a class="menu" href="mypage.do" target="article"><span><strong>M</strong>yPage</span></a>'+
 		'&nbsp;&nbsp;&nbsp;<a class="menu" href="logout.do"><span><strong>L</strong>ogout</span></a>') 
+		
+		$('#menuMonth').attr('href', 'month.do');
+		$('#menuMemo').attr('href', 'memo.do');
+		$('#menuTalk').attr('href', 'talk.do');
 	}
+	
+	
 </script>
 </head>
 <body id="page1">
@@ -26,7 +32,7 @@
 				<div class="container_12">
 					<div class="grid_8">
 						<h1>
-							<a class="logo" href="/WriteYourDay/"><span>Write</span><strong>Y</strong>our<strong>D</strong>ay
+							<a class="logo" href="/WriteYourDay/month.do"><span>Write</span><strong>Y</strong>our<strong>D</strong>ay
 							</a>
 						</h1>
 					</div>
@@ -46,9 +52,9 @@
 						<nav>
 							<ul class="menu">
 								<!-- <li style="width:540px;"><a class="active" href="index.html" style="width:540px;"><h2>2018.01.05</h2></a></li> -->
-								<li><a href="month.do" target="article">Month</a></li>
-								<li><a href="memo.do" target="article">Memo</a></li>
-								<li><a href="talk.do" target="article">Talk</a></li>
+								<li><a href="login.do" target="article" id="menuMonth">Month</a></li>
+								<li><a href="login.do" target="article" id="menuMemo">Memo</a></li>
+								<li><a href="login.do" target="article" id="menuTalk">Talk</a></li>
 							</ul>
 						</nav>
 					</div>

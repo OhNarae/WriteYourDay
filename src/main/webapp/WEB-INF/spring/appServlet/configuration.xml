@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+
+<properties>
+	<entry key="UPLOAD_FILE_DIR">C:\\eclipse-workspace\\WriteYourDay\\src\\main\\webapp\\resources\\upload_images\\</entry>
+</properties>
