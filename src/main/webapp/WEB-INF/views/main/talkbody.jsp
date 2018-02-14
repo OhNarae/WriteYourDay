@@ -41,6 +41,7 @@
 								</div>
 								<textarea name="contents_talk"></textarea>
 								<a class="abutton fright" id="iTalkBtn">입력</a>
+								<span class="fright" id="iTalkSpan">입력 중..</span>
 							</form>
 						</td>
 					</tr>

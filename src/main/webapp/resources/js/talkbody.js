@@ -4,7 +4,11 @@ $(document).ready(function(){
 	getlist();
 	readythumbnail();	
 	
+	$('#iTalkSpan').hide();
 	$("#iTalkBtn").click(function(){
+		$('#iTalkBtn').hide();
+		$('#iTalkSpan').show();
+				
 		var form = $('#iTalkForm')[0];
         var formData = new FormData(form);
         if($("#getfile")[0].files.length > 0)
@@ -16,7 +20,11 @@ $(document).ready(function(){
 			processData: false,
             contentType: false,
             data: formData,
-			success: getlist
+			success: function(){
+				$('#iTalkBtn').show();
+				$('#iTalkSpan').hide();
+				getlist();
+			}
 		})
 	})
 })
