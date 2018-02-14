@@ -55,11 +55,12 @@ CREATE TABLE MEMO_SET_TB(
 -- seq=1(월별메모), seq=2(이벤트메모) 
 
 CREATE TABLE MEMO_TB(
+	member_seq NUMBER(5),		--해당 메모셋를 소유하는 유저
 	set_seq NUMBER(3),		--해당 메모가 포함된 메모셋
 	seq NUMBER(3),	
 	name VARCHAR2(60),			--메모 제목
 	contents VARCHAR2(256),		--메모 내용
-	CONSTRAINT PK_MEMO PRIMARY KEY(set_seq, seq)
+	CONSTRAINT PK_MEMO PRIMARY KEY(member_seq, set_seq, seq)
 );
 
 CREATE TABLE CASHBOOK_TB(

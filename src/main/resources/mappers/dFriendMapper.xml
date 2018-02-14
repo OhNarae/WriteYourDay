@@ -13,7 +13,7 @@
 	
 	<insert id="insert" parameterType="hashMap" >
 		INSERT INTO FRIEND_TB( me_member_seq, you_member_seq, create_date) 
-		VALUES(#{me.seq}, #{you.seq}, TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss'))
+		VALUES(#{me.seq}, #{you.seq}, sysdate)
 	</insert>
 
 	<select id="getFriend" resultType="vo.DFriendVO">

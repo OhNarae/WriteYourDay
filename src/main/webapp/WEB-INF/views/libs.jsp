@@ -6,3 +6,4 @@
 <link rel="stylesheet" href="resources/css/grid.css?version=${sysVer}" type="text/css"
 	media="screen">
 <script src="./resources/js/jquery-3.2.1.min.js?version=${sysVer}" type="text/javascript"></script>
+<script src="./resources/js/allpage.js?version=${sysVer}" type="text/javascript"></script>

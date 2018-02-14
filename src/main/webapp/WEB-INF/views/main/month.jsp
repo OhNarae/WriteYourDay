@@ -6,82 +6,9 @@
 <html lang="ko">
 <head>
 <title>Month</title>
-<script src="resources/js/month.js?version=205" type="text/javascript"></script>
-<style type="text/css">
-
-/* 월별 스케쥴 테이블 스타일 */
-.month-tb {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 700px;
-}
-
-.month-tb td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	height: 100px;
-	width: 100px;
-}
-
-.month-tb th {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	background-color: #ff9601;
-}
-
-.month-tb .month-row {
-	vertical-align: top
-}
-
-/* 가계부 테이블 스타일 */
-.cal-tb {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 220px;
-}
-
-.cal-tb td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-}
-
-.cal-tb th {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	background-color: #ff9601;
-}
-
-.cal-tb .cal-row {
-	vertical-align: top
-}
-
-.carousel {margin: 0 auto;width:700px;height:50px;overflow:hidden;position:relative;}
-.carousel .next {display:block;height:22px;width:11px;position:absolute;right:0px;top:14px;background:url(resources/images/carousel-control.png) right top no-repeat}
-.carousel .prev {display:block;height:22px;width:11px;position:absolute;left:0px;top:14px;background:url(resources/images/carousel-control.png) left top no-repeat}
-
-</style>
+<script src="resources/js/month.js?version=${sysVer}" type="text/javascript"></script>
+<link rel="stylesheet" href="resources/css/month.css?version=${sysVer}" type="text/css"
+	media="screen">
 </head>
 <body id="mycalendar">
 	<div class="indent-top"></div>

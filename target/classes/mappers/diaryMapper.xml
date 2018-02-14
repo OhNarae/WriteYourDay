@@ -73,7 +73,7 @@
 	
 	<insert id="insertEventShare">
 		insert into EVENT_SHARE_TB ( member_seq, event_seq, you_member_seq, status, req_date) 
-		values( #{member_seq}, #{event_seq}, #{you_member_seq}, 0, TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss'))
+		values( #{member_seq}, #{event_seq}, #{you_member_seq}, 0, sysdate)
 	</insert>
 	
 	<select id="getEventShareList" resultType="vo.DEventShareVO">
@@ -88,8 +88,8 @@
 	<update id="updateEventShare">
 		update EVENT_SHARE_TB set status = #{status}
 		<choose>
-			<when test="status==1 or status==2">, resp_date = TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss') </when>
-			<when test="status==3">, cancle_date = TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss') </when>
+			<when test="status==1 or status==2">, resp_date = sysdate </when>
+			<when test="status==3">, cancle_date = sysdate </when>
 		</choose>
 		where member_seq=#{member_seq} and event_seq = #{event_seq} and you_member_seq=#{you_member_seq}
 	</update>

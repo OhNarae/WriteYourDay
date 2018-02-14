@@ -82,9 +82,29 @@ public class MemoController {
 	public ResultVO memosetUpdate(HttpServletRequest request, DMemoSetVO vo) {
 		ResultVO out = new ResultVO();
 		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		vo.setMember_seq(user.getSeq());
+
 		int cnt = mService.updateMemoSet(vo);
 		if(cnt > 0) {
 			out.setResult(vo);
+			out.setResultCode(0);
+		}
+		return out;
+	}
+	
+	@RequestMapping(value = "/memoset/delete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public ResultVO memosetDelete(HttpServletRequest request, DMemoSetVO vo) {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		vo.setMember_seq(user.getSeq());
+		
+		int cnt = mService.deleteMemoSet(vo);
+		if(cnt > 0) {
 			out.setResultCode(0);
 		}
 		return out;
@@ -113,9 +133,13 @@ public class MemoController {
 	
 	@RequestMapping(value = "/memo/insert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultVO memoInsert(DMemoVO vo) {
+	public ResultVO memoInsert(HttpServletRequest request, DMemoVO vo) {
 
 		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		vo.setMember_seq(user.getSeq());
 		
 		mService.insertMemo(vo);
 		if(vo.getSeq() > 0) {
@@ -129,9 +153,11 @@ public class MemoController {
 	@RequestMapping(value = "/memo/update.do")
 	@ResponseBody
 	public ResultVO memoUpdate(HttpServletRequest request, DMemoVO vo) {
-		System.out.println("MemoVO: " + vo.toString());
-		
 		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		vo.setMember_seq(user.getSeq());
 		
 		int cnt;
 		if(vo.getSeq() == 0) {
@@ -147,11 +173,32 @@ public class MemoController {
 		return out;
 	}
 	
+	@RequestMapping(value = "/memo/delete.do")
+	@ResponseBody
+	public ResultVO memoDelete(HttpServletRequest request, DMemoVO vo) {
+		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		vo.setMember_seq(user.getSeq());
+		
+		int cnt = mService.deleteMemo(vo);
+		if(cnt > 0) {
+			out.setResultCode(0);
+		}
+		
+		return out;
+	}
+	
 	@RequestMapping(value = "/memo/get.do")
 	@ResponseBody
 	public ResultVO memoGet(HttpServletRequest request, DMemoVO vo) {
 
 		ResultVO out = new ResultVO();
+		
+		HttpSession session = request.getSession(false);
+		DUserVO user = (DUserVO) session.getAttribute("loginInfo");
+		vo.setMember_seq(user.getSeq());
 		
 		vo = mService.getMemo(vo);
 		if(vo != null) {

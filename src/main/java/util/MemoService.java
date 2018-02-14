@@ -16,6 +16,8 @@ public interface MemoService {
 	
 	int updateMemoSet(DMemoSetVO vo);
 	
+	int deleteMemoSet(DMemoSetVO vo);
+	
 	List<DMemoVO> getMemoList(DMemoSetVO vo);
 	
 	DMemoVO getMemo(DMemoVO vo);
@@ -23,4 +25,6 @@ public interface MemoService {
 	int insertMemo(DMemoVO mvo);
 
 	int updateMemo(DMemoVO mvo);
+	
+	int deleteMemo(DMemoVO mvo);
 }

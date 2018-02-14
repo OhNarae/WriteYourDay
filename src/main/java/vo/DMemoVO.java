@@ -2,6 +2,7 @@ package vo;
 
 public class DMemoVO {
 	
+	int member_seq;
 	int set_seq;
 	int seq;
 	String name;
@@ -13,7 +14,13 @@ public class DMemoVO {
 	
 	@Override
 	public String toString() {
-		return "MemoVO [set_seq=" + set_seq + ", seq=" + seq + ", name=" + name + ", contents=" + contents + "]";
+		return "MemoVO [member_seq=" + member_seq + ", set_seq=" + set_seq + ", seq=" + seq + ", name=" + name + ", contents=" + contents + "]";
+	}
+	public int getMember_seq() {
+		return member_seq;
+	}
+	public void setMember_seq(int member_seq) {
+		this.member_seq = member_seq;
 	}
 	public int getSet_seq() {
 		return set_seq;

@@ -49,7 +49,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 		request.setAttribute("sysVer", dateFormat.format(new Date()));
 
 		logger.debug("==========END============");

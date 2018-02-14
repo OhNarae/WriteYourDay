@@ -8,41 +8,8 @@
 <head>
 <title>MyPage</title>
 <script src="resources/js/talk.js?version=${sysVer}" type="text/javascript"></script>
-<style type="text/css">
-.menu-tb {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-}
-
-.menu-tb tr {
-	border-style: solid;
-	border-width: 1px;
-}
-
-.menu-tb th {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding: 10px;
-	overflow: hidden;
-	word-break: normal;
-	height: 10px;
-	background-color: #ff9601;
-}
-
-.menu-tb td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding: 10px;
-	overflow: hidden;
-	word-break: normal;
-	height: 10px;
-}
-
-.menu-tb .menu-row {
-	vertical-align: top
-}
-</style>
+<link rel="stylesheet" href="resources/css/talk.css?version=${sysVer}" type="text/css"
+	media="screen">
 </head>
 <body>
 	<div class="indent-top"></div>
@@ -55,14 +22,7 @@
 							href="talkbody.do?seq=${sessionScope.loginInfo.seq}"
 							target="talkbody" class="color-3">me</a></th>
 					</tr>
-					<tbody id="menuL-fbody">
-<%-- 						<tr>
-							<td><c:forEach var="item" items="${friendList}">
-									<li><a href="talkbody.do?seq=${item.seq}"
-										target="talkbody">${item.id}</a></li>
-								</c:forEach></td>
-						</tr> --%>
-					</tbody>
+					<tbody id="menuL-fbody"></tbody>
 					<tr>
 						<td>
 							<div id="search-form">

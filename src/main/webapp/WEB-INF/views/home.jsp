@@ -32,7 +32,7 @@
 				<div class="container_12">
 					<div class="grid_8">
 						<h1>
-							<a class="logo" href="/WriteYourDay/month.do"><span>Write</span><strong>Y</strong>our<strong>D</strong>ay
+							<a class="logo" href="/WriteYourDay/"><span>Write</span><strong>Y</strong>our<strong>D</strong>ay
 							</a>
 						</h1>
 					</div>

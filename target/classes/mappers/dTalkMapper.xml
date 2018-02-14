@@ -6,12 +6,12 @@
 <mapper namespace="mappers.dtalk">
 
 	<select id="getTalkList" resultType="vo.DTalkVO">
-		select t.*, m.id writer_id, m.name writer_name from TALK_TB t join MEMBER_TB m on t.writer_seq = m.seq where t.member_seq = #{member_seq} order by talk_seq desc
+		select t.member_seq, t.talk_seq, t.writer_seq, t.contents_talk, t.contents_uploadfile_path, TO_CHAR(t.create_date, 'YYYY.MM.dd HH24:mi:ss') create_date, m.id writer_id, m.name writer_name from TALK_TB t join MEMBER_TB m on t.writer_seq = m.seq where t.member_seq = #{member_seq} order by talk_seq desc
 	</select>
 	
 	<insert id="insertTalk">
 		insert into TALK_TB ( member_seq, talk_seq, writer_seq, contents_talk, contents_uploadfile_path, create_date) 
-		values( #{member_seq}, (select nvl(max(talk_seq), 0)+1 from TALK_TB where member_seq = #{member_seq}) , #{writer_seq}, #{contents_talk}, #{contents_uploadfile_path}, TO_DATE(sysdate, 'YYYY.MM.dd HH24:mi:ss'))
+		values( #{member_seq}, (select nvl(max(talk_seq), 0)+1 from TALK_TB where member_seq = #{member_seq}) , #{writer_seq}, #{contents_talk}, #{contents_uploadfile_path}, sysdate)
 	</insert>
 
 </mapper>

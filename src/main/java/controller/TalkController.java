@@ -45,8 +45,8 @@ public class TalkController {
 	@Autowired
 	private FriendService sFriend;
 
-	@Value("#{config['UPLOAD_FILE_DIR']}")
-	String UPLOAD_FILE_DIR;
+/*	@Value("#{config['UPLOAD_FILE_DIR']}")
+	String UPLOAD_FILE_DIR;*/
 
 	@RequestMapping(value = "/talk.do")
 	public ModelAndView talk(HttpServletRequest request, ModelAndView mav) {
@@ -138,7 +138,7 @@ public class TalkController {
 		MultipartFile uploadfile = vo.getContents_uploadfile();
 		String filename = "No Image";
 		if (uploadfile != null && !uploadfile.isEmpty()) {			
-			filename = UPLOAD_FILE_DIR + uploadfile.getOriginalFilename();
+			filename = request.getSession().getServletContext().getRealPath("/resources/upload_images/") + uploadfile.getOriginalFilename();
 			File upFile = new File(filename);
 			uploadfile.transferTo(upFile);
 			int index = filename.lastIndexOf(".");

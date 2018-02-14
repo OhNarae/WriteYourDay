@@ -7,7 +7,7 @@
 
 	<select id="getMemoSetList" resultType="vo.DMemoSetVO">
 		select ms.* from
-		MEMO_SET_TB ms join MEMBER_TB mb on ms.member_seq = mb.seq where mb.id = #{id}
+		MEMO_SET_TB ms join MEMBER_TB mb on ms.member_seq = mb.seq where mb.id = #{id} order by ms.seq
 	</select>
 
 	<insert id="insertMemoSet">
@@ -17,35 +17,45 @@
 	
 	<update id="updateMemoSet">
 		update MEMO_SET_TB set name = #{name}
-		where seq = #{seq}
+		where member_seq = #{member_seq} and seq = #{seq}
 	</update>
+	
+	<delete id="deleteMemoSet">
+		delete MEMO_SET_TB where member_seq = #{member_seq} and seq = #{seq}
+	</delete>
 
 	<select id="getMemoList" resultType="vo.DMemoVO">
 		select * from
-		MEMO_TB where set_seq = #{seq}
+		MEMO_TB where member_seq = #{member_seq} and set_seq = #{seq} order by seq 
 	</select>
 
 	<select id="getMemo" resultType="vo.DMemoVO">
 		select set_seq, seq, name,
-		contents from MEMO_TB where set_seq = #{set_seq} 
+		contents from MEMO_TB where member_seq = #{member_seq} and set_seq = #{set_seq} 
 			<if test="seq > 0">and seq = #{seq}</if>
 			<if test="name != null">and name = #{name}</if>
 	</select>
 
 	<insert id="insertMemo">
-		insert into MEMO_TB(set_seq, seq, name, contents)
-		values(#{set_seq}, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = #{set_seq}), #{name}
+		insert into MEMO_TB(member_seq, set_seq, seq, name, contents)
+		values(#{member_seq}, #{set_seq}, (select nvl(max(seq), 0)+1 from MEMO_TB where set_seq = #{set_seq}), #{name}
 			, #{contents})
-		
-<!-- 		<selectKey keyProperty="seq" resultType="Integer" order="AFTER">
-			select nvl(max(seq), 0) from MEMO_TB where set_seq = #{set_seq}
-		</selectKey> -->
 	</insert>
 
 	<update id="updateMemo">		
 		update MEMO_TB set 
 			<if test="name != null">name=#{name}</if>
 			<if test="contents != null"><if test="name != null">,</if>contents=#{contents}</if>
-		where set_seq = #{set_seq} and seq = #{seq}
+		where member_seq = #{member_seq} and set_seq = #{set_seq} and seq = #{seq}
 	</update>
+	
+	<delete id="deleteMemo">		
+		delete MEMO_TB 
+		where member_seq = #{member_seq} and set_seq = #{set_seq} and seq = #{seq}
+	</delete>
+	
+	<delete id="deleteMemoBySet">		
+		delete MEMO_TB 
+		where member_seq = #{member_seq} and set_seq = #{seq}
+	</delete>
 </mapper>

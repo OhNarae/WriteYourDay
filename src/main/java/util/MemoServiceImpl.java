@@ -61,4 +61,19 @@ public class MemoServiceImpl implements MemoService {
 		return sqlSession.update(namespace + ".updateMemo", vo);
 	}
 
+	@Override
+	public int deleteMemoSet(DMemoSetVO vo) {
+		// TODO Auto-generated method stub
+		int cnt = sqlSession.delete(namespace + ".deleteMemoBySet", vo);
+		cnt = sqlSession.delete(namespace + ".deleteMemoSet", vo);
+		
+		return cnt;
+	}
+
+	@Override
+	public int deleteMemo(DMemoVO mvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(namespace + ".deleteMemo", mvo);
+	}
+
 }

@@ -22,39 +22,26 @@ function getMSetList(){
 			$('#memoL-body').html('');
             $.each(out.result, function(i, item){
             	var tr = '<tr><td class="memo-row">';
-            	tr += '<a href="javascript:getMemoList(' + item.seq + ')">'+ item.name +'</a>';
-            	tr += '<a class="fright" href="javascript:updateMemoSet(' + item.seq + ')">수정</a>';
+            	tr += '<a href="javascript:getMemoList(\'' + item.name + '\',' + item.seq + ')">'+ item.name +'</a>';
+            	tr += '<a class="fright" href="javascript:deleteMemoSet(' + item.seq + ')">삭제</a>';
+            	tr += '<a class="fright indent-right3" href="javascript:updateMemoSet(' + item.seq + ')">수정</a>';
             	tr += '</td></tr>';
 				$('#memoL-body').append(tr);
             })
-         }	
+         },	
+         error: function(){
+        	 alert('메모 카테고리를 가져오지 못했습니다.')
+         }
 	})
 }
 
-function updateMemoSet(setSeq){
-	layer_popup('update');
-	 $('#popBtn').unbind("click").bind("click", function(){
-			$('.dim-layer').fadeOut();// 닫기 버튼을 클릭하면 레이어가 닫힌다.
-		 	$.ajax({
-				type: 'POST',
-				url: '/WriteYourDay/memoset/update.do',
-				data: {
-						seq: setSeq,
-						name: $('#popName').val()
-				},		
-				success: function(out){
-						getMSetList();
-		        }
-			});
-		});
-}
+function getMemoList(name, setSeq){
 
-function getMemoList(setSeq){
-
+	$('#sMSetTitle').text(name)
 	$('#tbContent').hide()	
 	$('#addMemoT').unbind("click").bind("click",function(){
 	    layer_popup('insert');
-	    addMemo(setSeq)
+	    addMemo(name, setSeq)
 	});
 	
  	$.ajax({
@@ -65,36 +52,22 @@ function getMemoList(setSeq){
 			$('#memoT-body').html('')
             $.each(out.result, function(i, item){
             	var tr = '<tr><td class="memo-row">';
-            	tr += '<a href="javascript:getMemo(' + item.set_seq + ',' + item.seq + ')">'+ item.name +'</a>'
-        		tr += '<a class="fright" href="javascript:updateMemo(' + item.set_seq + ',' + item.seq + ')">수정</a>';
+            	tr += '<a href="javascript:getMemo(\''+ item.name+'\',' + item.set_seq + ',' + item.seq + ')">'+ item.name +'</a>'
+            	tr += '<a class="fright" href="javascript:deleteMemo(\''+ name +'\',' + item.set_seq + ',' + item.seq + ')">삭제</a>&nbsp;&nbsp;'
+        		tr += '<a class="fright indent-right3" href="javascript:updateMemo(\''+ name +'\',' + item.set_seq + ',' + item.seq + ')">수정</a>&nbsp;&nbsp;';
                 tr += '</td></tr>'
         		$('#memoT-body').append(tr);
             })
-         }	
+         },
+		 error: function(){
+			 alert('메모 목록을 가져오지 못했습니다.')
+		 }
 	}) 
 }
 
-function updateMemo(setSeq, seq){
+function getMemo(title, setSeq, seq){
 	
-	layer_popup('update');
-	 $('#popBtn').unbind("click").bind("click", function(){
-			$('.dim-layer').fadeOut();// 닫기 버튼을 클릭하면 레이어가 닫힌다.
-		 	$.ajax({
-				type: 'POST',
-				url: '/WriteYourDay/memo/update.do',
-				data: {
-						set_seq: setSeq,
-						seq: seq,
-						name: $('#popName').val()
-				},		
-				success: function(out){
-					getMemoList(setSeq);
-		        }
-			});
-		});
-}
-
-function getMemo(setSeq, seq){
+	$('#sMemoTitle').text(title)
  	$.ajax({
 		type: 'GET',
 		url: '/WriteYourDay/memo/get.do',
@@ -113,24 +86,6 @@ function getMemo(setSeq, seq){
 	readyUpdateContents(setSeq, seq)
 }
 
-function readyUpdateContents(setSeq, seq){
-	 $('#tbContent').show()	
-	 $('#updateMemo').unbind("click").bind("click", function(){
-		 	$.ajax({
-				type: 'POST',
-				url: '/WriteYourDay/memo/update.do',
-				data: {
-						set_seq: setSeq,
-						seq: seq,
-						contents: $('#memoContents').val()
-				},		
-				success: function(out){
-					alert('수정완료');
-		        }
-			});
-		});
-}
-
 function addMemoSet(){
 	 $('#popBtn').unbind("click").bind("click", function(){
 		$('.dim-layer').fadeOut();// 닫기 버튼을 클릭하면 레이어가 닫힌다.
@@ -147,8 +102,8 @@ function addMemoSet(){
 	});
 }
 
-function addMemo(setSeq){	
-    $('#popBtn').unbind("click").bind("click", function(){
+function addMemo(name, setSeq){	
+   $('#popBtn').unbind("click").bind("click", function(){
 		$('.dim-layer').fadeOut();// 닫기 버튼을 클릭하면 레이어가 닫힌다.
 	 	$.ajax({
 			type: 'POST',
@@ -158,11 +113,105 @@ function addMemo(setSeq){
 					set_seq: setSeq
 			},		
 			success: function(out){
-				getMemoList(setSeq);
+				getMemoList(name, setSeq);
 				readyUpdateContents(setSeq, out.result.seq)
 	        }
 		});
 	});
+}
+
+function updateMemoSet(setSeq){
+	layer_popup('update');
+	 $('#popBtn').unbind("click").bind("click", function(){
+			$('.dim-layer').fadeOut();// 닫기 버튼을 클릭하면 레이어가 닫힌다.
+		 	$.ajax({
+				type: 'POST',
+				url: '/WriteYourDay/memoset/update.do',
+				data: {
+						seq: setSeq,
+						name: $('#popName').val()
+				},		
+				success: function(out){
+					getMSetList();
+		        },
+				 error: function(){
+					 alert('업데이트에 실패하였습니다.')
+				 }
+			});
+		});
+}
+
+function deleteMemoSet(setSeq){
+ 	$.ajax({
+		type: 'POST',
+		url: '/WriteYourDay/memoset/delete.do',
+		data: {
+				seq: setSeq,
+		},		
+		success: function(out){
+			$('#sMSetTitle').text('')
+			$('#memoT-body').html('')
+			getMSetList();
+        },
+		 error: function(){
+			 alert('삭제에 실패하였습니다.')
+		 }
+	});
+}
+
+
+function updateMemo(name, setSeq, seq){	
+	layer_popup('update');
+	 $('#popBtn').unbind("click").bind("click", function(){
+			$('.dim-layer').fadeOut();// 닫기 버튼을 클릭하면 레이어가 닫힌다.
+		 	$.ajax({
+				type: 'POST',
+				url: '/WriteYourDay/memo/update.do',
+				data: {
+						set_seq: setSeq,
+						seq: seq,
+						name: $('#popName').val()
+				},		
+				success: function(out){
+					getMemoList(name, setSeq);
+		        }
+			});
+		});
+}
+
+function deleteMemo(name, setSeq, seq){
+ 	$.ajax({
+		type: 'POST',
+		url: '/WriteYourDay/memo/delete.do',
+		data: {
+			set_seq: setSeq,
+			seq: seq,
+		},		
+		success: function(out){
+			getMemoList(name, setSeq);
+        },
+		 error: function(){
+			 alert('삭제에 실패하였습니다.')
+		 }
+	});
+}
+
+function readyUpdateContents(setSeq, seq){
+	 $('#tbContent').show()	
+	 $('#updateMemo').unbind("click").bind("click", function(){
+		 	$.ajax({
+				type: 'POST',
+				url: '/WriteYourDay/memo/update.do',
+				data: {
+						set_seq: setSeq,
+						seq: seq,
+						contents: $('#memoContents').val()
+				},		
+				success: function(out){
+					alert('수정완료');
+		        }
+			});
+		});
 }
 
 function layer_popup(action){ //#layer

@@ -9,57 +9,8 @@
 <link rel="stylesheet" href="resources/css/popup.css?version=${sysVer}" type="text/css"
 	media="screen">
 <script src="resources/js/memo.js?version=${sysVer}" type="text/javascript"></script>
-<style type="text/css">
-
-.memo-tb {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-}
-
-.memo-tb td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	height: 10px
-}
-
-.memo-tb th {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	background-color: #ff9601;
-}
-
-.memo-tb .memo-row {
-	vertical-align: top
-}
-
-textarea {
-	float: left;
-	height: 192px;
-	overflow: auto;
-	width: 95%;
-	font-size: 13px;
-	line-height: 1.23em;
-	color: #404040;
-	padding: 6px 10px;
-	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
-	border: 1px solid #d9d9d9;
-	background: #fcfcfc;
-	outline: none
-}
-</style>
+<link rel="stylesheet" href="resources/css/memo.css?version=${sysVer}" type="text/css"
+	media="screen">
 </head>
 <body>
 	<div class="indent-top"></div>
@@ -91,20 +42,20 @@ textarea {
 				</table>
 			</div>
 			<div class="grid_3">
-				<table class="memo-tb" style="width: 100%;">
+				<table class="memo-tb">
 					<tr>
-						<th class="memo-row aligncenter">메모 제목 <a href="#layer"
+						<th class="memo-row aligncenter"><span id='sMSetTitle'></span><a href="#layer"
 							class="fright color-3" id="addMemoT" >+</a></th>
 					</tr>
 					<tbody id="memoT-body"></tbody>
 				</table>
 			</div>
 			<div class="grid_6">
-				<table class="memo-tb" style="width: 100%;" id="tbContent">
+				<table class="memo-tb">
 					<tr>
-						<th class="memo-row aligncenter">메모 내용</th>
+						<th class="memo-row aligncenter"><span id='sMemoTitle'></span>&nbsp;</th>
 					</tr>
-					<tbody id="memo-body">
+					<tbody id="memo-body" id="tbContent">
 						<tr>
 							<td><textarea id="memoContents"></textarea><br> <a
 								class="fright" id="updateMemo">수정</a></td>
