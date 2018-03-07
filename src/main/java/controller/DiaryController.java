@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.lf5.util.DateFormatManager;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,7 +138,15 @@ public class DiaryController {
 			mav.addObject("memo", memo);
 		else mav.addObject("memo", rMemo);
 		
-		mav.setViewName("main/myday");
+		String jstype = request.getParameter("jstype");
+		switch(jstype == null ? "jstype":jstype) {
+		case "AngularJS":
+			mav.setViewName("main/myday_angular");
+			break;
+		default:
+			mav.setViewName("main/myday");
+		}
+		
 		return mav;
 	}
 	

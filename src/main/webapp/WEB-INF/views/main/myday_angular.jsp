@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>MyDay</title>
+<title>MyDay_AngularJS</title>
 <script src="resources/js/myday.js?version=${sysVer}" type="text/javascript"></script>
 <link rel="stylesheet" href="resources/css/popup.css?version=${sysVer}" type="text/css" media="screen">
 <link rel="stylesheet" href="resources/css/month.css?version=${sysVer}" type="text/css"
@@ -15,9 +15,9 @@
 	<div class="indent-top"></div>
 	<div class="quote">
 		<h3 class="prev-indent-bot">
-			<span id="dayTitle">${date}</span>			
+			<span id="dayTitle">${date}</span>
 		</h3>
-		<a class="fright" href="/WriteYourDay/myday.do?date=${date}&jstype=AngularJS">AngularJS</a>
+		<a href="/WriteYourDay/myday.do?jstype=AngularJS"></a>
 	</div>
 	<div class="container_12 text-2">
 		<div class="grid_12">
